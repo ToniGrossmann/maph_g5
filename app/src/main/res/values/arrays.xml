@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="listActions">
+        <item>Deine Ziele</item>
+        <item>Dein Movatar</item>
+        <item>Statistik</item>
+        <item>Rabattcodes</item>
+    </string-array>
+
+    <string-array name="listDescriptions">
+        <item>Setze und betrachte deine Ziele</item>
+        <item>Betrachte und gestalte deinen Movatar</item>
+        <item>Die Statistik zu deinen bisherigen Leistungen</item>
+        <item>Tasche deine Credits gegen tolle Rabatte ein</item>
+    </string-array>
+</resources>
