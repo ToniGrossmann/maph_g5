@@ -4,12 +4,8 @@ README
 
 Dies ist das Repository des Projekts der Gruppe 5 "Mobile Applications 
 for Health Care" (AI Master - HTW Berlin WS15/16). In dem Projekt soll 
-eine Android-App für Smartphones/Tablets zum Thema Sport & Fitness 
+eine Android-App f�r Smartphones/Tablets zum Thema Sport & Fitness 
 entwickelt werden. 
-Die App unterstützt Geräte mit dem API Level 8-23.Somit können 99% der auf dem 
-Play Store aktiven Geräte die App nutzen. Mithilfe der Support Libraries 
-sind trotz des geringen API-Levels Funktionen der aktuellen API Level verfügbar.
-Im Folgenden eine Herangehensweise, um die App lauffähig zu machen.
 
 ======
 
@@ -30,9 +26,9 @@ https://www.youtube.com/watch?v=E0MjorpDWxc
 
 6. Die 'maph_g5/.gitignore' beinhaltet eine Liste von Dateien mit
    Build-Daten oder user-spezifischen Daten, die bei einem Commit ignoriert werden.
-   Sie sind dennoch unverzichtbar für das lokale Projekt und müssen nach dem Pull
+   Sie sind dennoch unverzichtbar f�r das lokale Projekt und m�ssen nach dem Pull
    von Gradle erzeugt werden. 
    "Android Studio -> Gradle (rechter Fensterrand) -> Refresh all Gradle projects"
-   Ihr erhaltet Fehler, könnt diese dann aber automatisch von Gradle fixen lassen.
+   Ihr erhaltet Fehler, k�nnt diese dann aber automatisch von Gradle fixen lassen.
 
-7. Viel Spaß bei der App-Entwicklung!
+7. Viel Spa� bei der App-Entwicklung!
