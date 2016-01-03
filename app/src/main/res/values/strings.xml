@@ -21,4 +21,13 @@
     </string>
     <string name="dummy_username">horsti@aol.com</string>
     <string name="dummy_password">horsti</string>
+
+    <string name="homepage">Startseite</string>
+    <string name="goals">Ziele</string>
+    <string name="stats">Statistik</string>
+    <string name="movatar">Movatar</string>
+    <string name="credits">Creditpoints</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

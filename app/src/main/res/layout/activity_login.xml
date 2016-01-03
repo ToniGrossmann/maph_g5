@@ -14,9 +14,9 @@
     <!-- Login progress -->
     <com.caverock.androidsvg.SVGImageView
         android:id="@+id/imageView1"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        svgimageview:svg="m.svg" />
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        svgimageview:svg="movation.svg" />
     <ProgressBar
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleLarge"
