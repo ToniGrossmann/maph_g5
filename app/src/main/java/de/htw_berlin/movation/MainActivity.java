@@ -17,14 +17,17 @@ import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
 
+import de.htw_berlin.movation.persistence.DatabaseHelper;
 import de.htw_berlin.movation.persistence.User;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private DatabaseHelper dbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dbHelper = ((MyApplication)getApplication()).getHelper();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -90,7 +93,15 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
+        switch(item.getItemId()){
+            default:
+                break;
+            case R.id.nav_homepage:
+                HomeFragment hf = HomeFragment.newInstance(1);
+                getSupportFragmentManager().beginTransaction()
+                                           .replace(R.id.content_main_framelayout, hf).commit();
+
+        }
 /*
         if (id == R.id.nav_camera) {
             // Handle the camera action
