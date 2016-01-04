@@ -4,7 +4,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "maph_g5.htw_berlin.de.movation"
+        applicationId "de.htw_berlin.movation"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
@@ -26,10 +26,10 @@ dependencies {
 
     compile project(':androidsvg')
 
+    compile 'com.mikepenz:iconics-core:2.5.3@aar'
 
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
-    compile 'com.mikepenz:iconics-core:2.5.3@aar'
     compile 'com.j256.ormlite:ormlite-core:4.48'
     compile 'com.j256.ormlite:ormlite-android:4.48'
     compile 'com.mikepenz:google-material-typeface:2.1.0.1.original@aar'
