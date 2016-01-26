@@ -1,9 +1,6 @@
 package de.htw_berlin.movation;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,7 +15,7 @@ import com.j256.ormlite.dao.Dao;
 import java.sql.SQLException;
 
 import de.htw_berlin.movation.persistence.DatabaseHelper;
-import de.htw_berlin.movation.persistence.User;
+import de.htw_berlin.movation.persistence.model.User;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,7 +43,7 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        Dao<User, Integer> a = ((MyApplication)getApplication()).getHelper().getUserDao();
+        Dao<User, Integer> a = ((MyApplication)getApplication()).getHelper().getGenericDao(User.class);
         try {
             a.create(new User());
         } catch (SQLException e) {

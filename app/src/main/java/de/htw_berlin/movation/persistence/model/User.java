@@ -1,9 +1,11 @@
-package de.htw_berlin.movation.persistence;
+package de.htw_berlin.movation.persistence.model;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.misc.BaseDaoEnabled;
 
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Locale;
 
@@ -21,6 +23,15 @@ public class User extends BaseDaoEnabled {
 
     @DatabaseField
     public String lastName;
+
+    @DatabaseField
+    public String password;
+
+    @DatabaseField
+    public long credits;
+
+    @ForeignCollectionField
+    Collection<Discount> discounts;
 
     @SuppressWarnings("unused")
     public User() {

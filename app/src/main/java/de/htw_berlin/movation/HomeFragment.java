@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import java.sql.SQLException;
 
 import de.htw_berlin.movation.persistence.DatabaseHelper;
-import de.htw_berlin.movation.persistence.User;
+import de.htw_berlin.movation.persistence.model.User;
 
 public class HomeFragment extends Fragment {
     private static final String USER_ID = "param1";
@@ -37,7 +37,7 @@ public class HomeFragment extends Fragment {
         dbHelper = ((MyApplication)getActivity().getApplication()).getHelper();
         if (getArguments() != null) {
             try {
-                mUser = dbHelper.getUserDao().queryForId(getArguments().getInt(USER_ID));
+                mUser = dbHelper.<User, Integer> getGenericDao(User.class).queryForId(getArguments().getInt(USER_ID));
             } catch (SQLException e) {
                 e.printStackTrace();
             }

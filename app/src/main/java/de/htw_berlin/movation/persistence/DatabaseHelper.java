@@ -15,8 +15,12 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import de.htw_berlin.movation.R;
+import de.htw_berlin.movation.persistence.model.*;
 
 /**
  * Database helper class used to manage the creation and upgrading of your database. This class also usually provides
@@ -28,12 +32,19 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     // name of the database file for your application -- change to something appropriate for your app
     private static final String DATABASE_NAME = "helloAndroid.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 4;
 
-    // the DAO object we use to access the SimpleData table
-    private Dao<SimpleData, Integer> simpleDao = null;
-    private Dao<User, Integer> userDao = null;
-    private RuntimeExceptionDao<SimpleData, Integer> simpleRuntimeDao = null;
+    List<Class> entities = new ArrayList<Class>(){{
+        add(Discount.class);
+        add(DiscountType.class);
+        add(Goal.class);
+        add(GoalCategory.class);
+        add(Movatar.class);
+        add(MovatarClothes.class);
+        add(Mrg_User_Goal.class);
+        add(Mrg_User_MovatarClothes.class);
+        add(User.class);
+    }};
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -47,8 +58,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource) {
         try {
             Log.i(DatabaseHelper.class.getName(), "onCreate");
-            TableUtils.createTable(connectionSource, SimpleData.class);
-            TableUtils.createTable(connectionSource, User.class);
+            for(Class c : entities)
+                TableUtils.createTable(connectionSource, c);
+            //TableUtils.createTable(connectionSource, SimpleData.class);
+            //TableUtils.createTable(connectionSource, User.class);
 
         } catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
@@ -64,7 +77,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
             Log.i(DatabaseHelper.class.getName(), "onUpgrade");
-            TableUtils.dropTable(connectionSource, SimpleData.class, true);
+            for(Class c : entities)
+                TableUtils.dropTable(connectionSource, c, true);
             // after we drop the old databases, we create the new ones
             onCreate(db, connectionSource);
         } catch (SQLException e) {
@@ -77,6 +91,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
      * Returns the Database Access Object (DAO) for our SimpleData class. It will create it or just give the cached
      * value.
      */
+/*
     public Dao<SimpleData, Integer> getDao() throws SQLException {
         if (simpleDao == null) {
             simpleDao = getDao(SimpleData.class);
@@ -93,25 +108,38 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             }
         return userDao;
     }
+*/
+    public <T, ID> Dao<T, ID> getGenericDao(Class clazz){
+        Dao<T, ID> dao = null;
+        try {
+            dao = getDao(clazz);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dao;
+    }
 
     /**
      * Returns the RuntimeExceptionDao (Database Access Object) version of a Dao for our SimpleData class. It will
      * create it or just give the cached value. RuntimeExceptionDao only through RuntimeExceptions.
      */
+    /*
     public RuntimeExceptionDao<SimpleData, Integer> getSimpleDataDao() {
         if (simpleRuntimeDao == null) {
             simpleRuntimeDao = getRuntimeExceptionDao(SimpleData.class);
         }
         return simpleRuntimeDao;
     }
-
+*/
     /**
      * Close the database connections and clear any cached DAOs.
      */
+   /*
     @Override
     public void close() {
         super.close();
         simpleDao = null;
         simpleRuntimeDao = null;
     }
+    */
 }
