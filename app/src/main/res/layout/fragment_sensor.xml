@@ -1,0 +1,174 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="de.htw_berlin.movation.SensorFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/sensor_steps"
+                android:id="@+id/txtSensorInfo" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TableRow
+                    android:id="@+id/tableRow1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/txtSensorStepNr1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sensor_step_nr1"/>
+                    <TextView
+                        android:id="@+id/txtSensorStep1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/sensor_step1"/>
+                </TableRow>
+                <TableRow
+                    android:id="@+id/tableRow2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/txtSensorStepNr2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sensor_step_nr2"/>
+                    <TextView
+                        android:id="@+id/txtSensorStep2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/sensor_step2"/>
+                </TableRow>
+                <TableRow
+                    android:id="@+id/tableRow3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/txtSensorStepNr3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sensor_step_nr3"/>
+                    <TextView
+                        android:id="@+id/txtSensorStep3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/sensor_step3"/>
+                </TableRow>
+                <TableRow
+                    android:id="@+id/tableRow4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/txtSensorStepNr4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sensor_step_nr4"/>
+                    <TextView
+                        android:id="@+id/txtSensorStep4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/sensor_step4"/>
+                </TableRow>
+                <TableRow
+                    android:id="@+id/tableRow5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/txtSensorStepNr5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sensor_step_nr5"/>
+                    <TextView
+                        android:id="@+id/txtSensorStep5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/sensor_step5"/>
+                </TableRow>
+                <TableRow
+                    android:id="@+id/tableRow6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/txtSensorStepNr6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sensor_step_nr6"/>
+                    <TextView
+                        android:id="@+id/txtSensorStep6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/sensor_step6"/>
+                </TableRow>
+            </TableLayout>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/heart_rate_consent"
+                android:id="@+id/btnHeartRateConsent" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/register_sensors"
+                android:id="@+id/btnRegisterSensors"
+                android:enabled="false" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/unregister_sensors"
+                android:id="@+id/btnUnregisterSensors"
+                android:enabled="false" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtBandStatus" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtHeartRateStatus" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtPedometerStatus" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtCaloriesStatus" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtContactStatus" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtDistanceStatus" />
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>

@@ -97,7 +97,12 @@ public class MainActivity extends AppCompatActivity
                 HomeFragment hf = HomeFragment.newInstance(1);
                 getSupportFragmentManager().beginTransaction()
                                            .replace(R.id.content_main_framelayout, hf).commit();
-
+                break;
+            case R.id.nav_sensors:
+                SensorFragment sf = SensorFragment.newInstance(1);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_main_framelayout, sf).commit();
+                break;
         }
 /*
         if (id == R.id.nav_camera) {
