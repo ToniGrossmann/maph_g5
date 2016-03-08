@@ -12,19 +12,26 @@ import android.view.MenuItem;
 
 import com.j256.ormlite.dao.Dao;
 
+import org.androidannotations.annotations.App;
+import org.androidannotations.annotations.EActivity;
+
 import java.sql.SQLException;
 
 import de.htw_berlin.movation.persistence.DatabaseHelper;
 import de.htw_berlin.movation.persistence.model.User;
 
+@EActivity
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    @App
+    MyApplication app;
 
     private DatabaseHelper dbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dbHelper = ((MyApplication)getApplication()).getHelper();
+        dbHelper = app.getHelper();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -41,7 +48,7 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
         Dao<User, Integer> a = ((MyApplication)getApplication()).getHelper().getGenericDao(User.class);
         try {
@@ -94,12 +101,12 @@ public class MainActivity extends AppCompatActivity
             default:
                 break;
             case R.id.nav_homepage:
-                HomeFragment hf = HomeFragment.newInstance(1);
+                HomeFragment hf = HomeFragment_.builder().mUserId(1).build();
                 getSupportFragmentManager().beginTransaction()
                                            .replace(R.id.content_main_framelayout, hf).commit();
                 break;
             case R.id.nav_sensors:
-                SensorFragment sf = SensorFragment.newInstance(1);
+                SensorFragment sf = SensorFragment_.builder().mUserId(1).build();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_main_framelayout, sf).commit();
                 break;

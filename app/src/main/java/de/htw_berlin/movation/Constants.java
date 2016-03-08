@@ -15,8 +15,4 @@ public final class Constants {
         DISTANCE,
         NONE
     }
-
-    public static final String LOGINPREFS_USERNAME = "loginprefs_username";
-    public static final String LOGINPREFS_PASSWORD = "loginprefs_password";
-    public static final String LOGINPREFS_AUTOLOGIN = "loginprefs_autologin";
 }

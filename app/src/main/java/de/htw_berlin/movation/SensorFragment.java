@@ -1,7 +1,14 @@
 package de.htw_berlin.movation;
 
-import java.lang.ref.WeakReference;
+import android.app.Activity;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.widget.Button;
+import android.widget.TextView;
 
+import com.j256.ormlite.dao.Dao;
 import com.microsoft.band.BandClient;
 import com.microsoft.band.BandClientManager;
 import com.microsoft.band.BandException;
@@ -21,43 +28,62 @@ import com.microsoft.band.sensors.BandPedometerEvent;
 import com.microsoft.band.sensors.BandPedometerEventListener;
 import com.microsoft.band.sensors.HeartRateConsentListener;
 
-import android.app.Activity;
-import android.content.Context;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
+import org.androidannotations.annotations.Click;
+import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.FragmentArg;
+import org.androidannotations.annotations.ViewById;
+import org.androidannotations.ormlite.annotations.OrmLiteDao;
 
+import java.lang.ref.WeakReference;
 import java.sql.SQLException;
 
 import de.htw_berlin.movation.persistence.DatabaseHelper;
 import de.htw_berlin.movation.persistence.model.User;
 
+@EFragment(R.layout.fragment_sensor)
 public class SensorFragment extends Fragment {
 
     private static final String USER_ID = "param1";
 
     // TODO: Rename and change types of parameters
     private User mUser;
+    @FragmentArg
+    long mUserId;
     private DatabaseHelper dbHelper;
-    private Context mListener;
+    @OrmLiteDao(helper = DatabaseHelper.class)
+    Dao<User, Long> userDao;
+    @ViewById
+    Button btnHeartRateConsent;
+    @ViewById
+    Button btnRegisterSensors;
+    @ViewById
+    Button btnUnregisterSensors;
 
-    private Button btnHeartRateConsent;
-    private Button btnRegisterSensors;
-    private Button btnUnregisterSensors;
+    @ViewById
+    TextView txtBandStatus;
+    @ViewById
+    TextView txtHeartRateStatus;
+    @ViewById
+    TextView txtPedometerStatus;
+    @ViewById
+    TextView txtCaloriesStatus;
+    @ViewById
+    TextView txtContactStatus;
+    @ViewById
+    TextView txtDistanceStatus;
+    /*
 
-    private TextView txtBandStatus;
-    private TextView txtHeartRateStatus;
-    private TextView txtPedometerStatus;
-    private TextView txtCaloriesStatus;
-    private TextView txtContactStatus;
-    private TextView txtDistanceStatus;
+        btnHeartRateConsent = (Button) view.findViewById(R.id.btnHeartRateConsent);
+        btnRegisterSensors = (Button) view.findViewById(R.id.btnRegisterSensors);
+        btnUnregisterSensors = (Button) view.findViewById(R.id.btnUnregisterSensors);
+
+        txtBandStatus = (TextView) view.findViewById(R.id.txtBandStatus);
+        txtHeartRateStatus = (TextView) view.findViewById(R.id.txtHeartRateStatus);
+        txtPedometerStatus = (TextView) view.findViewById(R.id.txtPedometerStatus);
+        txtCaloriesStatus = (TextView) view.findViewById(R.id.txtCaloriesStatus);
+        txtContactStatus = (TextView) view.findViewById(R.id.txtContactStatus);
+        txtDistanceStatus = (TextView) view.findViewById(R.id.txtDistanceStatus);
+     */
 
     private BandClient client;
     private BandHeartRateEventListener mHeartRateEventListener;
@@ -65,20 +91,12 @@ public class SensorFragment extends Fragment {
     private BandCaloriesEventListener mCaloriesEventListener;
     private BandContactEventListener mContactEventListener;
     private BandDistanceEventListener mDistanceEventListener;
-
-    public SensorFragment() {}
-
-    public static SensorFragment newInstance(int userId) {
-        SensorFragment fragment = new SensorFragment();
-        Bundle args = new Bundle();
-        args.putInt(USER_ID, userId);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    WeakReference<Activity> reference;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        reference = new WeakReference<Activity>(getActivity());
         dbHelper = ((MyApplication)getActivity().getApplication()).getHelper();
         if (getArguments() != null) {
             try {
@@ -177,84 +195,41 @@ public class SensorFragment extends Fragment {
         };
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_sensor, container, false);
-
-        btnHeartRateConsent = (Button) view.findViewById(R.id.btnHeartRateConsent);
-        btnRegisterSensors = (Button) view.findViewById(R.id.btnRegisterSensors);
-        btnUnregisterSensors = (Button) view.findViewById(R.id.btnUnregisterSensors);
-
-        txtBandStatus = (TextView) view.findViewById(R.id.txtBandStatus);
-        txtHeartRateStatus = (TextView) view.findViewById(R.id.txtHeartRateStatus);
-        txtPedometerStatus = (TextView) view.findViewById(R.id.txtPedometerStatus);
-        txtCaloriesStatus = (TextView) view.findViewById(R.id.txtCaloriesStatus);
-        txtContactStatus = (TextView) view.findViewById(R.id.txtContactStatus);
-        txtDistanceStatus = (TextView) view.findViewById(R.id.txtDistanceStatus);
-
-        final WeakReference<Activity> reference = new WeakReference<Activity>(getActivity());
-        btnHeartRateConsent.setOnClickListener(new OnClickListener() {
-            @SuppressWarnings("unchecked")
-            @Override
-            public void onClick(View v) {
-                new HeartRateConsentTask().execute(reference);
-            }
-        });
-
-        btnRegisterSensors.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new SensorSubscriptionTask().execute();
-            }
-        });
-
-        btnUnregisterSensors.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (client != null) {
-                    try {
-                        client.getSensorManager().unregisterAllListeners();
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                btnRegisterSensors.setEnabled(true);
-                                btnUnregisterSensors.setEnabled(false);
-                            }
-                        });
-                        txtBandStatus.setText("Messung beendet.");
-                        txtHeartRateStatus.setText("");
-                        txtPedometerStatus.setText("");
-                        txtCaloriesStatus.setText("");
-                        txtContactStatus.setText("");
-                        txtDistanceStatus.setText("");
-                    } catch (BandIOException e) {
-                        appendToUI(e.getMessage(), Constants.SensorTypes.NONE);
-                    }
-                }
-            }
-        });
-
-        // Inflate the layout for this fragment
-        return view;
+    @Click
+    void btnHeartRateConsent(){
+        new HeartRateConsentTask().execute(reference);
     }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        //if (context instanceof OnFragmentInteractionListener) {
-        mListener = context;
-        /*} else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }*/
+    @Click
+    void btnRegisterSensors(){
+        new SensorSubscriptionTask().execute();
+    }
+    @Click
+    void btnUnregisterSensors(){
+        if (client != null) {
+            try {
+                client.getSensorManager().unregisterAllListeners();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        btnRegisterSensors.setEnabled(true);
+                        btnUnregisterSensors.setEnabled(false);
+                    }
+                });
+                txtBandStatus.setText("Messung beendet.");
+                txtHeartRateStatus.setText("");
+                txtPedometerStatus.setText("");
+                txtCaloriesStatus.setText("");
+                txtContactStatus.setText("");
+                txtDistanceStatus.setText("");
+            } catch (BandIOException e) {
+                appendToUI(e.getMessage(), Constants.SensorTypes.NONE);
+            }
+        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
         if (client != null) {
             try {
                 client.disconnect().await();
@@ -278,8 +253,9 @@ public class SensorFragment extends Fragment {
     // wenn eine Verbindung zum Band besteht.
     //Laeuft asynchron im Background Thread. Ergebnisausgabe im UI Thread.
     private class HeartRateConsentTask extends AsyncTask<WeakReference<Activity>, Void, Void> {
+        @SafeVarargs
         @Override
-        protected Void doInBackground(WeakReference<Activity>... params) {
+        protected final Void doInBackground(WeakReference<Activity>... params) {
             try {
                 //wenn Band Client existiert
                 if (getConnectedBandClient()) {
