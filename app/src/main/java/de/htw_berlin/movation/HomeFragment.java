@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 
 import com.j256.ormlite.dao.Dao;
 
+import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.ormlite.annotations.OrmLiteDao;
@@ -23,13 +24,15 @@ public class HomeFragment extends Fragment {
     private DatabaseHelper dbHelper;
     @OrmLiteDao(helper = DatabaseHelper.class)
     Dao<User, Long> userDao;
+    @App
+    MyApplication app;
 
     public HomeFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dbHelper = ((MyApplication)getActivity().getApplication()).getHelper();
+        dbHelper = app.getHelper();
         if (getArguments() != null) {
             try {
                 mUser = userDao.queryForId(mUserId);

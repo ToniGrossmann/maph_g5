@@ -30,8 +30,6 @@ import org.androidannotations.annotations.sharedpreferences.Pref;
 @EActivity
 public class LoginActivity extends AppCompatActivity{
 
-    public static final String PREFS_NAME = "LoginPrefs";
-
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */

@@ -28,6 +28,7 @@ import com.microsoft.band.sensors.BandPedometerEvent;
 import com.microsoft.band.sensors.BandPedometerEventListener;
 import com.microsoft.band.sensors.HeartRateConsentListener;
 
+import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
@@ -43,15 +44,14 @@ import de.htw_berlin.movation.persistence.model.User;
 @EFragment(R.layout.fragment_sensor)
 public class SensorFragment extends Fragment {
 
-    private static final String USER_ID = "param1";
-
-    // TODO: Rename and change types of parameters
     private User mUser;
     @FragmentArg
-    long mUserId;
+    long mUserId = -1;
     private DatabaseHelper dbHelper;
     @OrmLiteDao(helper = DatabaseHelper.class)
     Dao<User, Long> userDao;
+    @App
+    MyApplication app;
     @ViewById
     Button btnHeartRateConsent;
     @ViewById
@@ -71,19 +71,6 @@ public class SensorFragment extends Fragment {
     TextView txtContactStatus;
     @ViewById
     TextView txtDistanceStatus;
-    /*
-
-        btnHeartRateConsent = (Button) view.findViewById(R.id.btnHeartRateConsent);
-        btnRegisterSensors = (Button) view.findViewById(R.id.btnRegisterSensors);
-        btnUnregisterSensors = (Button) view.findViewById(R.id.btnUnregisterSensors);
-
-        txtBandStatus = (TextView) view.findViewById(R.id.txtBandStatus);
-        txtHeartRateStatus = (TextView) view.findViewById(R.id.txtHeartRateStatus);
-        txtPedometerStatus = (TextView) view.findViewById(R.id.txtPedometerStatus);
-        txtCaloriesStatus = (TextView) view.findViewById(R.id.txtCaloriesStatus);
-        txtContactStatus = (TextView) view.findViewById(R.id.txtContactStatus);
-        txtDistanceStatus = (TextView) view.findViewById(R.id.txtDistanceStatus);
-     */
 
     private BandClient client;
     private BandHeartRateEventListener mHeartRateEventListener;
@@ -97,10 +84,10 @@ public class SensorFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         reference = new WeakReference<Activity>(getActivity());
-        dbHelper = ((MyApplication)getActivity().getApplication()).getHelper();
-        if (getArguments() != null) {
+        dbHelper = app.getHelper();
+        if (mUserId != -1) {
             try {
-                mUser = dbHelper.<User, Integer> getGenericDao(User.class).queryForId(getArguments().getInt(USER_ID));
+                mUser = userDao.queryForId(mUserId);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
