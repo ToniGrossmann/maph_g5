@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -51,11 +50,10 @@ public class LoginActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
 
         // Check if first time stared
-        if(preferences.hasBeenStarted().exists())
+        if(!preferences.hasBeenStarted().exists())
         {
             Intent intent = new Intent(this, AppIntroActivity.class);
             startActivity(intent);
-            preferences.edit().hasBeenStarted().put(true).apply();
         }
 
         LayoutInflaterCompat.setFactory(getLayoutInflater(), new  IconicsLayoutInflater(getDelegate()));

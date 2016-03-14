@@ -6,20 +6,22 @@ import android.os.Bundle;
 
 import com.github.paolorotolo.appintro.AppIntro;
 
-import de.htw_berlin.movation.MainActivity_;
+import de.htw_berlin.movation.LoginActivity_;
+import de.htw_berlin.movation.MyApplication;
+import de.htw_berlin.movation.Preferences_;
 import de.htw_berlin.movation.R;
 
-/**
- * Created by Seb on 11.03.2016.
- */
 public class AppIntroActivity extends AppIntro
 {
+    Preferences_ preferences;
+
     // Please DO NOT override onCreate. Use init.
     @Override
     public void init(Bundle savedInstanceState) {
 
         // Add your slide's fragments here.
         // AppIntro will automatically generate the dots indicator and buttons.
+        preferences = ((MyApplication) getApplication()).getPreferences();
         addSlide(Slide.newInstance(R.layout.intro_slide1));
         addSlide(Slide.newInstance(R.layout.intro_slide2));
 
@@ -35,7 +37,7 @@ public class AppIntroActivity extends AppIntro
 
         // Hide Skip/Done button.
         showSkipButton(false);
-        setProgressButtonEnabled(false);
+        setProgressButtonEnabled(true);
 
         // Turn vibration on and set intensity.
         // NOTE: you will probably need to ask VIBRATE permisssion in Manifest.
@@ -44,8 +46,7 @@ public class AppIntroActivity extends AppIntro
     }
 
     private void loadMainActivity(){
-        Intent intent = new Intent(this, MainActivity_.class);
-        startActivity(intent);
+
     }
 
     @Override
@@ -55,7 +56,10 @@ public class AppIntroActivity extends AppIntro
 
     @Override
     public void onDonePressed() {
-        // Do something when users tap on Done button.
+        finish();
+        preferences.hasBeenStarted().put(true);
+        Intent intent = new Intent(this, LoginActivity_.class);
+        startActivity(intent);
     }
 
     @Override
