@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,6 +25,8 @@ import com.mikepenz.iconics.context.IconicsLayoutInflater;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 
+import de.htw_berlin.movation.MovationIntro.AppIntroActivity;
+
 /**
  * A login screen that offers login via email/password.
  */
@@ -34,17 +37,27 @@ public class LoginActivity extends AppCompatActivity{
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
-    @Pref
-    Preferences_ prefs;
 
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    @Pref
+    Preferences_ preferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // Check if first time stared
+        if(preferences.hasBeenStarted().exists())
+        {
+            Intent intent = new Intent(this, AppIntroActivity.class);
+            startActivity(intent);
+            preferences.edit().hasBeenStarted().put(true).apply();
+        }
+
         LayoutInflaterCompat.setFactory(getLayoutInflater(), new  IconicsLayoutInflater(getDelegate()));
         super.onCreate(savedInstanceState);
         setTitle(R.string.action_sign_in_short);

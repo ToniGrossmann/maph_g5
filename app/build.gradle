@@ -46,6 +46,7 @@ dependencies {
     compile 'com.mikepenz:ionicons-typeface:2.0.1.1@aar'
     compile files('libs/microsoft-band-1.3.20105.2.jar')
 
+    compile 'com.github.paolorotolo:appintro:3.4.0'
     apt("org.androidannotations:androidannotations:$AAVersion")  { changing = true }
     compile( "org.androidannotations:androidannotations-api:$AAVersion")  { changing = true }
     apt( "org.androidannotations:ormlite:$AAVersion")  { changing = true }
