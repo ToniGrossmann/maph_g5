@@ -8,4 +8,5 @@ public interface Preferences {
     String username();
     String password();
     boolean autologin();
+    boolean hasBeenStarted();
 }

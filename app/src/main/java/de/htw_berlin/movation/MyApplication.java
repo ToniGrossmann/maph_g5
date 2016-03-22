@@ -5,12 +5,15 @@ import android.app.Application;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import org.androidannotations.annotations.EApplication;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 
 import de.htw_berlin.movation.persistence.DatabaseHelper;
 
 @EApplication
 public class MyApplication extends Application {
     private volatile DatabaseHelper databaseHelper = null;
+    @Pref
+    Preferences_ preferences;
 
     @Override
     public void onCreate() {
@@ -46,5 +49,9 @@ public class MyApplication extends Application {
             databaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
         }
         return databaseHelper;
+    }
+
+    public Preferences_ getPreferences() {
+        return preferences;
     }
 }
