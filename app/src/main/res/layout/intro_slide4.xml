@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Tutorial"
+        android:id="@+id/textTutorialTitel"
+        android:layout_gravity="center"
+        android:textSize="35dp" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="35dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="148dp"
+            android:id="@+id/imageViewTutorial1"
+            android:layout_weight="0.93" />
+
+        <TextView
+            android:layout_width="217dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Du kannst dir selbst deine Ziele setzen um um deine deine Fitness zu verbessern."
+            android:id="@+id/textTutorial1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="121dp"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="161dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Für jedes erfüllte Ziel werden dir Creditpunkte gut geschrieben."
+            android:id="@+id/textTutorial2"
+            android:layout_weight="0.16" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/imageViewTutorial2"
+            android:layout_weight="0.54" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1">
+
+        <ImageView
+            android:layout_width="158dp"
+            android:layout_height="127dp"
+            android:id="@+id/imageViewTutorial3" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/textTutorial3"
+            android:text="Mit den Creditpoints kannst du dir aus ausgewählten Shops Gutscheincodes für Sportswear erkaufe oder kleide deinen persönlichen Movatar ein" />
+    </LinearLayout>
+
+</LinearLayout>

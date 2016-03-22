@@ -2,14 +2,54 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">>
+    android:background="#FFFFFF"
+    android:weightSum="1">>
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Slide2"
-        android:id="@+id/textView6"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Anforderungen"
+        android:id="@+id/textViewRequirementsTitel"
+        android:textSize="35dp"
+        android:layout_gravity="center" />
+
+    <Space
+        android:layout_width="18dp"
+        android:layout_height="20px"
+        android:layout_weight="0.28" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="114dp"
+        android:baselineAligned="true"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0.04"
-        android:textSize="30dp" />
+        android:layout_weight="0.21">
+
+        <TextView
+            android:layout_width="141dp"
+            android:layout_height="156dp"
+            android:text="Damit du die App benutzen kannst benötigst du ein Micosoft Band 1 oder 2."
+            android:id="@+id/textRequierments"
+            android:layout_gravity="center_horizontal"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:layout_width="204dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageViewMSBand"
+            android:src="@drawable/Microsoft_Band"
+            android:layout_weight="0.05" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="345dp"
+        android:layout_height="wrap_content"
+        android:text="Bitte stell sicher das du ein solches Fitness Armband besitzt."
+        android:id="@+id/textRequierments2"
+        android:layout_gravity="center_horizontal"
+        android:textSize="20dp" />
+
 </LinearLayout>
