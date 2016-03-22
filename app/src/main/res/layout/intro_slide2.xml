@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Anforderungen"
-        android:id="@+id/textViewRequirementsTitel"
+        android:id="@+id/textViewRequirementsTitle"
         android:textSize="35dp"
         android:layout_gravity="center" />
 
@@ -31,8 +31,8 @@
         <TextView
             android:layout_width="141dp"
             android:layout_height="156dp"
-            android:text="Damit du die App benutzen kannst benötigst du ein Micosoft Band 1 oder 2."
-            android:id="@+id/textRequierments"
+            android:text="@string/band_required"
+            android:id="@+id/textRequirerments"
             android:layout_gravity="center_horizontal"
             android:textSize="20dp" />
 
@@ -40,15 +40,15 @@
             android:layout_width="204dp"
             android:layout_height="wrap_content"
             android:id="@+id/imageViewMSBand"
-            android:src="@drawable/Microsoft_Band"
+            android:src="@drawable/band"
             android:layout_weight="0.05" />
     </LinearLayout>
 
     <TextView
         android:layout_width="345dp"
         android:layout_height="wrap_content"
-        android:text="Bitte stell sicher das du ein solches Fitness Armband besitzt."
-        android:id="@+id/textRequierments2"
+        android:text="@string/make_sure_to_have_band"
+        android:id="@+id/textRequirements2"
         android:layout_gravity="center_horizontal"
         android:textSize="20dp" />
 
