@@ -7,38 +7,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.FragmentArg;
+
 /**
  * Created by Seb on 12.03.2016.
  */
+@EFragment
 public class Slide extends Fragment{
 
-    private static final String ARG_LAYOUT_RES_ID = "layoutResId";
-
-    public static Slide newInstance(int layoutResId) {
-        Slide sampleSlide = new Slide();
-
-        Bundle args = new Bundle();
-        args.putInt(ARG_LAYOUT_RES_ID, layoutResId);
-        sampleSlide.setArguments(args);
-
-        return sampleSlide;
-    }
-
-    private int layoutResId;
-
-    public Slide() {}
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if(getArguments() != null && getArguments().containsKey(ARG_LAYOUT_RES_ID))
-            layoutResId = getArguments().getInt(ARG_LAYOUT_RES_ID);
-    }
+    @FragmentArg
+    int resId;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(layoutResId, container, false);
+        return inflater.inflate(resId, container, false);
     }
 }

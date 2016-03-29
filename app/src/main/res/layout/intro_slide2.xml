@@ -3,21 +3,21 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    android:weightSum="1">>
+    android:weightSum="1">
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Anforderungen"
+        android:text="@string/requirements"
         android:id="@+id/textViewRequirementsTitle"
         android:textSize="35dp"
         android:layout_gravity="center" />
 
     <Space
         android:layout_width="18dp"
-        android:layout_height="20px"
+        android:layout_height="13dp"
         android:layout_weight="0.28" />
 
     <LinearLayout
@@ -34,10 +34,10 @@
             android:text="@string/band_required"
             android:id="@+id/textRequirerments"
             android:layout_gravity="center_horizontal"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <ImageView
-            android:layout_width="204dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/imageViewMSBand"
             android:src="@drawable/band"
@@ -50,6 +50,6 @@
         android:text="@string/make_sure_to_have_band"
         android:id="@+id/textRequirements2"
         android:layout_gravity="center_horizontal"
-        android:textSize="20dp" />
+        android:textSize="20sp" />
 
 </LinearLayout>

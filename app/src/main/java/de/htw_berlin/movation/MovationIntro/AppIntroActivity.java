@@ -11,8 +11,7 @@ import de.htw_berlin.movation.MyApplication;
 import de.htw_berlin.movation.Preferences_;
 import de.htw_berlin.movation.R;
 
-public class AppIntroActivity extends AppIntro
-{
+public class AppIntroActivity extends AppIntro {
     Preferences_ preferences;
 
     // Please DO NOT override onCreate. Use init.
@@ -22,9 +21,13 @@ public class AppIntroActivity extends AppIntro
         // Add your slide's fragments here.
         // AppIntro will automatically generate the dots indicator and buttons.
         preferences = ((MyApplication) getApplication()).getPreferences();
-        addSlide(Slide.newInstance(R.layout.intro_slide1));
-        addSlide(Slide.newInstance(R.layout.intro_slide2));
-
+        addSlide(Slide_.builder().resId(R.layout.intro_slide1).build());
+        addSlide(Slide_.builder().resId(R.layout.intro_slide2).build());
+        /*
+        addSlide(Slide_.builder().resId(R.layout.intro_slide3).build());
+        addSlide(Slide_.builder().resId(R.layout.intro_slide4).build());
+        addSlide(Slide_.builder().resId(R.layout.intro_slide5).build());
+        */
         // Instead of fragments, you can also use our default slide
         // Just set a title, description, background and image. AppIntro will do the rest.
         //addSlide(AppIntroFragment.newInstance(title, description, image, background_colour));
@@ -45,7 +48,7 @@ public class AppIntroActivity extends AppIntro
         //setVibrateIntensity(30);
     }
 
-    private void loadMainActivity(){
+    private void loadMainActivity() {
 
     }
 

@@ -55,4 +55,5 @@
     <string name="thanks_for_app_download">Danke, dass Du dir unsere App runtergeladen hast!</string>
     <string name="short_introduction">Im Folgenden möchten wir dir eine kurze Einführung geben.</string>
     <string name="make_sure_to_have_band">Bitte stell sicher, dass Du ein solches Fitnessarmband besitzt.</string>
+    <string name="requirements">Anforderungen</string>
 </resources>
