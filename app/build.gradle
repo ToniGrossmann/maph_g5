@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
-def AAVersion = '4.0-SNAPSHOT'
+def AAVersion = '4.0.0'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -48,10 +48,10 @@ dependencies {
 
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.3'
     compile 'com.github.paolorotolo:appintro:3.4.0'
-    apt("org.androidannotations:androidannotations:$AAVersion")  { changing = true }
-    compile( "org.androidannotations:androidannotations-api:$AAVersion")  { changing = true }
-    apt( "org.androidannotations:ormlite:$AAVersion")  { changing = true }
-    compile( "org.androidannotations:ormlite-api:$AAVersion")  { changing = true }
+    apt("org.androidannotations:androidannotations:$AAVersion")//  { changing = true }
+    compile( "org.androidannotations:androidannotations-api:$AAVersion")//  { changing = true }
+    apt( "org.androidannotations:ormlite:$AAVersion")//  { changing = true }
+    compile( "org.androidannotations:ormlite-api:$AAVersion")//  { changing = true }
 }
 apt {
     arguments {

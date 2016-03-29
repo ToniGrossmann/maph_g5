@@ -24,7 +24,7 @@ import com.mikepenz.iconics.context.IconicsLayoutInflater;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 
-import de.htw_berlin.movation.MovationIntro.AppIntroActivity;
+import de.htw_berlin.movation.intro.AppIntroActivity;
 
 /**
  * A login screen that offers login via email/password.

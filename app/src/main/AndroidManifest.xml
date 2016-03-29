@@ -25,9 +25,13 @@
             android:name="de.htw_berlin.movation.MainActivity_"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity
-            android:name="de.htw_berlin.movation.MovationIntro.AppIntroActivity"
+            android:name="de.htw_berlin.movation.intro.AppIntroActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
@@ -35,10 +39,8 @@
             android:name=".LoginActivity_"
             android:label="@string/app_name"
             android:noHistory="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
+        <service android:name=".BandService_"
+            android:exported="false"/>
     </application>
 </manifest>

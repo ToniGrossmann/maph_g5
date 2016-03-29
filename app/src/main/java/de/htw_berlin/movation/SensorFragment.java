@@ -99,7 +99,7 @@ public class SensorFragment extends Fragment {
             public void onBandHeartRateChanged(final BandHeartRateEvent event) {
                 if (event != null) {
                     appendToUI(String.format("Herzfrequenz = %d Schläge pro Minute\n"
-                            + "Messqualität = %s\n", event.getHeartRate(), event.getQuality()),
+                                    + "Messqualität = %s\n", event.getHeartRate(), event.getQuality()),
                             Constants.SensorTypes.HEART_RATE);
                 }
             }
@@ -132,7 +132,7 @@ public class SensorFragment extends Fragment {
                     switch (event.getContactState()) {
                         case UNKNOWN:
                             contactState = "unbekannt";
-                        break;
+                            break;
                         case WORN:
                             contactState = "wird getragen";
                             break;
@@ -173,7 +173,7 @@ public class SensorFragment extends Fragment {
                             break;
                     }
                     appendToUI(String.format("Bewegungstyp: %s\n\nTempo: %.2f min/km\n\n" +
-                            "Geschwindigkeit: %.2f km/h\n\nDistanz insgesamt: %.2f km\n",
+                                    "Geschwindigkeit: %.2f km/h\n\nDistanz insgesamt: %.2f km\n",
                             motionType, event.getPace() * 0.016666666666667,
                             event.getSpeed() * 0.036, event.getTotalDistance() * 0.00001),
                             Constants.SensorTypes.DISTANCE);
@@ -183,15 +183,17 @@ public class SensorFragment extends Fragment {
     }
 
     @Click
-    void btnHeartRateConsent(){
+    void btnHeartRateConsent() {
         new HeartRateConsentTask().execute(reference);
     }
+
     @Click
-    void btnRegisterSensors(){
+    void btnRegisterSensors() {
         new SensorSubscriptionTask().execute();
     }
+
     @Click
-    void btnUnregisterSensors(){
+    void btnUnregisterSensors() {
         if (client != null) {
             try {
                 client.getSensorManager().unregisterAllListeners();
@@ -230,12 +232,6 @@ public class SensorFragment extends Fragment {
     }
 
 
-
-
-
-
-
-
     //Fragt nach der Erlaubnis auf die Herzfrequenz zugreifen zu duerfen,
     // wenn eine Verbindung zum Band besteht.
     //Laeuft asynchron im Background Thread. Ergebnisausgabe im UI Thread.
@@ -248,30 +244,41 @@ public class SensorFragment extends Fragment {
                 if (getConnectedBandClient()) {
                     if (params[0].get() != null) {
                         appendToUI("Verbindung mit Band hergestellt.\n", Constants.SensorTypes.NONE);
-                        client.getSensorManager().requestHeartRateConsent(params[0].get(), new HeartRateConsentListener() {
-                            @Override
-                            public void userAccepted(boolean consentGiven) {
-                                if (consentGiven) {
-                                    appendToUI("Pulsmessung erlaubt.\n", Constants.SensorTypes.NONE);
-                                    getActivity().runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            btnHeartRateConsent.setEnabled(false);
-                                            btnRegisterSensors.setEnabled(true);
-                                        }
-                                    });
+                        if (client.getSensorManager().getCurrentHeartRateConsent() != UserConsent.GRANTED)
+                            client.getSensorManager().requestHeartRateConsent(params[0].get(), new HeartRateConsentListener() {
+                                @Override
+                                public void userAccepted(boolean consentGiven) {
+                                    if (consentGiven) {
+                                        appendToUI("Pulsmessung erlaubt.\n", Constants.SensorTypes.NONE);
+                                        getActivity().runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                btnHeartRateConsent.setEnabled(false);
+                                                btnRegisterSensors.setEnabled(true);
+                                            }
+                                        });
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        else{
+                            appendToUI("Pulsmessung erlaubt.\n", Constants.SensorTypes.NONE);
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    btnHeartRateConsent.setEnabled(false);
+                                    btnRegisterSensors.setEnabled(true);
+                                }
+                            });
+                        }
 
                     }
                 } else {
                     appendToUI("Band ist nicht verbunden. Vergewissere dich, dass Bluetooth" +
-                            " angeschaltet ist und sich das Band in Reichweite befindet.\n",
+                                    " angeschaltet ist und sich das Band in Reichweite befindet.\n",
                             Constants.SensorTypes.NONE);
                 }
             } catch (BandException e) {
-                String exceptionMessage="";
+                String exceptionMessage = "";
                 switch (e.getErrorType()) {
                     case UNSUPPORTED_SDK_VERSION_ERROR:
                         exceptionMessage = "Microsoft Health BandService unterstützt " +
@@ -323,17 +330,17 @@ public class SensorFragment extends Fragment {
 
                     } else {
                         appendToUI("Du hast der Anwendung noch keine Zustimmung " +
-                                "gegeben auf die Herzfrequenz zugreifen zu können."
-                                + " Bitte den Button \"Pulsmessung erlauben\" drücken.\n",
+                                        "gegeben auf die Herzfrequenz zugreifen zu können."
+                                        + " Bitte den Button \"Pulsmessung erlauben\" drücken.\n",
                                 Constants.SensorTypes.NONE);
                     }
                 } else {
                     appendToUI("Band ist nicht verbunden. Vergewissere dich, dass Bluetooth " +
-                            "angeschaltet ist und sich das Band in Reichweite befindet.\n",
+                                    "angeschaltet ist und sich das Band in Reichweite befindet.\n",
                             Constants.SensorTypes.NONE);
                 }
             } catch (BandException e) {
-                String exceptionMessage="";
+                String exceptionMessage = "";
                 switch (e.getErrorType()) {
                     case UNSUPPORTED_SDK_VERSION_ERROR:
                         exceptionMessage = "Microsoft Health BandService unterstützt" +

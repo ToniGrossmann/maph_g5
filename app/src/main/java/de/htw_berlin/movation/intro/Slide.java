@@ -1,4 +1,4 @@
-package de.htw_berlin.movation.MovationIntro;
+package de.htw_berlin.movation.intro;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
