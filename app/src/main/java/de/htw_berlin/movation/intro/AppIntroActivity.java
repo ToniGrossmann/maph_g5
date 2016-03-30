@@ -22,7 +22,11 @@ public class AppIntroActivity extends AppIntro {
         // AppIntro will automatically generate the dots indicator and buttons.
         preferences = ((MyApplication) getApplication()).getPreferences();
         addSlide(Slide_.builder().resId(R.layout.intro_slide1).build());
-        addSlide(Slide_.builder().resId(R.layout.intro_slide2).build());
+        addSlide(ConsentSlide_.builder().resId(R.layout.intro_slide2).build());
+        addSlide(Slide_.builder().resId(R.layout.intro_slide3).build());
+
+
+
         /*
         addSlide(Slide_.builder().resId(R.layout.intro_slide3).build());
         addSlide(Slide_.builder().resId(R.layout.intro_slide4).build());
@@ -46,10 +50,6 @@ public class AppIntroActivity extends AppIntro {
         // NOTE: you will probably need to ask VIBRATE permisssion in Manifest.
         //setVibrate(true);
         //setVibrateIntensity(30);
-    }
-
-    private void loadMainActivity() {
-
     }
 
     @Override

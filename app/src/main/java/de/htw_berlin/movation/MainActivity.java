@@ -1,5 +1,6 @@
 package de.htw_berlin.movation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,6 +18,7 @@ import org.androidannotations.ormlite.annotations.OrmLiteDao;
 
 import java.sql.SQLException;
 
+import de.htw_berlin.movation.intro.AppIntroActivity;
 import de.htw_berlin.movation.persistence.DatabaseHelper;
 import de.htw_berlin.movation.persistence.model.User;
 
@@ -51,6 +53,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Intent intent = new Intent(this, AppIntroActivity.class);
+        startActivity(intent);
     }
 
     @Override

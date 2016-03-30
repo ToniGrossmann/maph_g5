@@ -29,7 +29,6 @@ public class BandService extends Service {
         super.onCreate();
         Log.d(getClass().getSimpleName(), "onCreate()");
         BandInfo[] devices = BandClientManager.getInstance().getPairedBands();
-        //wenn kein Gerät gefunden wurde
         client = BandClientManager.getInstance().create(getApplication(), devices[0]);
         connectToBand();
     }
