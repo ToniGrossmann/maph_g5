@@ -1,8 +1,9 @@
 package de.htw_berlin.movation;
 
-import android.app.Service;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 
 import com.microsoft.band.BandClient;
 import com.microsoft.band.BandException;
@@ -16,6 +17,7 @@ public class TestFragment extends Fragment {
     @App
     MyApplication app;
     BandClient client;
+    Intent serviceIntent;
 
     @Background
     void connectToBand(){
@@ -43,7 +45,8 @@ public class TestFragment extends Fragment {
         super.onStart();
         //if (client.getSensorManager().getCurrentHeartRateConsent() == UserConsent.GRANTED) {
             //BandService_.intent(getActivity().getApplication()).start();
-        app.startService(BandService_.intent(app).flags(Service.START_STICKY).get());
+        serviceIntent = BandService_.intent(app).get();
+        app.startService(serviceIntent);
     /*
     } else
 
@@ -62,6 +65,13 @@ public class TestFragment extends Fragment {
 
         }
         */
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(getClass().getSimpleName(), "onStop()");
+        app.stopService(BandService_.intent(app).get());
     }
 
 }
