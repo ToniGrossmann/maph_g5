@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="de.htw_berlin.movation.MovatarFragment">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/imageLayer1HaareHintergrund"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/layer1_haare_justin_bieber_hintergrund_braun"
+                    android:layout_gravity="bottom|right"/>
+                <ImageView
+                    android:id="@+id/imageLayer2Koerper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/layer2_female_fit_mittel_koerper"
+                    android:layout_gravity="bottom|right"/>
+                <ImageView
+                    android:id="@+id/imageLayer3HaareHautschattierung"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/layer3_mittel_haare_justin_bieber_hautschattierungen"
+                    android:layout_gravity="bottom|right"/>
+                <ImageView
+                    android:id="@+id/imageLayer4Gesichtsausdruck"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/layer4_female_mittel_gesichtsausdruck_zufrieden_braun"
+                    android:layout_gravity="bottom|right"/>
+                <ImageView
+                    android:id="@+id/imageLayer5Hose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/layer5_female_fit_mittel_sporthose_kurz"
+                    android:layout_gravity="bottom|right"/>
+                <ImageView
+                    android:id="@+id/imageLayer6Shirt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/layer6_female_fit_mittel_tshirt_nike"
+                    android:layout_gravity="bottom|right"/>
+                <ImageView
+                    android:id="@+id/imageLayer7Haare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/layer7_haare_justin_bieber_braun"
+                    android:layout_gravity="bottom|right"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+</ScrollView>
