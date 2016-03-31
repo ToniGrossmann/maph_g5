@@ -4,12 +4,10 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.Display;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
@@ -63,9 +61,6 @@ public class MovatarFragment extends Fragment {
 
     @AfterViews
     void afterViews() {
-        Display display = wm.getDefaultDisplay();
-        Point p = new Point();
-        display.getSize(p);
         int[] bitmaps = {R.drawable.layer1_haare_justin_bieber_hintergrund_braun,
                 R.drawable.layer2_female_fit_mittel_koerper,
                 R.drawable.layer3_mittel_haare_justin_bieber_hautschattierungen,
@@ -77,11 +72,10 @@ public class MovatarFragment extends Fragment {
         Bitmap canvasBitmap = Bitmap.createBitmap(dimensions.getWidth(), dimensions.getHeight(), Bitmap.Config.ARGB_8888);
         dimensions.recycle();
         Canvas c = new Canvas(canvasBitmap);
-        final float scale = getResources().getDisplayMetrics().density;
-        int px = (int) (400 * scale + 0.5f);
         for (int bitmap : bitmaps) {
             Bitmap b = BitmapFactory.decodeResource(getResources(), bitmap);
             c.drawBitmap(b, 0, 0, null);
+            b.recycle();
         }
         imgMovatar.setImageDrawable(new BitmapDrawable(getResources(), canvasBitmap));
     }
