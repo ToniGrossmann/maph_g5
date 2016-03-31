@@ -10,6 +10,8 @@ public class Vitals extends BaseDaoEnabled {
     public int pulse;
     @DatabaseField(id = true)
     public Date timeStamp;
+    @DatabaseField(foreign = true)
+    public User user;
 
 
     @SuppressWarnings("unused")
