@@ -4,40 +4,22 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Paint;
+import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.widget.Button;
-import android.widget.TextView;
-
-import android.content.Context;
+import android.view.Display;
+import android.view.WindowManager;
+import android.widget.ImageView;
 
 import com.j256.ormlite.dao.Dao;
-import com.microsoft.band.BandClient;
-import com.microsoft.band.BandClientManager;
-import com.microsoft.band.BandException;
-import com.microsoft.band.BandIOException;
-import com.microsoft.band.BandInfo;
-import com.microsoft.band.ConnectionState;
-import com.microsoft.band.UserConsent;
-import com.microsoft.band.sensors.BandCaloriesEvent;
-import com.microsoft.band.sensors.BandCaloriesEventListener;
-import com.microsoft.band.sensors.BandContactEvent;
-import com.microsoft.band.sensors.BandContactEventListener;
-import com.microsoft.band.sensors.BandDistanceEvent;
-import com.microsoft.band.sensors.BandDistanceEventListener;
-import com.microsoft.band.sensors.BandHeartRateEvent;
-import com.microsoft.band.sensors.BandHeartRateEventListener;
-import com.microsoft.band.sensors.BandPedometerEvent;
-import com.microsoft.band.sensors.BandPedometerEventListener;
-import com.microsoft.band.sensors.HeartRateConsentListener;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
-import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
+import org.androidannotations.annotations.SystemService;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.ormlite.annotations.OrmLiteDao;
 
@@ -58,6 +40,10 @@ public class MovatarFragment extends Fragment {
     Dao<User, Long> userDao;
     @App
     MyApplication app;
+    @SystemService
+    WindowManager wm;
+    @ViewById
+    ImageView imgMovatar;
 
     WeakReference<Activity> reference;
 
@@ -73,6 +59,26 @@ public class MovatarFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+    }
+
+    @AfterViews
+    void afterViews() {
+        Display display = wm.getDefaultDisplay();
+        Point p = new Point();
+        display.getSize(p);
+        int[] bitmaps = {R.drawable.layer1_haare_justin_bieber_hintergrund_braun,
+                R.drawable.layer2_female_fit_mittel_koerper,
+                R.drawable.layer3_mittel_haare_justin_bieber_hautschattierungen,
+                R.drawable.layer4_female_mittel_gesichtsausdruck_zufrieden_braun,
+                R.drawable.layer5_female_fit_mittel_sporthose_kurz,
+                R.drawable.layer6_female_fit_mittel_tshirt_nike,
+                R.drawable.layer7_haare_justin_bieber_braun};
+        Bitmap canvasBitmap = Bitmap.createBitmap(p.x, p.y, Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(canvasBitmap);
+        for (int bitmap : bitmaps) {
+            c.drawBitmap(BitmapFactory.decodeResource(getResources(), bitmap), 0, 0, null);
+        }
+        imgMovatar.setImageDrawable(new BitmapDrawable(getResources(), canvasBitmap));
     }
 
     /**
