@@ -56,4 +56,8 @@
     <string name="short_introduction">Im Folgenden möchten wir dir eine kurze Einführung geben.</string>
     <string name="make_sure_to_have_band">Bitte stell sicher, dass Du ein solches Fitnessarmband besitzt.</string>
     <string name="requirements">Anforderungen</string>
+    <string name="title_activity_statistic">statisticActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
