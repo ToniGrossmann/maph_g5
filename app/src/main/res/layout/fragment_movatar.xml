@@ -8,60 +8,11 @@
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-<!--
-        <ImageView
-            android:id="@+id/imageLayer1HaareHintergrund"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:src="@drawable/layer1_haare_justin_bieber_hintergrund_braun"/>
 
         <ImageView
-            android:id="@+id/imageLayer2Koerper"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:src="@drawable/layer2_female_fit_mittel_koerper"/>
-
-        <ImageView
-            android:id="@+id/imageLayer3HaareHautschattierung"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:src="@drawable/layer3_mittel_haare_justin_bieber_hautschattierungen"/>
-
-        <ImageView
-            android:id="@+id/imageLayer4Gesichtsausdruck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:src="@drawable/layer4_female_mittel_gesichtsausdruck_zufrieden_braun"/>
-
-        <ImageView
-            android:id="@+id/imageLayer5Hose"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:src="@drawable/layer5_female_fit_mittel_sporthose_kurz"/>
-
-        <ImageView
-            android:id="@+id/imageLayer6Shirt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:src="@drawable/layer6_female_fit_mittel_tshirt_nike"/>
-
-        <ImageView
-            android:id="@+id/imageLayer7Haare"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:src="@drawable/layer7_haare_justin_bieber_braun"/>
--->
-        <ImageView
+            android:id="@+id/imgMovatar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/imgMovatar"/>
+            android:layout_height="match_parent"/>
     </FrameLayout>
 
 

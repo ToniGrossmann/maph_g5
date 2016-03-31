@@ -73,10 +73,15 @@ public class MovatarFragment extends Fragment {
                 R.drawable.layer5_female_fit_mittel_sporthose_kurz,
                 R.drawable.layer6_female_fit_mittel_tshirt_nike,
                 R.drawable.layer7_haare_justin_bieber_braun};
-        Bitmap canvasBitmap = Bitmap.createBitmap(p.x, p.y, Bitmap.Config.ARGB_8888);
+        Bitmap dimensions = BitmapFactory.decodeResource(getResources(), R.drawable.layer1_haare_justin_bieber_hintergrund_braun);
+        Bitmap canvasBitmap = Bitmap.createBitmap(dimensions.getWidth(), dimensions.getHeight(), Bitmap.Config.ARGB_8888);
+        dimensions.recycle();
         Canvas c = new Canvas(canvasBitmap);
+        final float scale = getResources().getDisplayMetrics().density;
+        int px = (int) (400 * scale + 0.5f);
         for (int bitmap : bitmaps) {
-            c.drawBitmap(BitmapFactory.decodeResource(getResources(), bitmap), 0, 0, null);
+            Bitmap b = BitmapFactory.decodeResource(getResources(), bitmap);
+            c.drawBitmap(b, 0, 0, null);
         }
         imgMovatar.setImageDrawable(new BitmapDrawable(getResources(), canvasBitmap));
     }
