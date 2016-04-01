@@ -10,17 +10,23 @@ import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import de.htw_berlin.movation.persistence.model.*;
+import de.htw_berlin.movation.persistence.model.Discount;
+import de.htw_berlin.movation.persistence.model.DiscountType;
+import de.htw_berlin.movation.persistence.model.Goal;
+import de.htw_berlin.movation.persistence.model.GoalCategory;
+import de.htw_berlin.movation.persistence.model.Movatar;
+import de.htw_berlin.movation.persistence.model.MovatarClothes;
+import de.htw_berlin.movation.persistence.model.Mrg_User_Goal;
+import de.htw_berlin.movation.persistence.model.Mrg_User_MovatarClothes;
+import de.htw_berlin.movation.persistence.model.User;
+import de.htw_berlin.movation.persistence.model.Vitals;
 
 /**
  * Database helper class used to manage the creation and upgrading of your database. This class also usually provides
@@ -32,7 +38,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     // name of the database file for your application -- change to something appropriate for your app
     private static final String DATABASE_NAME = "helloAndroid.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     List<Class> entities = new ArrayList<Class>(){{
         add(Discount.class);
@@ -44,6 +50,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         add(Mrg_User_Goal.class);
         add(Mrg_User_MovatarClothes.class);
         add(User.class);
+        add(Vitals.class);
     }};
 
     public DatabaseHelper(Context context) {
@@ -60,8 +67,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             Log.i(DatabaseHelper.class.getName(), "onCreate");
             for(Class c : entities)
                 TableUtils.createTable(connectionSource, c);
-            //TableUtils.createTable(connectionSource, SimpleData.class);
-            //TableUtils.createTable(connectionSource, User.class);
 
         } catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Can't create database", e);

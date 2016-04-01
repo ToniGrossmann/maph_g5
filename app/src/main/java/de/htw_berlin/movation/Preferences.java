@@ -9,4 +9,5 @@ public interface Preferences {
     String password();
     boolean autologin();
     boolean hasBeenStarted();
+    boolean hasActiveGoal();
 }
