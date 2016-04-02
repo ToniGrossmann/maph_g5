@@ -15,6 +15,9 @@
             android:id="@+id/nav_movatar"
             android:title="@string/movatar"/>
         <item
+            android:id="@+id/nav_shop"
+            android:title="@string/shop"/>
+        <item
             android:id="@+id/nav_sensors"
             android:title="@string/microsoft_band"/>
     </group>
