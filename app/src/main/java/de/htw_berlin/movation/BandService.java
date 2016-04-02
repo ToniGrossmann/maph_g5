@@ -161,6 +161,10 @@ public class BandService extends Service {
         } catch (BandException e) {
             e.printStackTrace();
         }
+        for(LocationListener l : mLocationListeners)
+            locationManager.removeUpdates(l);
+
+        stopSelf();
     }
 
     @Background
