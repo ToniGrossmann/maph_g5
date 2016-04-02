@@ -14,8 +14,11 @@ public class Vitals extends BaseDaoEnabled {
     public User user;
 
 
-    @SuppressWarnings("unused")
-    public Vitals() {
+    public Vitals(){}
+    public Vitals(int pulse, Date timeStamp)
+    {
+        this.pulse = pulse;
+        this.timeStamp = timeStamp;
     }
 
 }

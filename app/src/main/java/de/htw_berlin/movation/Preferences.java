@@ -10,4 +10,9 @@ public interface Preferences {
     boolean autologin();
     boolean hasBeenStarted();
     boolean hasActiveGoal();
+
+    int creditsEarnedLifeTime();
+    int maxPulse();
+    int minPulse();
+    int successfullGoals();
 }
