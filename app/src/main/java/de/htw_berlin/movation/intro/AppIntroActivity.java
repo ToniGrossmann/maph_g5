@@ -24,6 +24,9 @@ public class AppIntroActivity extends AppIntro {
         addSlide(Slide_.builder().resId(R.layout.intro_slide1).build());
         addSlide(ConsentSlide_.builder().resId(R.layout.intro_slide2).build());
         addSlide(Slide_.builder().resId(R.layout.intro_slide3).build());
+        addSlide(Slide_.builder().resId(R.layout.intro_slide4).build());
+        addSlide(Slide_.builder().resId(R.layout.intro_slide5).build());
+        addSlide(Slide_.builder().resId(R.layout.intro_slide6).build());
 
 
 
