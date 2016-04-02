@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:weightSum="1">
-
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/requirements"
+        android:text="@string/intro_requirements_title"
         android:id="@+id/textViewRequirementsTitle"
         android:textSize="35dp"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:textAlignment="center" />
 
     <Space
         android:layout_width="18dp"
-        android:layout_height="13dp"
+        android:layout_height="20px"
         android:layout_weight="0.28" />
 
     <LinearLayout
@@ -31,32 +32,42 @@
         <TextView
             android:layout_width="141dp"
             android:layout_height="156dp"
-            android:text="@string/band_required"
+            android:text="@string/intro_band_required"
             android:id="@+id/textRequirerments"
             android:layout_gravity="center_horizontal"
-            android:textSize="20sp" />
+            android:textSize="20dp" />
 
         <ImageView
-            android:layout_width="0dp"
+            android:layout_width="204dp"
             android:layout_height="wrap_content"
             android:id="@+id/imageViewMSBand"
             android:src="@drawable/band"
             android:layout_weight="0.05" />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="345dp"
-        android:layout_height="wrap_content"
-        android:text="@string/make_sure_to_have_band"
-        android:id="@+id/textRequirements2"
-        android:layout_gravity="center_horizontal"
-        android:textSize="20sp" />
-
-    <Button
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/give_heart_rate_consent"
-        android:id="@+id/btnHeartRateConsent"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_height="114dp"
+        android:baselineAligned="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.21" >
+
+        <ImageView
+            android:layout_width="121dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/imageView4"
+            android:src="@drawable/band"
+            android:layout_weight="0.05" />
+
+        <TextView
+            android:layout_width="204dp"
+            android:layout_height="156dp"
+            android:text="@string/intro_make_sure_to_have_ms_health"
+            android:id="@+id/textView5"
+            android:layout_gravity="center_horizontal"
+            android:textSize="20dp" />
+
+    </LinearLayout>
 
 </LinearLayout>

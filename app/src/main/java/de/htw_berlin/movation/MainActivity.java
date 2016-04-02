@@ -105,15 +105,14 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_goals:
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_main_framelayout, TestFragment_.builder().build()).commit();
                 break;
+            case R.id.nav_stats:
+                StatisticFragment statf = StatisticFragment_.builder().mUserId(1).build();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_main_framelayout, statf).commit();
+                break;
+
             case R.id.nav_movatar:
-//                MovatarFragment mf = MovatarFragment_.builder().mUserId(1).build();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_main_framelayout, MovatarFragment_.builder().build()).commit();
-                break;
-            case R.id.nav_stats:
-//                MovatarFragment mf = MovatarFragment_.builder().mUserId(1).build();
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_main_framelayout, StatisticFragment_.builder().build()).commit();
                 break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
