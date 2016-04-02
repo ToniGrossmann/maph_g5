@@ -62,11 +62,11 @@ public class MovatarFragment extends Fragment {
     @AfterViews
     void afterViews() {
         int[] bitmaps = {R.drawable.layer1_haare_justin_bieber_hintergrund_braun,
-                R.drawable.layer2_female_fit_mittel_koerper,
-                R.drawable.layer3_mittel_haare_justin_bieber_hautschattierungen,
-                R.drawable.layer4_female_mittel_gesichtsausdruck_zufrieden_braun,
-                R.drawable.layer5_female_fit_mittel_sporthose_kurz,
-                R.drawable.layer6_female_fit_mittel_tshirt_nike,
+                R.drawable.layer2_female_fit_koerper,
+                R.drawable.layer3_haare_hautschattierungen_justin_bieber,
+                R.drawable.layer4_female_blond_gesichtsausdruck_gluecklich,
+                R.drawable.layer5_female_fit_sporthose_kurz,
+                R.drawable.layer6_female_fit_langarmshirt_nike,
                 R.drawable.layer7_haare_justin_bieber_braun};
         Bitmap dimensions = BitmapFactory.decodeResource(getResources(), R.drawable.layer1_haare_justin_bieber_hintergrund_braun);
         Bitmap canvasBitmap = Bitmap.createBitmap(dimensions.getWidth(), dimensions.getHeight(), Bitmap.Config.ARGB_8888);

@@ -20,9 +20,4 @@ public class Vitals extends BaseDaoEnabled {
         this.pulse = pulse;
         this.timeStamp = timeStamp;
     }
-
-    public Vitals(int pulse, Date timeStamp) {
-        this.pulse = pulse;
-        this.timeStamp = timeStamp;
-    }
 }
