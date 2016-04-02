@@ -1,17 +1,11 @@
 package de.htw_berlin.movation;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
-
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -30,14 +24,11 @@ import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.androidannotations.ormlite.annotations.OrmLiteDao;
 
-import java.util.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 import de.htw_berlin.movation.persistence.DatabaseHelper;
-import de.htw_berlin.movation.persistence.model.User;
 import de.htw_berlin.movation.persistence.model.Vitals;
 
 
@@ -147,8 +138,8 @@ public class StatisticFragment extends Fragment {
         else
             totalCreditsEarned.setText("0");
 
-        if(preferences.successfullGoals().exists())
-            totalGoalsSuccessfull.setText(Integer.toString(preferences.successfullGoals().get()));
+        if(preferences.successfulGoals().exists())
+            totalGoalsSuccessfull.setText(Integer.toString(preferences.successfulGoals().get()));
         else
             totalGoalsSuccessfull.setText("0");
 

@@ -16,7 +16,7 @@ public interface Preferences {
     int creditsEarnedLifeTime();
     int maxPulse();
     int minPulse();
-    int successfullGoals();
+    int successfulGoals();
 
     @DefaultInt(0)
     int indexGender();
