@@ -213,10 +213,51 @@
         <item>@drawable/layer7_haare_kurz_seitenscheitel_schwarz</item>
     </array>
 
-    <array name="tn_eyecolors">
+    <array name="tn_genders">
+        <item>@drawable/tn_gender_female</item>
+        <item>@drawable/tn_gender_male</item>
+    </array>
+
+   <array name="tn_eyecolors">
         <item>@drawable/tn_eyecolor_blau</item>
         <item>@drawable/tn_eyecolor_braun</item>
         <item>@drawable/tn_eyecolor_gruen</item>
+    </array>
+
+    <array name="tn_haircolors">
+        <item>@drawable/tn_haarfarbe_blond</item>
+        <item>@drawable/tn_haarfarbe_braun</item>
+        <item>@drawable/tn_haarfarbe_schwarz</item>
+    </array>
+
+    <array name="tn_hairstyles">
+        <item>@drawable/tn_haare_afro</item>
+        <item>@drawable/tn_haare_justin_bieber</item>
+        <item>@drawable/tn_haare_kinnlang</item>
+        <item>@drawable/tn_haare_kurz_maennlich</item>
+        <item>@drawable/tn_haare_kurz_seitenscheitel</item>
+    </array>
+
+    <array name="tn_tops">
+        <item>@drawable/tn_male_fit_langarmshirt_nike</item>
+        <item>@drawable/tn_male_fit_langarmshirt_nike_2</item>
+        <item>@drawable/tn_male_fit_tshirt_nike</item>
+        <item>@drawable/tn_male_fit_tshirt_nike_2</item>
+    </array>
+
+    <array name="tn_bottoms">
+        <item>@drawable/tn_male_fit_sporthose_kurz</item>
+        <item>@drawable/tn_male_fit_sporthose_kurz_2</item>
+        <item>@drawable/tn_male_fit_sporthose_lang</item>
+        <item>@drawable/tn_male_fit_sporthose_lang_2</item>
+    </array>
+
+    <array name="tn_expressions">
+        <item>@drawable/tn_male_braun_gesichtsausdruck_gluecklich</item>
+        <item>@drawable/tn_male_braun_gesichtsausdruck_neutral_blau</item>
+        <item>@drawable/tn_male_braun_gesichtsausdruck_sauer_blau</item>
+        <item>@drawable/tn_male_braun_gesichtsausdruck_traurig_blau</item>
+        <item>@drawable/tn_male_braun_gesichtsausdruck_zufrieden_blau</item>
     </array>
 
 </resources>
