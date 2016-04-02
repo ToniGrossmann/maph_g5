@@ -19,6 +19,15 @@
             android:layout_weight="1"
             android:textAlignment="center" />
 
+        <Button
+            android:id="@+id/btnShareMovatar"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:clickable="true"
+            android:text="share"
+            android:layout_marginLeft="20dp" />
+
+
         <ImageView
             android:id="@+id/imgMovatar"
             android:layout_width="match_parent"

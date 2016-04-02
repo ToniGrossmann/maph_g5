@@ -1,14 +1,24 @@
 package de.htw_berlin.movation;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
 import com.j256.ormlite.dao.Dao;
@@ -23,6 +33,10 @@ import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.androidannotations.ormlite.annotations.OrmLiteDao;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.SQLException;
 
 import de.htw_berlin.movation.persistence.DatabaseHelper;
@@ -75,6 +89,7 @@ public class MovatarFragment extends Fragment {
     private TypedArray tn_expressions;
 
     Drawable[] layers = new Drawable[7];
+    LayerDrawable layerDrawable;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -180,7 +195,7 @@ public class MovatarFragment extends Fragment {
             layers[6] = layer7.getDrawable(preferences.indexHairstyle().get() * 3 + preferences.indexHairColor().get());
         }
 
-        LayerDrawable layerDrawable = new LayerDrawable(layers);
+        layerDrawable = new LayerDrawable(layers);
         imgMovatar.setImageDrawable(layerDrawable);
     }
 
@@ -321,6 +336,40 @@ public class MovatarFragment extends Fragment {
         }
         redrawLayers();
     }
+
+
+
+
+    @Click
+    void btnShareMovatar() {
+
+        int width = layerDrawable.getIntrinsicWidth();
+        int height = layerDrawable.getIntrinsicHeight();
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        layerDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        layerDrawable.draw(canvas);
+
+        Intent share = new Intent(Intent.ACTION_SEND);
+        share.setType("image/jpeg");
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        File f = new File(Environment.getExternalStorageDirectory() + File.separator + "temporary_file.jpg");
+        try {
+            f.createNewFile();
+            FileOutputStream fo = new FileOutputStream(f);
+            fo.write(bytes.toByteArray());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        share.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///sdcard/temporary_file.jpg"));
+        startActivity(Intent.createChooser(share, "Share Image"));
+    }
+
+
+
+
+
 
     /**
      * This interface must be implemented by activities that contain this
