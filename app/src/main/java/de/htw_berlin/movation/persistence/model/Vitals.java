@@ -12,10 +12,20 @@ public class Vitals extends BaseDaoEnabled {
     public Date timeStamp;
     @DatabaseField(foreign = true)
     public User user;
+    @DatabaseField
+    public long lat;
+    @DatabaseField
+    public long lon;
+    @DatabaseField(foreign = true)
+    public Assignment assignment;
 
 
-    @SuppressWarnings("unused")
-    public Vitals() {
+
+    public Vitals(){}
+    public Vitals(int pulse, Date timeStamp)
+    {
+        this.pulse = pulse;
+        this.timeStamp = timeStamp;
     }
 
 }

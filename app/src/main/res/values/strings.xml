@@ -58,4 +58,39 @@
     <string name="give_heart_rate_consent">Einverständnis geben</string>
     <string name="heart_rate_consent_given">Einverständnis erteilt</string>
     <string name="requirements">Anforderungen</string>
+    <string name="title_activity_statistic">statisticActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Strings for App Intro Slider 1 -->
+    <string name="intro_welcome_title">Willkommen\n bei Movation</string>
+    <string name="intro_thanks_for_app_download">
+        Danke, dass du dich für unsere Fitness-App entschieden hast!
+    </string>
+    <string name="intro_short_introduction">
+        Im Folgenden möchten wir dir eine kurze Einführung geben.
+    </string>
+
+    <!-- Strings for App Intro Slider 2 -->
+    <string name="intro_requirements_title">Anforderungen</string>
+    <string name="intro_band_required">
+        Damit du die App benutzen kannst, benötigst du ein Micosoft Band 1 oder 2.
+    </string>
+    <string name="intro_make_sure_to_have_band">
+        Bitte stelle sicher, dass du ein solches Fitnessarmband besitzt.
+    </string>
+    <string name="intro_make_sure_to_have_ms_health">
+        Desweiteren ist die Installation der App \"Microsoft Health\" erforderlich.
+    </string>
+
+    <!-- Strings for App Intro Slide 5-->
+    <string name="warning_title">Warnhinweise</string>
+    <string name="warning_1">Unser Ziel ist es das du mit dem Benutzen unserer App Fit wirst und dabei Spass hast.
+        Damit du das Erreichst möchten wir dir noch ein paar Hinweise mit auf dem Weg geben.
+    </string>
+    <string name="warning_2">- Benutze die App nur wenn du dich Gesund fühlst. Verzichte auf Sport wenn du krank bist.</string>
+    <string name="warning_3">- Benutze das Band nur während des Joggens. Bei anderen sportlichen Aktivitäten kannst du hängen bleiben und dich selbst verletzen.</string>
+    <string name="warning_4">- Überanspruche dich nicht und mach auch Mal eine Pause ;)</string>
+
 </resources>
