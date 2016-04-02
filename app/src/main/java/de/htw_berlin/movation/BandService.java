@@ -62,7 +62,6 @@ public class BandService extends Service {
 
     private class LocationListener implements android.location.LocationListener {
         Location mLastLocation;
-        float runMeters = 0;
 
         public LocationListener(String provider) {
             Log.d(TAG, "LocationListener " + provider);
