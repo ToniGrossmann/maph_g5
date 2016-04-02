@@ -3,16 +3,57 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Space
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="238dp" />
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/warning_title"
+        android:id="@+id/textViewWarningsTitle"
+        android:textSize="35dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:textAlignment="center" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Wir wünschen dir viel Spass mit der App!"
-        android:id="@+id/textViewStart"
-        android:layout_gravity="center"
-        android:textAlignment="center" />
+        android:text="@string/warning_1"
+        android:textSize="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/textWarning1"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="@string/warning_2"
+        android:textSize="17dp"
+        android:id="@+id/textWarning2" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/warning_3"
+        android:textSize="17dp"
+        android:id="@+id/textWarning3" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/warning_4"
+        android:textSize="17dp"
+        android:id="@+id/textWarning4" />
 </LinearLayout>

@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.htw_berlin.movation.persistence.model.Assignment;
 import de.htw_berlin.movation.persistence.model.Discount;
 import de.htw_berlin.movation.persistence.model.DiscountType;
 import de.htw_berlin.movation.persistence.model.Goal;
@@ -38,7 +39,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     // name of the database file for your application -- change to something appropriate for your app
     private static final String DATABASE_NAME = "helloAndroid.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
 
     List<Class> entities = new ArrayList<Class>(){{
         add(Discount.class);
@@ -51,6 +52,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         add(Mrg_User_MovatarClothes.class);
         add(User.class);
         add(Vitals.class);
+        add(Assignment.class);
     }};
 
     public DatabaseHelper(Context context) {
