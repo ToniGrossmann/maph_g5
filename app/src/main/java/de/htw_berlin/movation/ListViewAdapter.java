@@ -58,7 +58,7 @@ public class ListViewAdapter extends BaseAdapter {
         if(convertView == null){
             convertView = mInflater.inflate(R.layout.item_adapter, null);
             holder = new ViewHolder();
-            holder.txtname = (TextView) convertView.findViewById(R.id.textView1);
+            //holder.txtname = (TextView) convertView.findViewById(R.id.textView1);
 
             convertView.setTag(holder);
         } else {

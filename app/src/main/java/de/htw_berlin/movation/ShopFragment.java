@@ -63,9 +63,8 @@ public class ShopFragment extends Fragment {
 
     }
 
-
     @ItemClick
-    void personListItemClicked(PurchuseItem item) {
+    void listItemClicked(PurchuseItem item) {
         //makeText(this, person.firstName + " " + person.lastName, LENGTH_SHORT).show();
     }
 }
