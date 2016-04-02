@@ -85,7 +85,7 @@
         <item>@drawable/layer4_female_schwarz_gesichtsausdruck_zufrieden_blau</item>
         <item>@drawable/layer4_female_schwarz_gesichtsausdruck_zufrieden_braun</item>
         <item>@drawable/layer4_female_schwarz_gesichtsausdruck_zufrieden_gruen</item>
-        </array>
+    </array>
 
     <array name="layer4_male">
         <item>@drawable/layer4_male_blond_gesichtsausdruck_gluecklich</item>
