@@ -5,6 +5,8 @@ import org.androidannotations.annotations.sharedpreferences.DefaultInt;
 
 @SharedPref(SharedPref.Scope.APPLICATION_DEFAULT)
 public interface Preferences {
+
+
     String username();
     String password();
     boolean autologin();
@@ -17,10 +19,10 @@ public interface Preferences {
     int successfullGoals();
 
     @DefaultInt(0)
-    int indexGender(); // 0-1 (0 = female, 1 = male)
+    int indexGender();
 
     @DefaultInt(0)
-    int indexFitness(); // 0-2 (unfit, normal, fit)
+    int indexFitness();
 
     @DefaultInt(0)
     int indexHairstyle();

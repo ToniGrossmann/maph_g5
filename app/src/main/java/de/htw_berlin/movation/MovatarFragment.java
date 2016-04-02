@@ -1,29 +1,15 @@
 package de.htw_berlin.movation;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.text.Layout;
-import android.view.Display;
-import android.graphics.drawable.BitmapDrawable;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.widget.TextView;
-
-import android.preference.PreferenceManager;
-import android.preference.Preference;
-
-import android.content.res.TypedArray;
 
 import com.j256.ormlite.dao.Dao;
 
@@ -37,11 +23,10 @@ import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.androidannotations.ormlite.annotations.OrmLiteDao;
 
-import java.lang.ref.WeakReference;
 import java.sql.SQLException;
 
 import de.htw_berlin.movation.persistence.DatabaseHelper;
-import de.htw_berlin.movation.persistence.model.User;
+import de.htw_berlin.movation.persistence.model.*;
 
 @EFragment(R.layout.fragment_movatarchange)
 public class MovatarFragment extends Fragment {
@@ -91,12 +76,9 @@ public class MovatarFragment extends Fragment {
 
     Drawable[] layers = new Drawable[7];
 
-    WeakReference<Activity> reference;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        reference = new WeakReference<Activity>(getActivity());
         dbHelper = app.getHelper();
         if (mUserId != -1) {
             try {
@@ -135,12 +117,12 @@ public class MovatarFragment extends Fragment {
 
         redrawLayers();
 
-        if (preferences.indexFitness().get() == 0)
-            txtFitness.setText("Fitnesslevel: Fit");
-        else if (preferences.indexFitness().get() == 1)
-            txtFitness.setText("Fitnesslevel: Normal");
+        if (preferences.indexFitness().get() == Constants.Fitness.FIT.ordinal())
+            txtFitness.setText(getString(R.string.fitness_level_x, getText(R.string.fit)));
+        else if (preferences.indexFitness().get() == Constants.Fitness.AVERAGE.ordinal())
+            txtFitness.setText(getString(R.string.fitness_level_x, getText(R.string.normal)));
         else
-            txtFitness.setText("Fitnesslevel: Unfit");
+            txtFitness.setText(getString(R.string.fitness_level_x, getText(R.string.unfit)));
 
         txtCategory.setText(categories[currentCategoryIndex]);
     }
