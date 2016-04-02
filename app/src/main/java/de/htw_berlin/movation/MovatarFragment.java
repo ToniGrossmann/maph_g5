@@ -82,6 +82,12 @@ public class MovatarFragment extends Fragment {
     private TypedArray layer7;
 
     private TypedArray tn_eyecolors;
+    private TypedArray tn_haircolors;
+    private TypedArray tn_hairstyles;
+    private TypedArray tn_genders;
+    private TypedArray tn_tops;
+    private TypedArray tn_bottoms;
+    private TypedArray tn_expressions;
 
     Drawable[] layers = new Drawable[7];
 
@@ -120,6 +126,12 @@ public class MovatarFragment extends Fragment {
         layer7 = r.obtainTypedArray(R.array.layer7);
 
         tn_eyecolors = r.obtainTypedArray(R.array.tn_eyecolors);
+        tn_haircolors = r.obtainTypedArray(R.array.tn_haircolors);
+        tn_hairstyles = r.obtainTypedArray(R.array.tn_hairstyles);
+        tn_genders = r.obtainTypedArray(R.array.tn_genders);
+        tn_tops = r.obtainTypedArray(R.array.tn_tops);
+        tn_bottoms = r.obtainTypedArray(R.array.tn_bottoms);
+        tn_expressions = r.obtainTypedArray(R.array.tn_expressions);
 
         redrawLayers();
 
@@ -135,6 +147,36 @@ public class MovatarFragment extends Fragment {
 
     private void redrawLayers()
     {
+        if (currentCategoryIndex == 0)
+        {
+            imgThumbnail.setImageDrawable(tn_hairstyles.getDrawable(preferences.indexHairstyle().get()));
+        }
+        else if (currentCategoryIndex == 1)
+        {
+            imgThumbnail.setImageDrawable(tn_haircolors.getDrawable(preferences.indexHairColor().get()));
+        }
+        else if (currentCategoryIndex == 2)
+        {
+            imgThumbnail.setImageDrawable(tn_expressions.getDrawable(preferences.indexExpression().get()));
+        }
+        else if (currentCategoryIndex == 3)
+        {
+            imgThumbnail.setImageDrawable(tn_eyecolors.getDrawable(preferences.indexEyeColor().get()));
+        }
+        else if (currentCategoryIndex == 4)
+        {
+            imgThumbnail.setImageDrawable(tn_tops.getDrawable(preferences.indexTop().get()));
+        }
+        else if (currentCategoryIndex == 5)
+        {
+            imgThumbnail.setImageDrawable(tn_bottoms.getDrawable(preferences.indexBottom().get()));
+        }
+        else
+        {
+            imgThumbnail.setImageDrawable(tn_genders.getDrawable(preferences.indexGender().get()));
+        }
+
+
         if (preferences.indexGender().get() == 0) // female
         {
             layers[0] = layer1.getDrawable(preferences.indexHairstyle().get() * 3 + preferences.indexHairColor().get());
@@ -158,8 +200,6 @@ public class MovatarFragment extends Fragment {
 
         LayerDrawable layerDrawable = new LayerDrawable(layers);
         imgMovatar.setImageDrawable(layerDrawable);
-
-        imgThumbnail.setImageDrawable(tn_eyecolors.getDrawable((0)));
     }
 
     @Click
@@ -172,6 +212,7 @@ public class MovatarFragment extends Fragment {
         {
             currentCategoryIndex = 6;
         }
+        redrawLayers();
         txtCategory.setText(categories[currentCategoryIndex]);
     }
 
@@ -185,7 +226,7 @@ public class MovatarFragment extends Fragment {
         {
             currentCategoryIndex = 0;
         }
-
+        redrawLayers();
         txtCategory.setText(categories[currentCategoryIndex]);
     }
 
@@ -234,13 +275,14 @@ public class MovatarFragment extends Fragment {
             else
                 preferences.indexBottom().put(3);
         }
-        else if (currentCategoryIndex == 6) // Gender
+        else // Gender
         {
             if (preferences.indexGender().get() - 1 >= 0)
                 preferences.indexGender().put(preferences.indexGender().get() - 1);
             else
                 preferences.indexGender().put(1);
         }
+
         redrawLayers();
     }
 
@@ -288,7 +330,7 @@ public class MovatarFragment extends Fragment {
             else
                 preferences.indexBottom().put(0);
         }
-        else if (currentCategoryIndex == 6) // Gender
+        else // Gender
         {
             if (preferences.indexGender().get() + 1 < 2)
                 preferences.indexGender().put(preferences.indexGender().get() + 1);
