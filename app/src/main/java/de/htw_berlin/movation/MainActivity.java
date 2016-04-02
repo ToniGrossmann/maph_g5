@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_main_framelayout, TestFragment_.builder().build()).commit();
                 break;
             case R.id.nav_stats:
-                StatisticFragment statf = StatisticFragment_.builder().mUserId(1).build();
+                StatisticFragment statf = StatisticFragment_.builder().mVitalsId(1).build();
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_main_framelayout, statf).commit();
                 break;
 
