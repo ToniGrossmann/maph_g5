@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.github.mikephil.charting.charts.LineChart;
 import com.j256.ormlite.dao.Dao;
 
 import org.androidannotations.annotations.App;
@@ -109,12 +108,11 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_stats:
                 StatisticFragment statf = StatisticFragment_.builder().mUserId(1).build();
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_main_framelayout, statf).commit();
+                break;
 
             case R.id.nav_movatar:
-//                MovatarFragment mf = MovatarFragment_.builder().mUserId(1).build();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_main_framelayout, MovatarFragment_.builder().build()).commit();
-                break;
                 break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
