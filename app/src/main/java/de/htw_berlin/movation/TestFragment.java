@@ -71,7 +71,13 @@ public class TestFragment extends Fragment {
     public void onStop() {
         super.onStop();
         Log.d(getClass().getSimpleName(), "onStop()");
-        app.stopService(BandService_.intent(app).get());
+        //app.stopService(BandService_.intent(app).get());
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(getClass().getSimpleName(), "onDestroy()");
+        app.stopService(BandService_.intent(app).get());
+    }
 }

@@ -1,17 +1,13 @@
 package de.htw_berlin.movation;
 
 import android.app.Activity;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
@@ -61,14 +57,13 @@ public class MovatarFragment extends Fragment {
                 e.printStackTrace();
             }
         }
-
     }
 
     @AfterViews
     void afterViews() {
         int[] bitmaps = {R.drawable.layer1_haare_justin_bieber_hintergrund_braun,
                 R.drawable.layer2_female_fit_koerper,
-                R.drawable.layer3_haare_hautschattierungen_justin_bieber,
+                R.drawable.layer3_haare_hautschattierungen_afro,
                 R.drawable.layer4_female_blond_gesichtsausdruck_gluecklich,
                 R.drawable.layer5_female_fit_sporthose_kurz,
                 R.drawable.layer6_female_fit_langarmshirt_nike,
