@@ -27,5 +27,4 @@ public class Vitals extends BaseDaoEnabled {
         this.pulse = pulse;
         this.timeStamp = timeStamp;
     }
-
 }
