@@ -1,11 +1,17 @@
 package de.htw_berlin.movation;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
+
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -59,33 +65,6 @@ public class StatisticFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         dbHelper = app.getHelper();
-
-        // Datenbank Befüllung
-        try {
-            vitalsDao.executeRaw("delete from Vitals"); // Dumm aber Zweckmäßig
-            vitalsDao.createIfNotExists(new Vitals(80, new GregorianCalendar(2016, 3, 31, 17, 44).getTime()));
-            vitalsDao.createIfNotExists(new Vitals(90, new GregorianCalendar(2016, 3, 31, 17, 45).getTime()));
-            vitalsDao.createIfNotExists(new Vitals(100,new GregorianCalendar(2016,3,31,17,46).getTime()));
-            vitalsDao.createIfNotExists(new Vitals(110,new GregorianCalendar(2016,3,31,17,47).getTime()));
-            vitalsDao.createIfNotExists(new Vitals(118, new GregorianCalendar(2016, 3, 31, 17, 48).getTime()));
-            vitalsDao.createIfNotExists(new Vitals(110,new GregorianCalendar(2016,3,31,17,49).getTime()));
-            vitalsDao.createIfNotExists(new Vitals(106, new GregorianCalendar(2016, 3, 31, 17, 50).getTime()));
-            vitalsDao.createIfNotExists(new Vitals(109,new GregorianCalendar(2016,3,31,17,51).getTime()));
-            vitalsDao.createIfNotExists(new Vitals(100,new GregorianCalendar(2016,3,31,17,52).getTime()));
-            vitalsDao.createIfNotExists(new Vitals(98,new GregorianCalendar(2016,3,31,17,53).getTime()));
-            vitalsDao.createIfNotExists(new Vitals(96,new GregorianCalendar(2016,3,31,17,54).getTime()));
-            vitalsDao.createIfNotExists(new Vitals(99,new GregorianCalendar(2016,3,31,17,55).getTime()));
-            vitalsDao.createIfNotExists(new Vitals(90,new GregorianCalendar(2016,3,31,17,56).getTime()));
-            vitalsDao.createIfNotExists(new Vitals(86,new GregorianCalendar(2016,3,31,17,57).getTime()));
-            vitalsDao.createIfNotExists(new Vitals(79,new GregorianCalendar(2016,3,31,17,58).getTime()));
-            vitalsDao.createIfNotExists(new Vitals(76,new GregorianCalendar(2016,3,31,17,59).getTime()));
-            vitalsDao.createIfNotExists(new Vitals(66,new GregorianCalendar(2016,3,31,18,0).getTime()));
-        }
-        catch (SQLException e)
-        {
-
-        }
-
     }
 
     @AfterViews

@@ -19,6 +19,11 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="notification_started_assignment">Gestartete Aufgabe: %1$s</string>
+    <string name="notification_title">Movation</string>
+    <string name="notification_run_meters">Absolvierte Strecke: %1$d m</string>
+    <string name="notification_current_pulse">Aktueller Puls: %1$d</string>
+    <string name="notification_ticker">Aufgabe gestartet</string>
     <string name="dummy_username">horsti@aol.com</string>
     <string name="dummy_password">horsti</string>
 

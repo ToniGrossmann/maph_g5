@@ -13,9 +13,9 @@ public class Vitals extends BaseDaoEnabled {
     @DatabaseField(foreign = true)
     public User user;
     @DatabaseField
-    public long lat;
+    public double lat;
     @DatabaseField
-    public long lon;
+    public double lon;
     @DatabaseField(foreign = true)
     public Assignment assignment;
 

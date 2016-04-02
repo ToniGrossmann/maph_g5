@@ -7,6 +7,8 @@ public final class Constants {
 
     private Constants(){}
 
+    public static final int NOTIFICATION_ID = 6822;
+
     public enum SensorTypes {
         HEART_RATE,
         PEDOMETER,
