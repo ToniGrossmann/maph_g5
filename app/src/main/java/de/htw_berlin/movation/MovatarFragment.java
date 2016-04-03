@@ -169,11 +169,11 @@ public class MovatarFragment extends Fragment {
         }
         else if (currentCategoryIndex == 4)
         {
-            //imgThumbnail.setImageDrawable(tn_tops.getDrawable(preferences.indexTop().get()));
+            imgThumbnail.setImageDrawable(tn_tops.getDrawable((preferences.indexTop().get() - 4) % 8));
         }
         else if (currentCategoryIndex == 5)
         {
-            //imgThumbnail.setImageDrawable(tn_bottoms.getDrawable(preferences.indexBottom().get() / 3));
+            imgThumbnail.setImageDrawable(tn_bottoms.getDrawable((preferences.indexBottom().get() % 8)));
         }
         else
         {

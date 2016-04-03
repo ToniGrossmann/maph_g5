@@ -7,7 +7,6 @@ import org.androidannotations.annotations.sharedpreferences.DefaultInt;
 @SharedPref(SharedPref.Scope.APPLICATION_DEFAULT)
 public interface Preferences {
 
-
     String username();
     String password();
     boolean autologin();
@@ -46,15 +45,5 @@ public interface Preferences {
     @DefaultInt(0)
     int indexBottom();
 
-    @DefaultBoolean(true)
-    boolean top2Blocked();
-
-    @DefaultBoolean(true)
-    boolean top4Blocked();
-
-    @DefaultBoolean(true)
-    boolean bottom2Blocked();
-
-    @DefaultBoolean(true)
-    boolean bottom4Blocked();}
+}
 
