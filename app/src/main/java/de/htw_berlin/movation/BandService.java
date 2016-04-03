@@ -188,7 +188,10 @@ public class BandService extends Service {
         BandPendingResult<ConnectionState> a = client.connect();
         try {
             ConnectionState state = a.await();
-
+            if(!run){
+                client.disconnect().await();
+                return;
+            }
             if (state == ConnectionState.CONNECTED) {
                 client.getSensorManager().registerHeartRateEventListener(new BandHeartRateEventListener() {
                     @Override
@@ -207,9 +210,9 @@ public class BandService extends Service {
 
                         if (bandHeartRateEvent.getQuality().equals(HeartRateQuality.LOCKED)) {
                             currentPulse = bandHeartRateEvent.getHeartRate();
+                            firstPulseFixAcquired = true;
 
                             if (!firstGpsFixAcquired) {
-                                firstPulseFixAcquired = true;
                                 showNotification(false, true);
                                 return;
                             }
@@ -267,11 +270,16 @@ public class BandService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         /* prevent multiple polling instances */
-        try {
-            prefs.startedAssignmentId().put((long) assignmentDao.create(new Assignment(){{goal = new Goal(){{description = "asdf";}};}}));
+        /*try {
+            prefs.startedAssignmentId().put((long) assignmentDao.create(new Assignment() {{
+                goal = new Goal() {{
+                    description = "asdf";
+                }};
+            }}));
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
+        prefs.startedAssignmentId().remove();
 
         if (!started) {
             started = true;
