@@ -35,7 +35,7 @@ import de.htw_berlin.movation.persistence.model.MovatarClothes;
 public class ListViewAdapter extends BaseAdapter {
 
     private List<MovatarClothes> itemList;
-    private List<MovatarClothes> filteredItemList;
+    private ArrayList<MovatarClothes> filteredItemList;
 
     @OrmLiteDao(helper = DatabaseHelper.class)
     Dao<MovatarClothes, Long> movatarClothesDao;
@@ -48,6 +48,7 @@ public class ListViewAdapter extends BaseAdapter {
 
     @AfterInject
     void initAdapter() {
+        filteredItemList = new ArrayList<>();
         try{
             itemList = movatarClothesDao.queryForAll();
             filterList();
