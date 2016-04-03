@@ -112,6 +112,10 @@ public class MainActivity extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_main_framelayout, statf).commit();
                 break;
 
+            case R.id.nav_shop:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_main_framelayout, ShopFragment_.builder().build()).commit();
+                break;
             case R.id.nav_movatar:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_main_framelayout, MovatarFragment_.builder().build()).commit();

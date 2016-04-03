@@ -51,8 +51,6 @@ public class ShopFragment extends Fragment {
     @Bean
     ListViewAdapter adapter;
 
-
-
     @AfterViews
     void bindAdapter() {
         listView.setAdapter(adapter);
@@ -66,7 +64,7 @@ public class ShopFragment extends Fragment {
     }
 
     @ItemClick
-    void listItemClicked(MovatarClothes item)
+    void listViewItemClicked(MovatarClothes item)
     {
         new AlertDialog.Builder(getContext())
                 .setTitle("Kaufbestätigung")

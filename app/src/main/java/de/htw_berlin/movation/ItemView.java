@@ -1,9 +1,12 @@
 package de.htw_berlin.movation;
 
 import android.content.Context;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
@@ -22,12 +25,18 @@ public class ItemView extends RelativeLayout{
         @ViewById
         TextView secondLine;
 
+        @ViewById
+        ImageView icon;
+
         public ItemView(Context context) {
             super(context);
         }
 
         public void bind(MovatarClothes item)
         {
+            Picasso.with(getContext()).load(item.imageFilePath).resize(50,50)
+                    .into(icon);
+            icon.setImageResource(item.imageFilePath);
             firstLine.setText(item.name);
             secondLine.setText("Credits: " + Long.toString(item.price));
         }
