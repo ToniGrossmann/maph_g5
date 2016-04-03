@@ -52,7 +52,10 @@
                 android:id="@+id/btnMovatarCategoryChangeLeft"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:background="@drawable/button_arrow_left"
+                android:layout_gravity="center_vertical"
+                android:text="{gmd-arrow-back}"
+                android:background="@android:color/transparent"
+                android:textSize="30sp"
                 android:clickable="true"
                 android:layout_marginLeft="20dp" />
 
@@ -60,15 +63,19 @@
                 android:id="@+id/txtCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Kategorie"
+                android:text="@string/category"
                 android:layout_weight="8"
+                android:layout_gravity="center_vertical"
                 android:textAlignment="center" />
 
             <Button
                 android:id="@+id/btnMovatarCategoryChangeRight"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:background="@drawable/button_arrow_right"
+                android:layout_gravity="center_vertical"
+                android:text="{gmd-arrow-forward}"
+                android:background="@android:color/transparent"
+                android:textSize="30sp"
                 android:clickable="true"
                 android:layout_marginRight="20dp" />
 
@@ -84,7 +91,10 @@
                 android:id="@+id/btnMovatarChangeLeft"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:background="@drawable/button_arrow_left"
+                android:layout_gravity="center_vertical"
+                android:text="{gmd-arrow-back}"
+                android:background="@android:color/transparent"
+                android:textSize="30sp"
                 android:clickable="true"
                 android:layout_marginLeft="20dp" />
 
@@ -92,6 +102,7 @@
                 android:id="@+id/imgThumbnail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="8"
                 android:textAlignment="center" />
 
@@ -100,7 +111,10 @@
                 android:id="@+id/btnMovatarChangeRight"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:background="@drawable/button_arrow_right"
+                android:layout_gravity="center_vertical"
+                android:text="{gmd-arrow-forward}"
+                android:background="@android:color/transparent"
+                android:textSize="30sp"
                 android:clickable="true"
                 android:layout_marginRight="20dp" />
 

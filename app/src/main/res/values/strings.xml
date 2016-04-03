@@ -96,4 +96,5 @@
     <string name="fit">Fit</string>
     <string name="unfit">Unfit</string>
     <string name="normal">Normal</string>
+    <string name="category">Kategorie</string>
 </resources>

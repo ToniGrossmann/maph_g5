@@ -1,5 +1,6 @@
 package de.htw_berlin.movation;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.j256.ormlite.dao.Dao;
+import com.mikepenz.iconics.context.IconicsContextWrapper;
 
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.EActivity;
@@ -118,5 +120,10 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
     }
 }
