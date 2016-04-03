@@ -32,7 +32,7 @@ public class ItemView extends RelativeLayout{
 
         public void bind(MovatarClothes item)
         {
-            Picasso.with(getContext()).load(item.imageFilePath).resize(50,50)
+            Picasso.with(getContext()).load(item.imageFilePath).resize(100,200)
                     .into(icon);
             firstLine.setText(item.name);
             secondLine.setText("Credits: " + Long.toString(item.price));
