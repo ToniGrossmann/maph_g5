@@ -116,7 +116,7 @@ public class ListViewAdapter extends BaseAdapter {
                     } else if (itemList.get(i).fitness == Constants.Fitness.FIT && preferences.indexFitness().get() == 2) {
                         filteredItemList.add(itemList.get(i));
                     }
-                    
+
                 }
             }
         }
