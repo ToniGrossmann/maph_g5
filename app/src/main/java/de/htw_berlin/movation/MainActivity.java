@@ -1,5 +1,6 @@
 package de.htw_berlin.movation;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -7,10 +8,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.SparseArray;
 import android.view.MenuItem;
 
 import com.j256.ormlite.dao.Dao;
+import com.mikepenz.iconics.context.IconicsContextWrapper;
 
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.EActivity;
@@ -110,12 +111,10 @@ public class MainActivity extends AppCompatActivity
                 StatisticFragment statf = StatisticFragment_.builder().mVitalsId(1).build();
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_main_framelayout, statf).commit();
                 break;
+
             case R.id.nav_movatar:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_main_framelayout, MovatarFragment_.builder().build()).commit();
-                break;
-            case R.id.nav_shop:
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_main_framelayout, ShopFragment_.builder().build()).commit();
                 break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -123,5 +122,8 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
+    }
 }

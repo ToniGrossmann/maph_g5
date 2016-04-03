@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,6 +26,7 @@ import com.j256.ormlite.dao.Dao;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
@@ -40,6 +42,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import de.htw_berlin.movation.persistence.DatabaseHelper;
+import de.htw_berlin.movation.persistence.DatabaseTools;
 import de.htw_berlin.movation.persistence.model.*;
 
 @EFragment(R.layout.fragment_movatarchange)
@@ -65,6 +68,8 @@ public class MovatarFragment extends Fragment {
     TextView txtCategory;
     @Pref
     Preferences_ preferences;
+    @Bean
+    DatabaseTools irgendeinNameHaha;
 
     private String[] categories = {"Frisur", "Haarfarbe", "Gesicht", "Augenfarbe", "Oberteil", "Unterteil", "Geschlecht"};
     private int currentCategoryIndex = 0;
@@ -337,18 +342,36 @@ public class MovatarFragment extends Fragment {
         redrawLayers();
     }
 
-
-
-
     @Click
     void btnShareMovatar() {
 
-        int width = layerDrawable.getIntrinsicWidth();
-        int height = layerDrawable.getIntrinsicHeight();
+        Drawable[] layers2 = new Drawable[10];
+        layers2[0] = ResourcesCompat.getDrawable(getResources(), R.drawable.layer0_hintergrund_3, null);
+        layers2[1] = layers[0];
+        layers2[2] = layers[1];
+        layers2[3] = layers[2];
+        layers2[4] = layers[3];
+        layers2[5] = layers[4];
+        layers2[6] = layers[5];
+        layers2[7] = layers[6];
+        layers2[8] = ResourcesCompat.getDrawable(getResources(), R.drawable.layer8_logo_2, null);
+
+
+        if (preferences.indexFitness().get() == Constants.Fitness.FIT.ordinal())
+            layers2[9] = ResourcesCompat.getDrawable(getResources(), R.drawable.layer9_fitness_fit, null);
+        else if (preferences.indexFitness().get() == Constants.Fitness.AVERAGE.ordinal())
+            layers2[9] = ResourcesCompat.getDrawable(getResources(), R.drawable.layer9_fitness_normal, null);
+        else
+            layers2[9] = ResourcesCompat.getDrawable(getResources(), R.drawable.layer9_fitness_unfit, null);
+
+        LayerDrawable ld2 = new LayerDrawable(layers2);
+
+        int width = ld2.getIntrinsicWidth();
+        int height = ld2.getIntrinsicHeight();
         Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
-        layerDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        layerDrawable.draw(canvas);
+        ld2.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        ld2.draw(canvas);
 
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("image/jpeg");

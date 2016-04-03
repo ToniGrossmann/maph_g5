@@ -15,14 +15,14 @@ import de.htw_berlin.movation.persistence.model.MovatarClothes;
  * Created by Telan on 03.04.2016.
  */
 @EViewGroup(R.layout.item_adapter)
-public class PurchaseItemView extends RelativeLayout{
+public class ItemView extends RelativeLayout{
         @ViewById
         TextView firstLine;
 
         @ViewById
         TextView secondLine;
 
-        public PurchaseItemView(Context context) {
+        public ItemView(Context context) {
             super(context);
         }
 

@@ -4,10 +4,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.misc.BaseDaoEnabled;
 
-import java.text.SimpleDateFormat;
 import java.util.Collection;
-import java.util.Date;
-import java.util.Locale;
 
 public class User extends BaseDaoEnabled {
 
@@ -28,10 +25,16 @@ public class User extends BaseDaoEnabled {
     public String password;
 
     @DatabaseField
+    /**
+     * unused
+     */
     public long credits;
 
     @ForeignCollectionField
     Collection<Discount> discounts;
+
+    @ForeignCollectionField
+    Collection<Assignment> assignments;
 
     @SuppressWarnings("unused")
     public User() {

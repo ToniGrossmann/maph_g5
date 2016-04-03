@@ -6,6 +6,7 @@ package de.htw_berlin.movation.persistence;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
@@ -15,6 +16,7 @@ import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import de.htw_berlin.movation.persistence.model.Assignment;
@@ -24,7 +26,6 @@ import de.htw_berlin.movation.persistence.model.Goal;
 import de.htw_berlin.movation.persistence.model.GoalCategory;
 import de.htw_berlin.movation.persistence.model.Movatar;
 import de.htw_berlin.movation.persistence.model.MovatarClothes;
-import de.htw_berlin.movation.persistence.model.Mrg_User_Goal;
 import de.htw_berlin.movation.persistence.model.Mrg_User_MovatarClothes;
 import de.htw_berlin.movation.persistence.model.User;
 import de.htw_berlin.movation.persistence.model.Vitals;
@@ -37,18 +38,17 @@ import de.htw_berlin.movation.persistence.model.Vitals;
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     // name of the database file for your application -- change to something appropriate for your app
-    private static final String DATABASE_NAME = "helloAndroid.db";
+    private static final String DATABASE_NAME = "movation.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 3;
 
-    List<Class> entities = new ArrayList<Class>(){{
+    List<Class> entities = new ArrayList<Class>() {{
         add(Discount.class);
         add(DiscountType.class);
         add(Goal.class);
         add(GoalCategory.class);
         add(Movatar.class);
         add(MovatarClothes.class);
-        add(Mrg_User_Goal.class);
         add(Mrg_User_MovatarClothes.class);
         add(User.class);
         add(Vitals.class);
@@ -67,13 +67,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource) {
         try {
             Log.i(DatabaseHelper.class.getName(), "onCreate");
-            for(Class c : entities)
+            for (Class c : entities)
                 TableUtils.createTable(connectionSource, c);
-
+            new FillTablesTask().execute();
         } catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Can't create database", e);
             throw new RuntimeException(e);
         }
+
     }
 
     /**
@@ -81,10 +82,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
      * the various data to match the new version number.
      */
     @Override
-    public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVersion, int newVersion) {
+    public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVersion,
+                          int newVersion) {
         try {
             Log.i(DatabaseHelper.class.getName(), "onUpgrade");
-            for(Class c : entities)
+            for (Class c : entities)
                 TableUtils.dropTable(connectionSource, c, true);
             // after we drop the old databases, we create the new ones
             onCreate(db, connectionSource);
@@ -92,6 +94,120 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             Log.e(DatabaseHelper.class.getName(), "Can't drop databases", e);
             throw new RuntimeException(e);
         }
+    }
+
+    private class FillTablesTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                fillTables();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            Log.d(getClass().getSimpleName(), "Tables filled");
+        }
+    }
+
+    private void fillTables() throws SQLException {
+        Dao<Discount, Long> discountDao = getGenericDao(Discount.class);
+        Dao<DiscountType, Long> discountTypeDao = getGenericDao(DiscountType.class);
+        Dao<Goal, Long> goalDao = getGenericDao(Goal.class);
+        Dao<GoalCategory, Long> goalCategoryDao = getGenericDao(GoalCategory.class);
+        Dao<Movatar, Long> movatarDao = getGenericDao(Movatar.class);
+        Dao<MovatarClothes, Long> movatarClothesDao = getGenericDao(MovatarClothes.class);
+        Dao<User, Long> userDao = getGenericDao(User.class);
+        Dao<Vitals, Long> vitalsDao = getGenericDao(Vitals.class);
+
+        userDao.createIfNotExists(new User(){{firstName = "user";}});
+
+        final GoalCategory shortTrip = goalCategoryDao.createIfNotExists(new GoalCategory() {{
+            name = "Kurzstrecke";
+        }});
+        final GoalCategory longTrip = goalCategoryDao.createIfNotExists(new GoalCategory() {{
+            name = "Langstrecke";
+        }});
+        GoalCategory marathon = goalCategoryDao.createIfNotExists(new GoalCategory() {{
+            name = "Marathon";
+        }});
+/*
+        goalDao.createIfNotExists(new Goal(){{
+            description = "";
+            requirements = "";
+            reward = 0;
+            runDistance = 0;
+            category = null;
+        }});
+*/
+        goalDao.createIfNotExists(new Goal() {{
+            description = "Laufe einen Kilometer";
+            requirements = "";
+            reward = 1;
+            runDistance = 1000;
+            category = shortTrip;
+        }});
+
+        goalDao.createIfNotExists(new Goal() {{
+            description = "Laufe zwei Kilometer";
+            requirements = "";
+            reward = 3;
+            runDistance = 2000;
+            category = shortTrip;
+        }});
+
+        goalDao.createIfNotExists(new Goal() {{
+            description = "Laufe drei Kilometer";
+            requirements = "";
+            reward = 5;
+            runDistance = 3000;
+            category = shortTrip;
+        }});
+
+        goalDao.createIfNotExists(new Goal() {{
+            description = "Laufe zehn Kilometer";
+            requirements = "";
+            reward = 15;
+            runDistance = 10000;
+            category = longTrip;
+        }});
+
+        goalDao.createIfNotExists(new Goal() {{
+            description = "Laufe 20 Kilometer";
+            requirements = "";
+            reward = 40;
+            runDistance = 20000;
+            category = longTrip;
+        }});
+
+        goalDao.createIfNotExists(new Goal() {{
+            description = "Laufe einen Marathon (etwa 42,2 Kilometer)";
+            requirements = "";
+            reward = 100;
+            runDistance = 42195;
+            category = longTrip;
+        }});
+
+        vitalsDao.createIfNotExists(new Vitals(80, new GregorianCalendar(2016, 3, 31, 17, 44).getTime()));
+        vitalsDao.createIfNotExists(new Vitals(90, new GregorianCalendar(2016, 3, 31, 17, 45).getTime()));
+        vitalsDao.createIfNotExists(new Vitals(100,new GregorianCalendar(2016,3,31,17,46).getTime()));
+        vitalsDao.createIfNotExists(new Vitals(110,new GregorianCalendar(2016,3,31,17,47).getTime()));
+        vitalsDao.createIfNotExists(new Vitals(118, new GregorianCalendar(2016, 3, 31, 17, 48).getTime()));
+        vitalsDao.createIfNotExists(new Vitals(110,new GregorianCalendar(2016,3,31,17,49).getTime()));
+        vitalsDao.createIfNotExists(new Vitals(106, new GregorianCalendar(2016, 3, 31, 17, 50).getTime()));
+        vitalsDao.createIfNotExists(new Vitals(109,new GregorianCalendar(2016,3,31,17,51).getTime()));
+        vitalsDao.createIfNotExists(new Vitals(100,new GregorianCalendar(2016,3,31,17,52).getTime()));
+        vitalsDao.createIfNotExists(new Vitals(98,new GregorianCalendar(2016,3,31,17,53).getTime()));
+        vitalsDao.createIfNotExists(new Vitals(96,new GregorianCalendar(2016,3,31,17,54).getTime()));
+        vitalsDao.createIfNotExists(new Vitals(99,new GregorianCalendar(2016,3,31,17,55).getTime()));
+        vitalsDao.createIfNotExists(new Vitals(90,new GregorianCalendar(2016,3,31,17,56).getTime()));
+        vitalsDao.createIfNotExists(new Vitals(86,new GregorianCalendar(2016,3,31,17,57).getTime()));
+        vitalsDao.createIfNotExists(new Vitals(79,new GregorianCalendar(2016,3,31,17,58).getTime()));
+        vitalsDao.createIfNotExists(new Vitals(76,new GregorianCalendar(2016,3,31,17,59).getTime()));
+        vitalsDao.createIfNotExists(new Vitals(66,new GregorianCalendar(2016,3,31,18,0).getTime()));
     }
 
     /**
@@ -116,7 +232,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return userDao;
     }
 */
-    public <T, ID> Dao<T, ID> getGenericDao(Class clazz){
+    public <T, ID> Dao<T, ID> getGenericDao(Class clazz) {
         Dao<T, ID> dao = null;
         try {
             dao = getDao(clazz);

@@ -15,6 +15,15 @@ public class Goal extends BaseDaoEnabled {
     @DatabaseField
     public String requirements;
 
+    /**
+     * Distance in meters
+     */
+    @DatabaseField
+    public int runDistance;
+
+    @DatabaseField
+    public int reward;
+
     @DatabaseField(foreign = true)
     public GoalCategory category;
 
