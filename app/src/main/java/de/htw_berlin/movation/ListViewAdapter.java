@@ -16,62 +16,66 @@ import android.widget.CheckedTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.j256.ormlite.dao.Dao;
 
+import org.androidannotations.annotations.AfterInject;
+import org.androidannotations.annotations.EBean;
+import org.androidannotations.annotations.RootContext;
+import org.androidannotations.ormlite.annotations.OrmLiteDao;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import de.htw_berlin.movation.persistence.DatabaseHelper;
+import de.htw_berlin.movation.persistence.model.DiscountType;
+import de.htw_berlin.movation.persistence.model.MovatarClothes;
+
+@EBean
 public class ListViewAdapter extends BaseAdapter {
 
-    private static ArrayList<String> listContact;
-    private LayoutInflater mInflater;
+    private List<MovatarClothes> itemList;
 
-    public LayoutInflater inflater;
-    public Activity activity;
+    @OrmLiteDao(helper = DatabaseHelper.class)
+    Dao<MovatarClothes, Long> movatarClothesDao;
 
-    public ListViewAdapter(Context context, ArrayList<String> results){
-        listContact = results;
-        mInflater = LayoutInflater.from(context);
+    @RootContext
+    Context context;
+
+    @AfterInject
+    void initAdapter() {
+        try{
+            itemList = movatarClothesDao.queryForAll();
+        }
+        catch(Exception e){}
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+
+        PurchaseItemView itemView;
+        if (convertView == null) {
+            itemView = PurchaseItemView_.build(context);
+        } else {
+            itemView = (PurchaseItemView) convertView;
+        }
+
+        itemView.bind(getItem(position));
+
+        return itemView;
     }
 
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
-        return listContact.size();
+        return itemList.size();
     }
 
     @Override
-    public Object getItem(int arg0) {
-        // TODO Auto-generated method stub
-        return listContact.get(arg0);
+    public MovatarClothes getItem(int position) {
+        return itemList.get(position);
     }
 
     @Override
-    public long getItemId(int arg0) {
-        // TODO Auto-generated method stub
-        return arg0;
-    }
-
-
-    public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
-
-
-        ViewHolder holder;
-        if(convertView == null){
-            convertView = mInflater.inflate(R.layout.item_adapter, null);
-            holder = new ViewHolder();
-            //holder.txtname = (TextView) convertView.findViewById(R.id.textView1);
-
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-
-        //holder.txtname.setText(listContact.get(position));
-
-
-        return convertView;
-    }
-
-    static class ViewHolder{
-        TextView txtname, txtphone;
+    public long getItemId(int position) {
+        return position;
     }
 }

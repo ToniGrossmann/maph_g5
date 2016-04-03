@@ -1,7 +1,9 @@
 package de.htw_berlin.movation;
 
+import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -48,8 +50,7 @@ public class ShopFragment extends Fragment {
     @Bean
     ListViewAdapter adapter;
 
-    @OrmLiteDao(helper = DatabaseHelper.class)
-    Dao<DiscountType, Long> discountDao;
+
 
     @AfterViews
     void bindAdapter() {
@@ -64,7 +65,21 @@ public class ShopFragment extends Fragment {
     }
 
     @ItemClick
-    void listItemClicked(PurchuseItem item) {
-        //makeText(this, person.firstName + " " + person.lastName, LENGTH_SHORT).show();
+    void listItemClicked(DiscountType item)
+    {
+        new AlertDialog.Builder(getContext())
+                .setTitle("Kaufbestätigung")
+                .setMessage("Bist du sicher das du " + item.name + " für " + item.price + " Credits kaufen möchtest?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // KAUFEN KAUFEN!
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Nööööö
+                    }
+                })
+                .show();
     }
 }
