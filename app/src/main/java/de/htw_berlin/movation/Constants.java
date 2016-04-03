@@ -26,8 +26,8 @@ public final class Constants {
     }
 
     public enum Sex {
-        MALE,
-        FEMALE
+        FEMALE,
+        MALE
     }
 
     public enum Fitness {
