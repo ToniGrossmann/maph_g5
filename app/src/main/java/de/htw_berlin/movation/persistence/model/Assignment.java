@@ -1,5 +1,8 @@
 package de.htw_berlin.movation.persistence.model;
 
+import android.support.annotation.NonNull;
+
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.misc.BaseDaoEnabled;
 
@@ -7,7 +10,7 @@ import java.util.Date;
 
 public class Assignment extends BaseDaoEnabled {
 
-    enum Status{
+    public enum Status{
         STARTED,
         COMPLETED,
         FAILED
@@ -17,13 +20,14 @@ public class Assignment extends BaseDaoEnabled {
     @DatabaseField(generatedId = true)
     public int id;
 
+    @NonNull
     @DatabaseField(foreign = true)
     public Goal goal;
 
     @DatabaseField(foreign = true)
     public User user;
 
-    @DatabaseField
+    @DatabaseField(dataType = DataType.ENUM_INTEGER)
     public Status status;
     
     @DatabaseField

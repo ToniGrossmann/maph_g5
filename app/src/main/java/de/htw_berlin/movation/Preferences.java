@@ -12,12 +12,15 @@ public interface Preferences {
     String password();
     boolean autologin();
     boolean hasBeenStarted();
-    boolean hasActiveGoal();
+    boolean hasActiveAssignment();
 
     int creditsEarnedLifeTime();
     int maxPulse();
     int minPulse();
     int successfulGoals();
+
+
+    long startedAssignmentId();
 
     @DefaultInt(0)
     int credits();

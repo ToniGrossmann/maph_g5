@@ -31,6 +31,7 @@ import com.microsoft.band.sensors.HeartRateQuality;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EService;
 import org.androidannotations.annotations.SystemService;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.androidannotations.ormlite.annotations.OrmLiteDao;
 
 import java.sql.SQLException;
@@ -38,6 +39,8 @@ import java.util.Date;
 import java.util.List;
 
 import de.htw_berlin.movation.persistence.DatabaseHelper;
+import de.htw_berlin.movation.persistence.model.Assignment;
+import de.htw_berlin.movation.persistence.model.Goal;
 import de.htw_berlin.movation.persistence.model.Vitals;
 
 @EService
@@ -55,6 +58,11 @@ public class BandService extends Service {
     LocationManager locationManager;
     @SystemService
     NotificationManager notificationManager;
+    @OrmLiteDao(helper = DatabaseHelper.class)
+    Dao<Assignment, Long> assignmentDao;
+    @Pref
+    Preferences_ prefs;
+    Assignment currentAssignment;
     float runMeters = 0;
     int currentPulse = 0;
     boolean firstGpsFixAcquired = false;
@@ -170,15 +178,7 @@ public class BandService extends Service {
             }
             //Log.d(getClass().getSimpleName(), "pollHeartRate()");
         }
-        try {
-            client.disconnect().await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (BandException e) {
-            e.printStackTrace();
-        }
-        for (LocationListener l : mLocationListeners)
-            locationManager.removeUpdates(l);
+
 
         stopSelf();
     }
@@ -254,14 +254,47 @@ public class BandService extends Service {
         super.onDestroy();
         run = false;
         notificationManager.cancel(Constants.NOTIFICATION_ID);
+        try {
+            client.disconnect().await();
+        } catch (InterruptedException | BandException e) {
+            e.printStackTrace();
+        }
+        for (LocationListener l : mLocationListeners)
+            locationManager.removeUpdates(l);
         Log.d(getClass().getSimpleName(), "onDestroy()");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         /* prevent multiple polling instances */
+        try {
+            prefs.startedAssignmentId().put((long) assignmentDao.create(new Assignment(){{goal = new Goal(){{description = "asdf";}};}}));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         if (!started) {
             started = true;
+            if (!prefs.startedAssignmentId().exists()) {
+                Log.d(getClass().getSimpleName(), "!prefs.startedAssignmentId().exists()");
+
+                stopSelf();
+                run = false;
+                return START_NOT_STICKY;
+            }
+            try {
+                currentAssignment = assignmentDao.queryForId(prefs.startedAssignmentId().get());
+                if (currentAssignment == null) {
+                    Log.d(getClass().getSimpleName(), "currentAssignment == null");
+                    stopSelf();
+                    run = false;
+                    return START_NOT_STICKY;
+                }
+                currentAssignment.status = Assignment.Status.STARTED;
+                currentAssignment.update();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             showNotification(firstGpsFixAcquired, firstPulseFixAcquired);
             pollHeartRate();
         }
@@ -280,7 +313,7 @@ public class BandService extends Service {
         NotificationCompat.InboxStyle inboxStyle =
                 new NotificationCompat.InboxStyle();
         String[] textLines = new String[3];
-        textLines[0] = getResources().getString(R.string.notification_started_assignment, "test");
+        textLines[0] = getResources().getString(R.string.notification_started_assignment, currentAssignment.goal.description);
         if (!gpsFixAcquired)
             textLines[1] = getResources().getString(R.string.notification_please_wait_for_gps);
         else
