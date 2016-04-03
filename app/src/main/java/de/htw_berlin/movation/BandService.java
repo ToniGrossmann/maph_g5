@@ -1,5 +1,6 @@
 package de.htw_berlin.movation;
 
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.location.Location;
@@ -10,6 +11,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -17,9 +19,11 @@ import com.j256.ormlite.dao.Dao;
 import com.microsoft.band.BandClient;
 import com.microsoft.band.BandClientManager;
 import com.microsoft.band.BandException;
+import com.microsoft.band.BandIOException;
 import com.microsoft.band.BandInfo;
 import com.microsoft.band.BandPendingResult;
 import com.microsoft.band.ConnectionState;
+import com.microsoft.band.notifications.VibrationType;
 import com.microsoft.band.sensors.BandHeartRateEvent;
 import com.microsoft.band.sensors.BandHeartRateEventListener;
 import com.microsoft.band.sensors.HeartRateQuality;
@@ -49,35 +53,46 @@ public class BandService extends Service {
     Dao<Vitals, Long> mVitalsDao;
     @SystemService
     LocationManager locationManager;
+    @SystemService
+    NotificationManager notificationManager;
+    float runMeters = 0;
+    int currentPulse = 0;
+    boolean firstFixAcquired = false;
+    boolean firstPulseFixAcquired = false;
 
     private class LocationListener implements android.location.LocationListener {
         Location mLastLocation;
 
         public LocationListener(String provider) {
-            Log.e(TAG, "LocationListener " + provider);
+            Log.d(TAG, "LocationListener " + provider);
             mLastLocation = new Location(provider);
         }
 
         @Override
         public void onLocationChanged(Location location) {
-            Log.e(TAG, "onLocationChanged: " + location);
-            toast(location.toString());
+            Log.d(TAG, "onLocationChanged: " + location);
+            //toast(location.toString());
+            if (mLastLocation.getAccuracy() != 0.0)
+                runMeters += location.distanceTo(mLastLocation);
             mLastLocation.set(location);
+            firstFixAcquired = true;
+            showNotification();
+            Log.d(getClass().getSimpleName(), String.valueOf(runMeters));
         }
 
         @Override
         public void onProviderDisabled(String provider) {
-            Log.e(TAG, "onProviderDisabled: " + provider);
+            Log.d(TAG, "onProviderDisabled: " + provider);
         }
 
         @Override
         public void onProviderEnabled(String provider) {
-            Log.e(TAG, "onProviderEnabled: " + provider);
+            Log.d(TAG, "onProviderEnabled: " + provider);
         }
 
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
-            Log.e(TAG, "onStatusChanged: " + provider);
+            Log.d(TAG, "onStatusChanged: " + provider);
             String statusString = null;
             switch (status) {
                 case LocationProvider.OUT_OF_SERVICE:
@@ -152,7 +167,7 @@ public class BandService extends Service {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            Log.d(getClass().getSimpleName(), "pollHeartRate()");
+            //Log.d(getClass().getSimpleName(), "pollHeartRate()");
         }
         try {
             client.disconnect().await();
@@ -161,28 +176,56 @@ public class BandService extends Service {
         } catch (BandException e) {
             e.printStackTrace();
         }
+        for (LocationListener l : mLocationListeners)
+            locationManager.removeUpdates(l);
+
+        stopSelf();
     }
 
     @Background
     void connectToBand() {
         BandPendingResult<ConnectionState> a = client.connect();
-        final Vitals vitals = new Vitals();
         try {
             ConnectionState state = a.await();
+
             if (state == ConnectionState.CONNECTED) {
                 client.getSensorManager().registerHeartRateEventListener(new BandHeartRateEventListener() {
                     @Override
                     public void onBandHeartRateChanged(BandHeartRateEvent bandHeartRateEvent) {
+                        if (mLocationListeners[0].mLastLocation.getAccuracy() == 0) {
+                            Log.d(getClass().getSimpleName(), "accuracy 0");
+                            return;
+                        }
                         //Log.i(getClass().getSimpleName(), "onBandHeartRateChanged() " + bandHeartRateEvent);
+                        Vitals vitals = new Vitals();
                         vitals.pulse = bandHeartRateEvent.getHeartRate();
                         vitals.timeStamp = new Date(bandHeartRateEvent.getTimestamp());
-                        if (bandHeartRateEvent.getQuality().equals(HeartRateQuality.LOCKED))
+                        vitals.lat = mLocationListeners[0].mLastLocation.getLatitude();
+                        vitals.lon = mLocationListeners[0].mLastLocation.getLongitude();
+                        //TODO Assignment id
+
+                        if (bandHeartRateEvent.getQuality().equals(HeartRateQuality.LOCKED)) {
+                            if (!firstFixAcquired)
+                                return;
+                            if (!firstPulseFixAcquired) {
+                                firstPulseFixAcquired = true;
+                                try {
+                                    client.getNotificationManager().vibrate(VibrationType.THREE_TONE_HIGH);
+                                } catch (BandIOException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
                             try {
-                                mVitalsDao.createIfNotExists(vitals);
+                                currentPulse = bandHeartRateEvent.getHeartRate();
+                                mVitalsDao.create(vitals);
+
+
                             } catch (SQLException e) {
                                 e.printStackTrace();
                             }
-
+                        } else
+                            currentPulse = 0;
                     }
                 });
                 Log.d(getClass().getSimpleName(), "state == ConnectionState.CONNECTED");
@@ -192,7 +235,7 @@ public class BandService extends Service {
         } catch (InterruptedException ex) {
             // handle InterruptedException
         } catch (BandException ex) {
-            // handle BandException
+            ex.printStackTrace();
         }
 
 
@@ -202,6 +245,7 @@ public class BandService extends Service {
     public void onDestroy() {
         super.onDestroy();
         run = false;
+        notificationManager.cancel(Constants.NOTIFICATION_ID);
         Log.d(getClass().getSimpleName(), "onDestroy()");
     }
 
@@ -219,5 +263,34 @@ public class BandService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    void showNotification() {
+        if (!run)
+            return;
+        NotificationCompat.InboxStyle inboxStyle =
+                new NotificationCompat.InboxStyle();
+        String[] textLines = new String[3];
+        textLines[0] = getResources().getString(R.string.notification_started_assignment, "test");
+        textLines[1] = getResources().getString(R.string.notification_run_meters, (int) runMeters);
+        if (currentPulse != 0)
+            textLines[2] = getResources().getString(R.string.notification_current_pulse, currentPulse);
+
+        // Sets a title for the Inbox in expanded layout
+        inboxStyle.setBigContentTitle(getResources().getString(R.string.notification_title));
+        // Moves events into the expanded layout
+        for (String s : textLines) {
+
+            inboxStyle.addLine(s);
+        }
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getBaseContext())
+                .setSmallIcon(android.R.drawable.ic_dialog_map)
+                .setTicker(getResources().getString(R.string.notification_ticker))
+                .setWhen(System.currentTimeMillis())
+                .setOngoing(true)
+                .setStyle(inboxStyle);
+
+
+        notificationManager.notify(Constants.NOTIFICATION_ID, notificationBuilder.build());
     }
 }
