@@ -24,7 +24,7 @@ public interface Preferences {
     @DefaultInt(0)
     int indexGender();
 
-    @DefaultInt(0)
+    @DefaultInt(2)
     int indexFitness();
 
     @DefaultInt(0)
@@ -39,7 +39,7 @@ public interface Preferences {
     @DefaultInt(0)
     int indexEyeColor();
 
-    @DefaultInt(0)
+    @DefaultInt(4)
     int indexTop();
 
     @DefaultInt(0)
