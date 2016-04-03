@@ -242,7 +242,7 @@ public class MovatarFragment extends Fragment {
             if (preferences.indexHairColor().get() - 1 >= 0)
                 preferences.indexHairColor().put(preferences.indexHairColor().get() - 1);
             else
-                preferences.indexHairColor().put(4);
+                preferences.indexHairColor().put(2);
         }
         else if (currentCategoryIndex == 2) // Expression
         {
@@ -365,11 +365,6 @@ public class MovatarFragment extends Fragment {
         share.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///sdcard/temporary_file.jpg"));
         startActivity(Intent.createChooser(share, "Share Image"));
     }
-
-
-
-
-
 
     /**
      * This interface must be implemented by activities that contain this

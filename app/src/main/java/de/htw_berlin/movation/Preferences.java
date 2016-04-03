@@ -1,5 +1,6 @@
 package de.htw_berlin.movation;
 
+import org.androidannotations.annotations.sharedpreferences.DefaultBoolean;
 import org.androidannotations.annotations.sharedpreferences.SharedPref;
 import org.androidannotations.annotations.sharedpreferences.DefaultInt;
 
@@ -41,5 +42,16 @@ public interface Preferences {
 
     @DefaultInt(0)
     int indexBottom();
-}
+
+    @DefaultBoolean(true)
+    boolean top2Blocked();
+
+    @DefaultBoolean(true)
+    boolean top4Blocked();
+
+    @DefaultBoolean(true)
+    boolean bottom2Blocked();
+
+    @DefaultBoolean(true)
+    boolean bottom4Blocked();}
 
