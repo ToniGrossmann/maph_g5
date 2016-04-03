@@ -30,6 +30,7 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.androidannotations.ormlite.annotations.OrmLiteDao;
 
 import java.util.ArrayList;
@@ -48,8 +49,14 @@ public class ShopFragment extends Fragment {
     @ViewById
     ListView listView;
 
+    @OrmLiteDao(helper = DatabaseHelper.class)
+    Dao<MovatarClothes, Long> movatarClothesDao;
+
     @Bean
     ListViewAdapter adapter;
+
+    @Pref
+    Preferences_ preferences;
 
     @AfterViews
     void bindAdapter() {
@@ -64,21 +71,58 @@ public class ShopFragment extends Fragment {
     }
 
     @ItemClick
-    void listViewItemClicked(MovatarClothes item)
+    void listViewItemClicked(final MovatarClothes item)
     {
+        final MovatarClothes insideItem = item;
         new AlertDialog.Builder(getContext())
                 .setTitle("Kaufbestätigung")
-                .setMessage("Bist du sicher das du " + item.name + " für " + item.price + " Credits kaufen möchtest?")
+                .setMessage("Bist du sicher das du " + insideItem.name + " für " + insideItem.price + " Credits kaufen möchtest?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // KAUFEN KAUFEN!
+                            public void onClick(DialogInterface dialog, int which) {
+                                if ((preferences.credits().get() - insideItem.price) >= 0) {
+                                    preferences.edit().credits().put(preferences.credits().get() - (int) item.price);
+                                    try {
+                                        insideItem.owned = true;
+                                        movatarClothesDao.update(insideItem);
+
+                                    }
+                                    catch(Exception e) {}
+
+                                    new AlertDialog.Builder(getContext())
+                                            .setTitle("Erfolg!")
+                                            .setMessage("Du hast " + insideItem.name + " gekauft!").setNeutralButton(android.R.string.ok,
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.dismiss();
+                                                }
+                                            });
+
+                                } else {
+                                    new AlertDialog.Builder(getContext())
+                                            .setTitle("Nicht genug Credits!!")
+                                            .setMessage("Du hast nicht genügend Credits für " + insideItem.name + "!").setNeutralButton(android.R.string.ok,
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.dismiss();
+                                                }
+                                            });
+                                }
+                                // KAUFEN KAUFEN!
+                            }
                     }
-                })
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Nööööö
+
+                )
+                .
+
+                        setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // Nööööö
+                                    }
                     }
-                })
-                .show();
+
+                        )
+                            .
+
+                    show();
+                }
     }
-}

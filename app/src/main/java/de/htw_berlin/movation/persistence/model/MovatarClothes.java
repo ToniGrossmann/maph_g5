@@ -33,15 +33,21 @@ public class MovatarClothes extends BaseDaoEnabled {
     @DatabaseField
     public int imageFilePath;
 
+    @DatabaseField
+    public boolean owned;
+
     @SuppressWarnings("unused")
     public MovatarClothes() {
     }
 
-    public MovatarClothes(String name, long price,int image)
+    public MovatarClothes(String name, long price,int image,Constants.Sex sex, Constants.Fitness fitness,boolean owned)
     {
         this.name = name;
         this.price = price;
         this.imageFilePath = image;
+        this.sex = sex;
+        this.fitness = fitness;
+        this.owned = owned;
     }
 
     @Override

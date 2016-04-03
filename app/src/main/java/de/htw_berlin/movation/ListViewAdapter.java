@@ -35,6 +35,7 @@ import de.htw_berlin.movation.persistence.model.MovatarClothes;
 public class ListViewAdapter extends BaseAdapter {
 
     private List<MovatarClothes> itemList;
+    private List<MovatarClothes> filteredItemList;
 
     @OrmLiteDao(helper = DatabaseHelper.class)
     Dao<MovatarClothes, Long> movatarClothesDao;
@@ -49,6 +50,7 @@ public class ListViewAdapter extends BaseAdapter {
     void initAdapter() {
         try{
             itemList = movatarClothesDao.queryForAll();
+            filterList();
         }
         catch(Exception e){}
     }
@@ -70,16 +72,41 @@ public class ListViewAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return itemList.size();
+        return filteredItemList.size();
     }
 
     @Override
     public MovatarClothes getItem(int position) {
-        return itemList.get(position);
+        return filteredItemList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
         return position;
+    }
+
+    private void filterList()
+    {
+        for(int i = 0; i < itemList.size();i++) {
+            if(itemList.get(i).owned == false) {
+                if (itemList.get(i).sex == Constants.Sex.FEMALE && preferences.indexGender().get() == 0) {
+                    if (itemList.get(i).fitness == Constants.Fitness.FAT && preferences.indexFitness().get() == 0) {
+                        filteredItemList.add(itemList.get(i));
+                    } else if (itemList.get(i).fitness == Constants.Fitness.AVERAGE && preferences.indexFitness().get() == 1) {
+                        filteredItemList.add(itemList.get(i));
+                    } else if (itemList.get(i).fitness == Constants.Fitness.FIT && preferences.indexFitness().get() == 2) {
+                        filteredItemList.add(itemList.get(i));
+                    }
+                } else if (itemList.get(i).sex == Constants.Sex.MALE && preferences.indexGender().get() == 1) {
+                    if (itemList.get(i).fitness == Constants.Fitness.FAT && preferences.indexFitness().get() == 0) {
+                        filteredItemList.add(itemList.get(i));
+                    } else if (itemList.get(i).fitness == Constants.Fitness.AVERAGE && preferences.indexFitness().get() == 1) {
+                        filteredItemList.add(itemList.get(i));
+                    } else if (itemList.get(i).fitness == Constants.Fitness.FIT && preferences.indexFitness().get() == 2) {
+                        filteredItemList.add(itemList.get(i));
+                    }
+                }
+            }
+        }
     }
 }

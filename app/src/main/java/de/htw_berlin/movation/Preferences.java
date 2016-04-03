@@ -20,6 +20,9 @@ public interface Preferences {
     int successfulGoals();
 
     @DefaultInt(0)
+    int credits();
+
+    @DefaultInt(0)
     int indexGender();
 
     @DefaultInt(0)
