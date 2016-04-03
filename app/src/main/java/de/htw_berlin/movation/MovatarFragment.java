@@ -137,6 +137,11 @@ public class MovatarFragment extends Fragment {
         tn_bottoms = r.obtainTypedArray(R.array.tn_bottoms);
         tn_expressions = r.obtainTypedArray(R.array.tn_expressions);
 
+        preferences.indexFitness().put(2);
+        preferences.indexGender().put(0);
+        preferences.indexTop().put(4);
+        preferences.indexBottom().put(0);
+
         redrawLayers();
 
         if (preferences.indexFitness().get() == Constants.Fitness.FIT.ordinal())

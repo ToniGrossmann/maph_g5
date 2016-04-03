@@ -48,7 +48,7 @@ public class ListViewAdapter extends BaseAdapter {
 
     @AfterInject
     void initAdapter() {
-        filteredItemList = new ArrayList<MovatarClothes>();
+        filteredItemList = new ArrayList<>();
         try{
             itemList = movatarClothesDao.queryForAll();
             filterList();
@@ -88,18 +88,8 @@ public class ListViewAdapter extends BaseAdapter {
 
     private void filterList()
     {
-
-
         for(int i = 0; i < itemList.size();i++) {
-
-            //MovatarClothes movatarClothes = itemList.get(i);
-            //filteredItemList.add(movatarClothes);
-            if(!itemList.get(i).owned) {
-                //temp.add(itemList.get(i));
-
-                //filteredItemList.add(itemList.get(i));
-
-
+            if(itemList.get(i).owned == false) {
                 if (itemList.get(i).sex == Constants.Sex.FEMALE && preferences.indexGender().get() == 0) {
                     if (itemList.get(i).fitness == Constants.Fitness.FAT && preferences.indexFitness().get() == 0) {
                         filteredItemList.add(itemList.get(i));
@@ -116,7 +106,6 @@ public class ListViewAdapter extends BaseAdapter {
                     } else if (itemList.get(i).fitness == Constants.Fitness.FIT && preferences.indexFitness().get() == 2) {
                         filteredItemList.add(itemList.get(i));
                     }
-
                 }
             }
         }
