@@ -57,8 +57,9 @@ public class BandService extends Service {
     NotificationManager notificationManager;
     float runMeters = 0;
     int currentPulse = 0;
-    boolean firstFixAcquired = false;
+    boolean firstGpsFixAcquired = false;
     boolean firstPulseFixAcquired = false;
+    boolean hasStartVibrated = false;
 
     private class LocationListener implements android.location.LocationListener {
         Location mLastLocation;
@@ -72,11 +73,11 @@ public class BandService extends Service {
         public void onLocationChanged(Location location) {
             Log.d(TAG, "onLocationChanged: " + location);
             //toast(location.toString());
-            if (mLastLocation.getAccuracy() != 0.0)
+            if (mLastLocation.getAccuracy() != 0.0 && firstPulseFixAcquired)
                 runMeters += location.distanceTo(mLastLocation);
             mLastLocation.set(location);
-            firstFixAcquired = true;
-            showNotification();
+            firstGpsFixAcquired = true;
+            showNotification(true, firstPulseFixAcquired);
             Log.d(getClass().getSimpleName(), String.valueOf(runMeters));
         }
 
@@ -192,10 +193,10 @@ public class BandService extends Service {
                 client.getSensorManager().registerHeartRateEventListener(new BandHeartRateEventListener() {
                     @Override
                     public void onBandHeartRateChanged(BandHeartRateEvent bandHeartRateEvent) {
-                        if (mLocationListeners[0].mLastLocation.getAccuracy() == 0) {
+                        /*if (mLocationListeners[0].mLastLocation.getAccuracy() == 0) {
                             Log.d(getClass().getSimpleName(), "accuracy 0");
                             return;
-                        }
+                        }*/
                         //Log.i(getClass().getSimpleName(), "onBandHeartRateChanged() " + bandHeartRateEvent);
                         Vitals vitals = new Vitals();
                         vitals.pulse = bandHeartRateEvent.getHeartRate();
@@ -205,19 +206,26 @@ public class BandService extends Service {
                         //TODO Assignment id
 
                         if (bandHeartRateEvent.getQuality().equals(HeartRateQuality.LOCKED)) {
-                            if (!firstFixAcquired)
-                                return;
-                            if (!firstPulseFixAcquired) {
+                            currentPulse = bandHeartRateEvent.getHeartRate();
+
+                            if (!firstGpsFixAcquired) {
                                 firstPulseFixAcquired = true;
+                                showNotification(false, true);
+                                return;
+                            }
+                            if (firstPulseFixAcquired && firstGpsFixAcquired && !hasStartVibrated) {
+                                hasStartVibrated = true;
+                                showNotification(true, true);
                                 try {
                                     client.getNotificationManager().vibrate(VibrationType.THREE_TONE_HIGH);
                                 } catch (BandIOException e) {
                                     e.printStackTrace();
                                 }
+                            } else
+                                showNotification(true, true);
 
-                            }
+
                             try {
-                                currentPulse = bandHeartRateEvent.getHeartRate();
                                 mVitalsDao.create(vitals);
 
 
@@ -254,6 +262,7 @@ public class BandService extends Service {
         /* prevent multiple polling instances */
         if (!started) {
             started = true;
+            showNotification(firstGpsFixAcquired, firstPulseFixAcquired);
             pollHeartRate();
         }
         return super.onStartCommand(intent, flags, startId);
@@ -265,14 +274,20 @@ public class BandService extends Service {
         return null;
     }
 
-    void showNotification() {
+    void showNotification(boolean gpsFixAcquired, boolean pulseFixAcquired) {
         if (!run)
             return;
         NotificationCompat.InboxStyle inboxStyle =
                 new NotificationCompat.InboxStyle();
         String[] textLines = new String[3];
         textLines[0] = getResources().getString(R.string.notification_started_assignment, "test");
-        textLines[1] = getResources().getString(R.string.notification_run_meters, (int) runMeters);
+        if (!gpsFixAcquired)
+            textLines[1] = getResources().getString(R.string.notification_please_wait_for_gps);
+        else
+            textLines[1] = getResources().getString(R.string.notification_run_meters, (int) runMeters);
+        if (!pulseFixAcquired)
+            textLines[2] = getResources().getString(R.string.notification_please_wait_for_pulse);
+
         if (currentPulse != 0)
             textLines[2] = getResources().getString(R.string.notification_current_pulse, currentPulse);
 

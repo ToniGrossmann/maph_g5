@@ -20,6 +20,10 @@
         completions."
     </string>
     <string name="notification_started_assignment">Gestartete Aufgabe: %1$s</string>
+    <string name="notification_please_wait_for_pulse">Bitte warte, bis dein Puls erkannt wird</string>
+    <string name="notification_please_wait_for_gps">Bitte warte, bis deine Position bestimmt ist</string>
+
+
     <string name="notification_title">Movation</string>
     <string name="notification_run_meters">Absolvierte Strecke: %1$d m</string>
     <string name="notification_current_pulse">Aktueller Puls: %1$d</string>
