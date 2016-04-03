@@ -21,6 +21,7 @@ import com.j256.ormlite.dao.Dao;
 import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.androidannotations.ormlite.annotations.OrmLiteDao;
 
 import java.util.ArrayList;
@@ -41,9 +42,42 @@ public class ListViewAdapter extends BaseAdapter {
     @RootContext
     Context context;
 
+    @Pref
+    Preferences_ preferences;
+
     @AfterInject
     void initAdapter() {
         try{
+            movatarClothesDao.create(new MovatarClothes("shortSh_fe_unfit", 100, R.drawable.layer5_female_unfit_sporthose_kurz_2));
+            movatarClothesDao.create(new MovatarClothes("longSh_fe_unfit", 100, R.drawable.layer5_female_unfit_sporthose_lang_2));
+            movatarClothesDao.create(new MovatarClothes("longShirt_fe_unfit", 100, R.drawable.layer6_female_unfit_langarmshirt_nike_2));
+            movatarClothesDao.create(new MovatarClothes("shirt_fe_unfit", 100, R.drawable.layer6_female_unfit_tshirt_nike_2));
+
+            movatarClothesDao.create(new MovatarClothes("shortSh_fe_normal", 100, R.drawable.layer5_female_normal_sporthose_kurz_2));
+            movatarClothesDao.create(new MovatarClothes("longSh_fe_normal", 100, R.drawable.layer5_female_normal_sporthose_lang_2));
+            movatarClothesDao.create(new MovatarClothes("longShirt_fe_normal", 100, R.drawable.layer6_female_normal_langarmshirt_nike_2));
+            movatarClothesDao.create(new MovatarClothes("shirt_fe_normal", 100, R.drawable.layer6_female_normal_tshirt_nike_2));
+
+            movatarClothesDao.create(new MovatarClothes("shortSh_fe_fit", 100, R.drawable.layer5_female_fit_sporthose_kurz_2));
+            movatarClothesDao.create(new MovatarClothes("longSh_fe_fit", 100, R.drawable.layer5_female_fit_sporthose_lang_2));
+            movatarClothesDao.create(new MovatarClothes("longShirt_fe_fit", 100, R.drawable.layer6_female_fit_langarmshirt_nike_2));
+            movatarClothesDao.create(new MovatarClothes("shirt_fe_fit", 100, R.drawable.layer6_female_fit_tshirt_nike_2));
+
+            movatarClothesDao.create(new MovatarClothes("shortSh_ma_unfit", 100, R.drawable.layer5_male_unfit_sporthose_kurz_2));
+            movatarClothesDao.create(new MovatarClothes("longSh_ma_unfit", 100, R.drawable.layer5_male_unfit_sporthose_lang_2));
+            movatarClothesDao.create(new MovatarClothes("longShirt_ma_unfit", 100, R.drawable.layer6_male_unfit_langarmshirt_nike_2));
+            movatarClothesDao.create(new MovatarClothes("shirt_ma_unfit", 100, R.drawable.layer6_male_unfit_tshirt_nike_2));
+
+            movatarClothesDao.create(new MovatarClothes("shortSh_ma_normal", 100, R.drawable.layer5_male_normal_sporthose_kurz_2));
+            movatarClothesDao.create(new MovatarClothes("longSh_ma_normalt", 100, R.drawable.layer5_male_normal_sporthose_lang_2));
+            movatarClothesDao.create(new MovatarClothes("longShirt_ma_normal", 100, R.drawable.layer6_male_normal_langarmshirt_nike_2));
+            movatarClothesDao.create(new MovatarClothes("shirt_ma_normal", 100, R.drawable.layer6_male_normal_tshirt_nike_2));
+
+            movatarClothesDao.create(new MovatarClothes("shortSh_ma_fit", 100, R.drawable.layer5_male_fit_sporthose_kurz_2));
+            movatarClothesDao.create(new MovatarClothes("longSh_ma_fit", 100, R.drawable.layer5_male_fit_sporthose_lang_2));
+            movatarClothesDao.create(new MovatarClothes("longShirt_ma_fit", 100, R.drawable.layer6_male_fit_langarmshirt_nike_2));
+            movatarClothesDao.create(new MovatarClothes("shirt_ma_fit", 100, R.drawable.layer6_male_fit_tshirt_nike_2));
+
             itemList = movatarClothesDao.queryForAll();
         }
         catch(Exception e){}

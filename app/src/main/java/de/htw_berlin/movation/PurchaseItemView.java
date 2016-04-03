@@ -26,7 +26,8 @@ public class PurchaseItemView extends RelativeLayout{
             super(context);
         }
 
-        public void bind(MovatarClothes item) {
+        public void bind(MovatarClothes item)
+        {
             firstLine.setText(item.name);
             secondLine.setText("Credits: " + Long.toString(item.price));
         }

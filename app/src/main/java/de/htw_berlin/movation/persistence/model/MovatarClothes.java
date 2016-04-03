@@ -31,15 +31,22 @@ public class MovatarClothes extends BaseDaoEnabled {
     public long price;
 
     @DatabaseField
-    public String imageFilePath;
+    public int imageFilePath;
 
     @SuppressWarnings("unused")
     public MovatarClothes() {
     }
 
+    public MovatarClothes(String name, long price,int image)
+    {
+        this.name = name;
+        this.price = price;
+        this.imageFilePath = image;
+    }
+
     @Override
     public int delete() throws SQLException {
-        new File(imageFilePath).delete();
+        //new File(imageFilePath).delete();
         return super.delete();
     }
 }

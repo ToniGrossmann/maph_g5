@@ -19,6 +19,11 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="notification_started_assignment">Gestartete Aufgabe: %1$s</string>
+    <string name="notification_title">Movation</string>
+    <string name="notification_run_meters">Absolvierte Strecke: %1$d m</string>
+    <string name="notification_current_pulse">Aktueller Puls: %1$d</string>
+    <string name="notification_ticker">Aufgabe gestartet</string>
     <string name="dummy_username">horsti@aol.com</string>
     <string name="dummy_password">horsti</string>
 
@@ -28,7 +33,6 @@
     <string name="movatar">Movatar</string>
     <string name="microsoft_band">Microsoft Band</string>
     <string name="credits">Creditpoints</string>
-    <string name="shop">Shop</string>
 
     <!-- Strings for SensorFragment -->
     <string name="sensor_steps">Im Folgenden können relevante Sensordaten des Microsoft Bands
@@ -93,5 +97,9 @@
     <string name="warning_2">- Benutze die App nur wenn du dich Gesund fühlst. Verzichte auf Sport wenn du krank bist.</string>
     <string name="warning_3">- Benutze das Band nur während des Joggens. Bei anderen sportlichen Aktivitäten kannst du hängen bleiben und dich selbst verletzen.</string>
     <string name="warning_4">- Überanspruche dich nicht und mach auch Mal eine Pause ;)</string>
-
+    <string name="fitness_level_x">Fitnesslevel: %1$s</string>
+    <string name="fit">Fit</string>
+    <string name="unfit">Unfit</string>
+    <string name="normal">Normal</string>
+    <string name="category">Kategorie</string>
 </resources>

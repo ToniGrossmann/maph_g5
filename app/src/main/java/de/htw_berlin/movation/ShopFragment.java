@@ -36,6 +36,7 @@ import java.util.ArrayList;
 
 import de.htw_berlin.movation.persistence.DatabaseHelper;
 import de.htw_berlin.movation.persistence.model.DiscountType;
+import de.htw_berlin.movation.persistence.model.MovatarClothes;
 import de.htw_berlin.movation.persistence.model.Vitals;
 
 @EFragment(R.layout.fragment_shop_list)
@@ -65,7 +66,7 @@ public class ShopFragment extends Fragment {
     }
 
     @ItemClick
-    void listItemClicked(DiscountType item)
+    void listItemClicked(MovatarClothes item)
     {
         new AlertDialog.Builder(getContext())
                 .setTitle("Kaufbestätigung")
