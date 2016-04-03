@@ -268,6 +268,7 @@ public class MovatarFragment extends Fragment {
             if (preferences.indexTop().get() - 1 >= 0)
                 preferences.indexTop().put(preferences.indexTop().get() - 1);
             else
+                if(preferences.bottom2Blocked().get())
                 preferences.indexTop().put(3);
         }
         else if (currentCategoryIndex == 5) // Bottom

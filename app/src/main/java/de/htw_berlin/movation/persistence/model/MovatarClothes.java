@@ -21,6 +21,9 @@ public class MovatarClothes extends BaseDaoEnabled {
     @DatabaseField(dataType = DataType.ENUM_INTEGER)
     public Constants.Sex sex;
 
+    @DatabaseField(dataType = DataType.ENUM_INTEGER)
+    public Constants.ClothType clothType;
+
     @DatabaseField
     public String type;
 
@@ -31,15 +34,29 @@ public class MovatarClothes extends BaseDaoEnabled {
     public long price;
 
     @DatabaseField
-    public String imageFilePath;
+    public int imageFilePath;
+
+    @DatabaseField
+    public boolean owned;
 
     @SuppressWarnings("unused")
     public MovatarClothes() {
     }
 
+    public MovatarClothes(String name, long price,int image,Constants.Sex sex, Constants.Fitness fitness,boolean owned,Constants.ClothType clothType)
+    {
+        this.name = name;
+        this.price = price;
+        this.imageFilePath = image;
+        this.sex = sex;
+        this.fitness = fitness;
+        this.owned = owned;
+        this.clothType = clothType;
+    }
+
     @Override
     public int delete() throws SQLException {
-        new File(imageFilePath).delete();
+        //new File(imageFilePath).delete();
         return super.delete();
     }
 }

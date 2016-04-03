@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import de.htw_berlin.movation.Constants;
+import de.htw_berlin.movation.R;
 import de.htw_berlin.movation.persistence.model.Assignment;
 import de.htw_berlin.movation.persistence.model.Discount;
 import de.htw_berlin.movation.persistence.model.DiscountType;
@@ -40,7 +42,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     // name of the database file for your application -- change to something appropriate for your app
     private static final String DATABASE_NAME = "movation.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     List<Class> entities = new ArrayList<Class>() {{
         add(Discount.class);
@@ -207,7 +209,65 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         vitalsDao.createIfNotExists(new Vitals(86,new GregorianCalendar(2016,3,31,17,57).getTime()));
         vitalsDao.createIfNotExists(new Vitals(79,new GregorianCalendar(2016,3,31,17,58).getTime()));
         vitalsDao.createIfNotExists(new Vitals(76,new GregorianCalendar(2016,3,31,17,59).getTime()));
-        vitalsDao.createIfNotExists(new Vitals(66,new GregorianCalendar(2016,3,31,18,0).getTime()));
+        vitalsDao.createIfNotExists(new Vitals(66, new GregorianCalendar(2016, 3, 31, 18, 0).getTime()));
+
+        movatarClothesDao.create(new MovatarClothes("Kurze Sporthose", 100, R.drawable.layer5_female_unfit_sporthose_kurz_2, Constants.Sex.FEMALE, Constants.Fitness.FAT,false, Constants.ClothType.BOTTOM));
+        movatarClothesDao.create(new MovatarClothes("Lange Sporthose", 100, R.drawable.layer5_female_unfit_sporthose_lang_2,Constants.Sex.FEMALE, Constants.Fitness.FAT,false,Constants.ClothType.BOTTOM));
+        movatarClothesDao.create(new MovatarClothes("Langarm T-Shirt", 100, R.drawable.layer6_female_unfit_langarmshirt_nike_2,Constants.Sex.FEMALE, Constants.Fitness.FAT,false,Constants.ClothType.TOP));
+        movatarClothesDao.create(new MovatarClothes("T-Shirt", 100, R.drawable.layer6_female_unfit_tshirt_nike_2,Constants.Sex.FEMALE, Constants.Fitness.FAT,false,Constants.ClothType.TOP));
+
+        movatarClothesDao.create(new MovatarClothes("Kurze Sporthose", 100, R.drawable.layer5_female_normal_sporthose_kurz_2, Constants.Sex.FEMALE, Constants.Fitness.AVERAGE,false,Constants.ClothType.BOTTOM));
+        movatarClothesDao.create(new MovatarClothes("Lange Sporthose", 100, R.drawable.layer5_female_normal_sporthose_lang_2,Constants.Sex.FEMALE, Constants.Fitness.AVERAGE,false,Constants.ClothType.BOTTOM));
+        movatarClothesDao.create(new MovatarClothes("Langarm T-Shirt", 100, R.drawable.layer6_female_normal_langarmshirt_nike_2,Constants.Sex.FEMALE, Constants.Fitness.AVERAGE,false,Constants.ClothType.TOP));
+        movatarClothesDao.create(new MovatarClothes("T-Shirt", 100, R.drawable.layer6_female_normal_tshirt_nike_2,Constants.Sex.FEMALE, Constants.Fitness.AVERAGE,false,Constants.ClothType.TOP));
+        movatarClothesDao.create(new MovatarClothes("Kurze Sporthose", 100, R.drawable.layer5_female_fit_sporthose_kurz_2, Constants.Sex.FEMALE, Constants.Fitness.FIT,false,Constants.ClothType.BOTTOM));
+        movatarClothesDao.create(new MovatarClothes("Lange Sporthose", 100, R.drawable.layer5_female_fit_sporthose_lang_2,Constants.Sex.FEMALE, Constants.Fitness.FIT,false,Constants.ClothType.BOTTOM));
+        movatarClothesDao.create(new MovatarClothes("Langarm T-Shirt", 100, R.drawable.layer6_female_fit_langarmshirt_nike_2,Constants.Sex.FEMALE, Constants.Fitness.FIT,false,Constants.ClothType.TOP));
+        movatarClothesDao.create(new MovatarClothes("T-Shirt", 100, R.drawable.layer6_female_fit_tshirt_nike_2,Constants.Sex.FEMALE, Constants.Fitness.FIT,false,Constants.ClothType.TOP));
+        movatarClothesDao.create(new MovatarClothes("Kurze Sporthose", 100, R.drawable.layer5_male_unfit_sporthose_kurz_2, Constants.Sex.MALE, Constants.Fitness.FAT,false,Constants.ClothType.BOTTOM));
+        movatarClothesDao.create(new MovatarClothes("Lange Sporthose", 100, R.drawable.layer5_male_unfit_sporthose_lang_2,Constants.Sex.MALE, Constants.Fitness.FAT,false,Constants.ClothType.BOTTOM));
+        movatarClothesDao.create(new MovatarClothes("Langarm T-Shirt", 100, R.drawable.layer6_male_unfit_langarmshirt_nike_2,Constants.Sex.MALE, Constants.Fitness.FAT,false,Constants.ClothType.TOP));
+        movatarClothesDao.create(new MovatarClothes("T-Shirt", 100, R.drawable.layer6_male_unfit_tshirt_nike_2,Constants.Sex.MALE, Constants.Fitness.FAT,false,Constants.ClothType.TOP));
+        movatarClothesDao.create(new MovatarClothes("Kurze Sporthose", 100, R.drawable.layer5_male_normal_sporthose_kurz_2, Constants.Sex.MALE, Constants.Fitness.AVERAGE,false,Constants.ClothType.BOTTOM));
+        movatarClothesDao.create(new MovatarClothes("Lange Sporthose", 100, R.drawable.layer5_male_normal_sporthose_lang_2,Constants.Sex.MALE, Constants.Fitness.AVERAGE,false,Constants.ClothType.BOTTOM));
+        movatarClothesDao.create(new MovatarClothes("Langarm T-Shirt", 100, R.drawable.layer6_male_normal_langarmshirt_nike_2,Constants.Sex.MALE, Constants.Fitness.AVERAGE,false,Constants.ClothType.TOP));
+        movatarClothesDao.create(new MovatarClothes("T-Shirt", 100, R.drawable.layer6_male_normal_tshirt_nike_2,Constants.Sex.MALE, Constants.Fitness.AVERAGE,false,Constants.ClothType.TOP));
+        movatarClothesDao.create(new MovatarClothes("Kurze Sporthose", 100, R.drawable.layer5_male_fit_sporthose_kurz_2, Constants.Sex.MALE, Constants.Fitness.FIT,false,Constants.ClothType.BOTTOM));
+        movatarClothesDao.create(new MovatarClothes("Lange Sporthose", 100, R.drawable.layer5_male_fit_sporthose_lang_2,Constants.Sex.MALE, Constants.Fitness.FIT,false,Constants.ClothType.BOTTOM));
+        movatarClothesDao.create(new MovatarClothes("Langarm T-Shirt", 100, R.drawable.layer6_male_fit_langarmshirt_nike_2,Constants.Sex.MALE, Constants.Fitness.FIT,false,Constants.ClothType.TOP));
+        movatarClothesDao.create(new MovatarClothes("T-Shirt", 100, R.drawable.layer6_male_fit_tshirt_nike_2,Constants.Sex.MALE, Constants.Fitness.FIT,false,Constants.ClothType.TOP));
+
+
+        movatarClothesDao.create(new MovatarClothes("Kurze Sporthose", 100, R.drawable.layer5_female_unfit_sporthose_kurz, Constants.Sex.FEMALE, Constants.Fitness.FAT,true,Constants.ClothType.BOTTOM));
+        movatarClothesDao.create(new MovatarClothes("Lange Sporthose", 100, R.drawable.layer5_female_unfit_sporthose_lang,Constants.Sex.FEMALE, Constants.Fitness.FAT,true,Constants.ClothType.BOTTOM));
+        movatarClothesDao.create(new MovatarClothes("Langarm T-Shirt", 100, R.drawable.layer6_female_unfit_langarmshirt_nike,Constants.Sex.FEMALE, Constants.Fitness.FAT,true,Constants.ClothType.TOP));
+        movatarClothesDao.create(new MovatarClothes("T-Shirt", 100, R.drawable.layer6_female_unfit_tshirt_nike,Constants.Sex.FEMALE, Constants.Fitness.FAT,true,Constants.ClothType.TOP));
+
+        movatarClothesDao.create(new MovatarClothes("Kurze Sporthose", 100, R.drawable.layer5_female_normal_sporthose_kurz, Constants.Sex.FEMALE, Constants.Fitness.AVERAGE,true,Constants.ClothType.BOTTOM));
+        movatarClothesDao.create(new MovatarClothes("Lange Sporthose", 100, R.drawable.layer5_female_normal_sporthose_lang,Constants.Sex.FEMALE, Constants.Fitness.AVERAGE,true,Constants.ClothType.BOTTOM));
+        movatarClothesDao.create(new MovatarClothes("Langarm T-Shirt", 100, R.drawable.layer6_female_normal_langarmshirt_nike,Constants.Sex.FEMALE, Constants.Fitness.AVERAGE,true,Constants.ClothType.TOP));
+        movatarClothesDao.create(new MovatarClothes("T-Shirt", 100, R.drawable.layer6_female_normal_tshirt_nike,Constants.Sex.FEMALE, Constants.Fitness.AVERAGE,true,Constants.ClothType.TOP));
+
+        movatarClothesDao.create(new MovatarClothes("Kurze Sporthose", 100, R.drawable.layer5_female_fit_sporthose_kurz, Constants.Sex.FEMALE, Constants.Fitness.FIT,true,Constants.ClothType.BOTTOM));
+        movatarClothesDao.create(new MovatarClothes("Lange Sporthose", 100, R.drawable.layer5_female_fit_sporthose_lang,Constants.Sex.FEMALE, Constants.Fitness.FIT,true,Constants.ClothType.BOTTOM));
+        movatarClothesDao.create(new MovatarClothes("Langarm T-Shirt", 100, R.drawable.layer6_female_fit_langarmshirt_nike,Constants.Sex.FEMALE, Constants.Fitness.FIT,true,Constants.ClothType.TOP));
+        movatarClothesDao.create(new MovatarClothes("T-Shirt", 100, R.drawable.layer6_female_fit_tshirt_nike,Constants.Sex.FEMALE, Constants.Fitness.FIT,true,Constants.ClothType.TOP));
+
+        movatarClothesDao.create(new MovatarClothes("Kurze Sporthose", 100, R.drawable.layer5_male_unfit_sporthose_kurz, Constants.Sex.MALE, Constants.Fitness.FAT,true,Constants.ClothType.BOTTOM));
+        movatarClothesDao.create(new MovatarClothes("Lange Sporthose", 100, R.drawable.layer5_male_unfit_sporthose_lang,Constants.Sex.MALE, Constants.Fitness.FAT,true,Constants.ClothType.BOTTOM));
+        movatarClothesDao.create(new MovatarClothes("Langarm T-Shirt", 100, R.drawable.layer6_male_unfit_langarmshirt_nike,Constants.Sex.MALE, Constants.Fitness.FAT,true,Constants.ClothType.TOP));
+        movatarClothesDao.create(new MovatarClothes("T-Shirt", 100, R.drawable.layer6_male_unfit_tshirt_nike,Constants.Sex.MALE, Constants.Fitness.FAT,true,Constants.ClothType.TOP));
+
+        movatarClothesDao.create(new MovatarClothes("Kurze Sporthose", 100, R.drawable.layer5_male_normal_sporthose_kurz, Constants.Sex.MALE, Constants.Fitness.AVERAGE,true,Constants.ClothType.BOTTOM));
+        movatarClothesDao.create(new MovatarClothes("Lange Sporthose", 100, R.drawable.layer5_male_normal_sporthose_lang,Constants.Sex.MALE, Constants.Fitness.AVERAGE,true,Constants.ClothType.BOTTOM));
+        movatarClothesDao.create(new MovatarClothes("Langarm T-Shirt", 100, R.drawable.layer6_male_normal_langarmshirt_nike,Constants.Sex.MALE, Constants.Fitness.AVERAGE,true,Constants.ClothType.TOP));
+        movatarClothesDao.create(new MovatarClothes("T-Shirt", 100, R.drawable.layer6_male_normal_tshirt_nike,Constants.Sex.MALE, Constants.Fitness.AVERAGE,true,Constants.ClothType.TOP));
+
+        movatarClothesDao.create(new MovatarClothes("Kurze Sporthose", 100, R.drawable.layer5_male_fit_sporthose_kurz, Constants.Sex.MALE, Constants.Fitness.FIT,true,Constants.ClothType.BOTTOM));
+        movatarClothesDao.create(new MovatarClothes("Lange Sporthose", 100, R.drawable.layer5_male_fit_sporthose_lang,Constants.Sex.MALE, Constants.Fitness.FIT,true,Constants.ClothType.BOTTOM));
+        movatarClothesDao.create(new MovatarClothes("Langarm T-Shirt", 100, R.drawable.layer6_male_fit_langarmshirt_nike,Constants.Sex.MALE, Constants.Fitness.FIT,true,Constants.ClothType.TOP));
+        movatarClothesDao.create(new MovatarClothes("T-Shirt", 100, R.drawable.layer6_male_fit_tshirt_nike,Constants.Sex.MALE, Constants.Fitness.FIT,true,Constants.ClothType.TOP));
+
     }
 
     /**
