@@ -1,6 +1,7 @@
 package de.htw_berlin.movation;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.location.Location;
@@ -37,10 +38,10 @@ import org.androidannotations.ormlite.annotations.OrmLiteDao;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import de.htw_berlin.movation.persistence.DatabaseHelper;
 import de.htw_berlin.movation.persistence.model.Assignment;
-import de.htw_berlin.movation.persistence.model.Goal;
 import de.htw_berlin.movation.persistence.model.Vitals;
 
 @EService
@@ -84,8 +85,21 @@ public class BandService extends Service {
             if (mLastLocation.getAccuracy() != 0.0 && firstPulseFixAcquired)
                 runMeters += location.distanceTo(mLastLocation);
             mLastLocation.set(location);
+            if(runMeters >= currentAssignment.goal.runDistance){
+                currentAssignment.status = Assignment.Status.COMPLETED;
+                try {
+                currentAssignment.update();
+                    client.getNotificationManager().vibrate(VibrationType.THREE_TONE_HIGH);
+                } catch (BandIOException | SQLException e) {
+                    e.printStackTrace();
+                }
+                prefs.startedAssignmentId().remove();
+                run = false;
+                showSuccessNotification();
+                stopSelf();
+            }
             firstGpsFixAcquired = true;
-            showNotification(true, firstPulseFixAcquired);
+            showInfoNotification(true, firstPulseFixAcquired);
             Log.d(getClass().getSimpleName(), String.valueOf(runMeters));
         }
 
@@ -206,26 +220,26 @@ public class BandService extends Service {
                         vitals.timeStamp = new Date(bandHeartRateEvent.getTimestamp());
                         vitals.lat = mLocationListeners[0].mLastLocation.getLatitude();
                         vitals.lon = mLocationListeners[0].mLastLocation.getLongitude();
-                        //TODO Assignment id
+                        vitals.assignment = currentAssignment;
 
                         if (bandHeartRateEvent.getQuality().equals(HeartRateQuality.LOCKED)) {
                             currentPulse = bandHeartRateEvent.getHeartRate();
                             firstPulseFixAcquired = true;
 
                             if (!firstGpsFixAcquired) {
-                                showNotification(false, true);
+                                showInfoNotification(false, true);
                                 return;
                             }
                             if (firstPulseFixAcquired && firstGpsFixAcquired && !hasStartVibrated) {
                                 hasStartVibrated = true;
-                                showNotification(true, true);
+                                showInfoNotification(true, true);
                                 try {
                                     client.getNotificationManager().vibrate(VibrationType.THREE_TONE_HIGH);
                                 } catch (BandIOException e) {
                                     e.printStackTrace();
                                 }
                             } else
-                                showNotification(true, true);
+                                showInfoNotification(true, true);
 
 
                             try {
@@ -279,8 +293,6 @@ public class BandService extends Service {
         } catch (SQLException e) {
             e.printStackTrace();
         }*/
-        prefs.startedAssignmentId().remove();
-
         if (!started) {
             started = true;
             if (!prefs.startedAssignmentId().exists()) {
@@ -303,7 +315,7 @@ public class BandService extends Service {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            showNotification(firstGpsFixAcquired, firstPulseFixAcquired);
+            showInfoNotification(firstGpsFixAcquired, firstPulseFixAcquired);
             pollHeartRate();
         }
         return super.onStartCommand(intent, flags, startId);
@@ -315,7 +327,22 @@ public class BandService extends Service {
         return null;
     }
 
-    void showNotification(boolean gpsFixAcquired, boolean pulseFixAcquired) {
+    void showSuccessNotification(){
+        Intent intent = new Intent(this, MainActivity_.class);
+        intent.setAction(Long.toString(System.currentTimeMillis()));
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getBaseContext())
+                .setSmallIcon(android.R.drawable.ic_dialog_map)
+                .setTicker(getResources().getString(R.string.notification_success, (int)runMeters))
+                .setContentTitle(getResources().getString(R.string.assignment_finished))
+                .setContentText(getResources().getString(R.string.notification_success, (int)runMeters))
+                .setWhen(System.currentTimeMillis())
+                .setAutoCancel(true)
+                .setContentIntent(PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT));
+        notificationManager.notify(new Random().nextInt(), notificationBuilder.build());
+    }
+
+    void showInfoNotification(boolean gpsFixAcquired, boolean pulseFixAcquired) {
         if (!run)
             return;
         NotificationCompat.InboxStyle inboxStyle =

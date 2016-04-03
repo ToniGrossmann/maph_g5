@@ -42,7 +42,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     // name of the database file for your application -- change to something appropriate for your app
     private static final String DATABASE_NAME = "movation.db";
     // any time you make changes to your database objects, you may have to increase the database version
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 10;
 
     List<Class> entities = new ArrayList<Class>() {{
         add(Discount.class);
@@ -145,6 +145,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             category = null;
         }});
 */
+        goalDao.createIfNotExists(new Goal() {{
+            description = "Laufe 10 Meter";
+            requirements = "";
+            reward = 1;
+            runDistance = 10;
+            category = shortTrip;
+        }});
+
         goalDao.createIfNotExists(new Goal() {{
             description = "Laufe einen Kilometer";
             requirements = "";
