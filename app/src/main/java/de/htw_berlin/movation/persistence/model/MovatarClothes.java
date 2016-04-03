@@ -21,6 +21,9 @@ public class MovatarClothes extends BaseDaoEnabled {
     @DatabaseField(dataType = DataType.ENUM_INTEGER)
     public Constants.Sex sex;
 
+    @DatabaseField(dataType = DataType.ENUM_INTEGER)
+    public Constants.ClothType clothType;
+
     @DatabaseField
     public String type;
 
@@ -40,7 +43,7 @@ public class MovatarClothes extends BaseDaoEnabled {
     public MovatarClothes() {
     }
 
-    public MovatarClothes(String name, long price,int image,Constants.Sex sex, Constants.Fitness fitness,boolean owned)
+    public MovatarClothes(String name, long price,int image,Constants.Sex sex, Constants.Fitness fitness,boolean owned,Constants.ClothType clothType)
     {
         this.name = name;
         this.price = price;
@@ -48,6 +51,7 @@ public class MovatarClothes extends BaseDaoEnabled {
         this.sex = sex;
         this.fitness = fitness;
         this.owned = owned;
+        this.clothType = clothType;
     }
 
     @Override

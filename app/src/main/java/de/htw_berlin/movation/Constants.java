@@ -36,6 +36,11 @@ public final class Constants {
         FAT
     }
 
+    public enum ClothType {
+        TOP,
+        BOTTOM
+    }
+
     public enum Haircut{
         CUT1, CUT2, CUT3, CUT4, CUT5, CUT6, CUT7, CUT8
     }
