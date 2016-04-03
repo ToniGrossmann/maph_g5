@@ -79,14 +79,16 @@ public class ShopFragment extends Fragment {
                 .setMessage("Bist du sicher das du " + insideItem.name + " für " + insideItem.price + " Credits kaufen möchtest?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                if ((preferences.credits().get() - insideItem.price) >= 0) {
+                                dialog.dismiss();
+                                if ((preferences.credits().get() - insideItem.price) >= 0)
+                                {
                                     preferences.edit().credits().put(preferences.credits().get() - (int) item.price);
                                     try {
                                         insideItem.owned = true;
                                         movatarClothesDao.update(insideItem);
 
+                                    } catch (Exception e) {
                                     }
-                                    catch(Exception e) {}
 
                                     new AlertDialog.Builder(getContext())
                                             .setTitle("Erfolg!")
@@ -98,6 +100,8 @@ public class ShopFragment extends Fragment {
                                             });
 
                                 } else {
+
+
                                     new AlertDialog.Builder(getContext())
                                             .setTitle("Nicht genug Credits!!")
                                             .setMessage("Du hast nicht genügend Credits für " + insideItem.name + "!").setNeutralButton(android.R.string.ok,
@@ -109,7 +113,7 @@ public class ShopFragment extends Fragment {
                                 }
                                 // KAUFEN KAUFEN!
                             }
-                    }
+                        }
 
                 )
                 .
@@ -118,11 +122,11 @@ public class ShopFragment extends Fragment {
                                     public void onClick(DialogInterface dialog, int which) {
                                         // Nööööö
                                     }
-                    }
+                                }
 
                         )
                             .
 
-                    show();
+                                    show();
                 }
     }
