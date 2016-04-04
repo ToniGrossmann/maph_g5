@@ -25,6 +25,9 @@
 
 
     <string name="notification_title">Movation</string>
+    <string name="notification_click_me">Für weitere Informationen antippen</string>
+    <string name="assignment_already_active">Es ist bereits eine Aufgabe gestartet, bitte beende diese zuerst.</string>
+
     <string name="notification_run_meters">Absolvierte Strecke: %1$d m</string>
     <string name="notification_current_pulse">Aktueller Puls: %1$d</string>
     <string name="notification_ticker">Aufgabe gestartet</string>

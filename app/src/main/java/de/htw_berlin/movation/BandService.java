@@ -391,6 +391,8 @@ public class BandService extends Service {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getBaseContext())
                 .setSmallIcon(android.R.drawable.ic_dialog_map)
                 .setTicker(getResources().getString(R.string.notification_ticker))
+                .setContentTitle(getResources().getString(R.string.notification_title))
+                .setContentText(getResources().getString(R.string.notification_click_me))
                 .setWhen(System.currentTimeMillis())
                 .setContentIntent(PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT))
                 .setOngoing(true)
