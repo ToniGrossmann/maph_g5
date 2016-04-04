@@ -3,8 +3,6 @@ package de.htw_berlin.movation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
 import com.j256.ormlite.dao.Dao;
@@ -25,8 +23,6 @@ import java.util.List;
 import de.htw_berlin.movation.persistence.DatabaseHelper;
 import de.htw_berlin.movation.persistence.model.Goal;
 import de.htw_berlin.movation.persistence.model.GoalCategory;
-import de.htw_berlin.movation.persistence.model.MovatarClothes;
-import de.htw_berlin.movation.persistence.model.User;
 
 @EFragment(R.layout.fragment_goals)
 public class GoalFragment extends Fragment {
@@ -49,7 +45,7 @@ public class GoalFragment extends Fragment {
     HashMap<String, List<String>> listDataChild;
 
     @Background
-    void connectToBand(){
+    void connectToBand() {
         try {
             client.connect().await();
         } catch (InterruptedException e) {
@@ -97,20 +93,19 @@ public class GoalFragment extends Fragment {
         try {
             listGoalGategories = goalCategoriesDao.queryForAll();
             listGoals = goalsDao.queryForAll();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        catch(Exception e) {}
         // Adding child data
-        for(int i = 0; i < listGoalGategories.size(); i++)
-        {
-            listDataHeader.add(listGoalGategories.get(i).name);
+        for (GoalCategory gc : listGoalGategories) {
+            listDataHeader.add(gc.name);
             List<String> listGoalNames = new ArrayList<>();
-            for(int j = 0; j < listGoals.size();j++) {
-                if(listGoals.get(j).category == listGoalGategories.get(i))
-                {
-                    listGoalNames.add(listGoals.get(j).description);
+            for (Goal g : listGoals) {
+                if (gc.equals(g.category)) {
+                    listGoalNames.add(g.description);
                 }
             }
-            listDataChild.put(listGoalGategories.get(i).name, listGoalNames);
+            listDataChild.put(gc.name, listGoalNames);
         }
     }
 }
