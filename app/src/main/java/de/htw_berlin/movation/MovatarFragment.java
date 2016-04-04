@@ -211,6 +211,11 @@ public class MovatarFragment extends Fragment {
     @Override
     public void onResume() {
         super.onStart();
+        try {
+            clothesList = movatarClothesDao.queryForAll();
+        }
+        catch(SQLException e)
+        {}
         if (preferences.creditsEarnedLifeTime().get() >= 1000 && preferences.indexFitness().get() == 2) {
             preferences.indexFitness().put(1);
 
@@ -498,7 +503,7 @@ public class MovatarFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main, menu);
-        super.onCreateOptionsMenu(menu,inflater);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override

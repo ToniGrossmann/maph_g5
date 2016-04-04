@@ -58,12 +58,13 @@ public class ShopFragment extends Fragment {
                             public void onClick(DialogInterface dialog, int which) {
                                 if ((preferences.credits().get() - insideItem.price) >= 0) {
                                     preferences.credits().put(preferences.credits().get() - (int) item.price);
+
                                     try {
                                         insideItem.owned = true;
                                         movatarClothesDao.update(insideItem);
-
                                     }
-                                    catch(Exception e) {}
+                                    catch (Exception e) {
+                                    }
 
                                     new AlertDialog.Builder(getContext())
                                             .setTitle("Erfolg!")
@@ -74,28 +75,29 @@ public class ShopFragment extends Fragment {
                                                 }
                                             }).show();
 
+
                                 } else {
                                     new AlertDialog.Builder(getContext())
                                             .setTitle("Nicht genug Credits!")
                                             .setMessage("Du hast nicht genügend Credits für " + insideItem.name + "!")
                                             .setNeutralButton(android.R.string.ok,
-                                            new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    dialog.dismiss();
-                                                }
-                                            }).show();
+                                                    new DialogInterface.OnClickListener() {
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            dialog.dismiss();
+                                                        }
+                                                    }).show();
                                 }
                                 // KAUFEN KAUFEN!
                             }
-                    }
+                        }
 
                 )
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        // Nööööö
-                                    }
-                    }
-                        )
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Nööööö
+                            }
+                        }
+                )
                             .show();
                 }
     }

@@ -73,6 +73,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        textViewCredits.setText(preferences.credits().getOr(0).toString());
         if(preferences.creditsEarnedLifeTime().get()  >= 1000 && preferences.indexFitness().get() == 2)
         {
             //preferences.indexFitness().put(1);
