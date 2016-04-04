@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -71,8 +72,6 @@ public class MovatarFragment extends Fragment {
     TextView txtCategory;
     @Pref
     Preferences_ preferences;
-    @Bean
-    DatabaseTools irgendeinNameHaha;
 
     private String[] categories = {"Frisur", "Haarfarbe", "Gesicht", "Augenfarbe", "Oberteil", "Unterteil", "Geschlecht"};
     private int currentCategoryIndex = 0;
@@ -108,7 +107,9 @@ public class MovatarFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+
         currentCategoryIndex = 0;
+        setHasOptionsMenu(true);
     }
 
     @AfterViews
@@ -118,6 +119,8 @@ public class MovatarFragment extends Fragment {
         }
         catch(SQLException e)
         {}
+
+        getActivity().setTitle("Movatar");
 
         Resources r = getResources();
 
@@ -136,11 +139,6 @@ public class MovatarFragment extends Fragment {
         tn_tops = r.obtainTypedArray(R.array.tn_tops);
         tn_bottoms = r.obtainTypedArray(R.array.tn_bottoms);
         tn_expressions = r.obtainTypedArray(R.array.tn_expressions);
-
-        preferences.indexFitness().put(2);
-        preferences.indexGender().put(0);
-        preferences.indexTop().put(4);
-        preferences.indexBottom().put(0);
 
         redrawLayers();
 
@@ -192,13 +190,8 @@ public class MovatarFragment extends Fragment {
             layers[1] = layer2_female.getDrawable(preferences.indexFitness().get());
             layers[2] = layer3.getDrawable(preferences.indexHairstyle().get());
             layers[3] = layer4_female.getDrawable(preferences.indexHairColor().get() * 15 + preferences.indexExpression().get() * 3 + preferences.indexEyeColor().get());
-
-/*            layers[4] = layer5_female.getDrawable(preferences.indexBottom().get() + preferences.indexFitness().get() * 4);
-            layers[5] = layer6_female.getDrawable(preferences.indexTop().get() + preferences.indexFitness().get() * 4);*/
-
             layers[4] = ResourcesCompat.getDrawable(getResources(), clothesList.get(preferences.indexBottom().get()).imageFilePath, null);
             layers[5] = ResourcesCompat.getDrawable(getResources(), clothesList.get(preferences.indexTop().get()).imageFilePath, null);
-
             layers[6] = layer7.getDrawable(preferences.indexHairstyle().get() * 3 + preferences.indexHairColor().get());
         }
         else // male
@@ -207,13 +200,8 @@ public class MovatarFragment extends Fragment {
             layers[1] = layer2_male.getDrawable(preferences.indexFitness().get());
             layers[2] = layer3.getDrawable(preferences.indexHairstyle().get());
             layers[3] = layer4_male.getDrawable(preferences.indexHairColor().get() * 15 + preferences.indexExpression().get() * 3 + preferences.indexEyeColor().get());
-/*
-            layers[4] = layer5_male.getDrawable(preferences.indexBottom().get() + preferences.indexFitness().get() * 4);
-            layers[5] = layer6_male.getDrawable(preferences.indexTop().get() + preferences.indexFitness().get() * 4);*/
-
             layers[4] = ResourcesCompat.getDrawable(getResources(), clothesList.get(preferences.indexBottom().get()).imageFilePath, null);
             layers[5] = ResourcesCompat.getDrawable(getResources(), clothesList.get(preferences.indexTop().get()).imageFilePath, null);
-
             layers[6] = layer7.getDrawable(preferences.indexHairstyle().get() * 3 + preferences.indexHairColor().get());
         }
 
@@ -300,11 +288,6 @@ public class MovatarFragment extends Fragment {
                     preferences.indexTop().put(index);
                 }
             } while (!nextFound);
-
-            /*if (preferences.indexTop().get() - 1 >= 0)
-                preferences.indexTop().put(preferences.indexTop().get() - 1);
-            else
-                preferences.indexTop().put(3);*/
         }
         else if (currentCategoryIndex == 5) // Bottom
         {
@@ -326,12 +309,6 @@ public class MovatarFragment extends Fragment {
                     preferences.indexBottom().put(index);
                 }
             } while (!nextFound);
-
-
-/*            if (preferences.indexBottom().get() - 1 >= 0)
-                preferences.indexBottom().put(preferences.indexBottom().get() - 1);
-            else
-                preferences.indexBottom().put(3);*/
         }
         else // Gender
         {
@@ -412,11 +389,6 @@ public class MovatarFragment extends Fragment {
                     preferences.indexTop().put(index);
                 }
             } while (!nextFound);
-
-/*            if (preferences.indexTop().get() + 1 < 4)
-                preferences.indexTop().put(preferences.indexTop().get() + 1);
-            else
-                preferences.indexTop().put(0);*/
         }
         else if (currentCategoryIndex == 5) // Bottom
         {
@@ -438,11 +410,6 @@ public class MovatarFragment extends Fragment {
                     preferences.indexBottom().put(index);
                 }
             } while (!nextBottomFound);
-
-/*            if (preferences.indexBottom().get() + 1 < 4)
-                preferences.indexBottom().put(preferences.indexBottom().get() + 1);
-            else
-                preferences.indexBottom().put(0);*/
         }
         else // Gender
         {
@@ -472,8 +439,8 @@ public class MovatarFragment extends Fragment {
         redrawLayers();
     }
 
-    @Click
-    void btnShareMovatar() {
+    //@Click
+    void shareMovatar() {
 
         Drawable[] layers2 = new Drawable[10];
         layers2[0] = ResourcesCompat.getDrawable(getResources(), R.drawable.layer0_hintergrund_3, null);
@@ -516,6 +483,24 @@ public class MovatarFragment extends Fragment {
         }
         share.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///sdcard/temporary_file.jpg"));
         startActivity(Intent.createChooser(share, "Share Image"));
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main, menu);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_share:
+                shareMovatar();
+                return true;
+        }
+        return false;
     }
 
     /**
