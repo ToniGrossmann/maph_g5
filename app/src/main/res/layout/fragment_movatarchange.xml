@@ -32,13 +32,15 @@
             android:id="@+id/imgMovatar"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_weight="6"/>
+            android:layout_weight="6"
+            android:background="@drawable/layer0_hintergrund_3" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="horizontal"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="@color/movation_dark_grey">
 
             <Button
                 android:id="@+id/btnMovatarCategoryChangeLeft"
@@ -49,7 +51,8 @@
                 android:background="@android:color/transparent"
                 android:textSize="30sp"
                 android:clickable="true"
-                android:layout_marginLeft="20dp" />
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/movation_text_dark_grey" />
 
             <TextView
                 android:id="@+id/txtCategory"
@@ -69,7 +72,8 @@
                 android:background="@android:color/transparent"
                 android:textSize="30sp"
                 android:clickable="true"
-                android:layout_marginRight="20dp" />
+                android:layout_marginRight="20dp"
+                android:textColor="@color/movation_text_dark_grey" />
 
         </LinearLayout>
 
@@ -78,7 +82,7 @@
             android:layout_height="0dp"
             android:orientation="horizontal"
             android:layout_weight="1"
-            android:layout_marginBottom="10dp">
+            android:background="@color/movation_light_grey">
 
             <Button
                 android:id="@+id/btnMovatarChangeLeft"
@@ -89,7 +93,8 @@
                 android:background="@android:color/transparent"
                 android:textSize="30sp"
                 android:clickable="true"
-                android:layout_marginLeft="20dp" />
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/movation_text_dark_grey" />
 
             <ImageView
                 android:id="@+id/imgThumbnail"
@@ -97,7 +102,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="8"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp" />
 
 
             <Button
@@ -109,7 +116,8 @@
                 android:background="@android:color/transparent"
                 android:textSize="30sp"
                 android:clickable="true"
-                android:layout_marginRight="20dp" />
+                android:layout_marginRight="20dp"
+                android:textColor="@color/movation_text_dark_grey" />
 
         </LinearLayout>
     </LinearLayout>

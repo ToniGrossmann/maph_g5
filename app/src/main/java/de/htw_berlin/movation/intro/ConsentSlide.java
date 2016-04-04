@@ -77,7 +77,7 @@ public class ConsentSlide extends Fragment {
         try {
             ConnectionState state = a.await();
             if (state == ConnectionState.CONNECTED) {
-                if (client.getSensorManager().getCurrentHeartRateConsent() != UserConsent.GRANTED | true)
+                if (client.getSensorManager().getCurrentHeartRateConsent() != UserConsent.GRANTED)
                     client.getSensorManager().requestHeartRateConsent(getActivity(), new HeartRateConsentListener() {
                         @Override
                         public void userAccepted(boolean b) {

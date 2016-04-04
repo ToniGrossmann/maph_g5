@@ -20,10 +20,16 @@
         completions."
     </string>
     <string name="notification_started_assignment">Gestartete Aufgabe: %1$s</string>
+    <string name="notification_please_wait_for_pulse">Bitte warte, bis dein Puls erkannt wird</string>
+    <string name="notification_please_wait_for_gps">Bitte warte, bis deine Position bestimmt ist</string>
+
+
     <string name="notification_title">Movation</string>
     <string name="notification_run_meters">Absolvierte Strecke: %1$d m</string>
     <string name="notification_current_pulse">Aktueller Puls: %1$d</string>
     <string name="notification_ticker">Aufgabe gestartet</string>
+    <string name="notification_success">Du bist erfolgreich %1$d Meter gelaufen!</string>
+    <string name="assignment_finished">Aufgabe erledigt</string>
     <string name="dummy_username">horsti@aol.com</string>
     <string name="dummy_password">horsti</string>
 
@@ -32,7 +38,6 @@
     <string name="stats">Statistik</string>
     <string name="movatar">Movatar</string>
     <string name="microsoft_band">Microsoft Band</string>
-    <string name="shop">Shop</string>
     <string name="credits">Creditpoints</string>
 
     <!-- Strings for SensorFragment -->
@@ -62,6 +67,7 @@
     <string name="short_introduction">Im Folgenden möchten wir dir eine kurze Einführung geben.</string>
     <string name="make_sure_to_have_band">Bitte stell sicher, dass Du ein solches Fitnessarmband besitzt. Zusätlich benötigen wir Deine Erlaubnis, die Pulsrate auszulesen.</string>
     <string name="give_heart_rate_consent">Einverständnis geben</string>
+    <string name="please_give_consent">Bitte erlaube das Erfassen deines Herzschlags.</string>
     <string name="heart_rate_consent_given">Einverständnis erteilt</string>
     <string name="requirements">Anforderungen</string>
     <string name="title_activity_statistic">statisticActivity</string>
@@ -92,17 +98,17 @@
 
     <!-- Strings for App Intro Slide 5-->
     <string name="warning_title">Warnhinweise</string>
-    <string name="warning_1">Unser Ziel ist es das du mit dem Benutzen unserer App Fit wirst und dabei Spass hast.
-        Damit du das Erreichst möchten wir dir noch ein paar Hinweise mit auf dem Weg geben.
+    <string name="warning_1">Unser Ziel ist es, dass du mit dem Benutzen unserer App fit wirst und dabei Spaß hast.
+        Damit du das erreichst, möchten wir dir noch ein paar Hinweise mit auf dem Weg geben.
     </string>
-    <string name="warning_2">- Benutze die App nur wenn du dich Gesund fühlst. Verzichte auf Sport wenn du krank bist.</string>
+    <string name="warning_2">- Benutze die App nur, wenn du dich gesund fühlst. Verzichte auf Sport, wenn du krank bist.</string>
     <string name="warning_3">- Benutze das Band nur während des Joggens. Bei anderen sportlichen Aktivitäten kannst du hängen bleiben und dich selbst verletzen.</string>
-    <string name="warning_4">- Überanspruche dich nicht und mach auch Mal eine Pause ;)</string>
+    <string name="warning_4">- Überanspruche dich nicht und mach auch mal eine Pause. ;)</string>
 
-    <string name="fitness_level_x">Fitnesslevel: %1$s</string>
-    <string name="fit">Fit</string>
-    <string name="unfit">Unfit</string>
-    <string name="normal">Normal</string>
+    <string name="fitness_level_x">Fitnesslevel %1$s</string>
+    <string name="fit">3: Marathonroutinier</string>
+    <string name="normal">2: Gelegenheitsläufer</string>
+    <string name="unfit">1: Trainingseinsteiger</string>
     <string name="category">Kategorie</string>
     <string name="current_goal_heading">Aktuelles Ziel</string>
     <string name="no_current_goal">Du hast dir aktuell kein Ziel gesetzt.</string>
@@ -114,6 +120,10 @@
 
     <!-- Strings for page titles -->
     <string name="title_home">Home</string>
+    <string name="title_goals">Ziele</string>
+    <string name="title_statistics">Statistik</string>
     <string name="title_movatar">Movatar</string>
     <string name="title_shop">Shop</string>
+    <string name="title_microsoft_band">Microsoft Band</string>
+
 </resources>
