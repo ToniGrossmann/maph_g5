@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationProvider;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -50,6 +51,9 @@ public class BandService extends Service {
     private final String TAG = getClass().getSimpleName();
     private static final int LOCATION_INTERVAL = 1000;
     private static final float LOCATION_DISTANCE = 1f;
+    private final IBinder mBinder = new BandServiceBinder();
+    private ProgressListener progressListener;
+
     BandClient client;
     boolean started = false;
     boolean run = true;
@@ -63,12 +67,12 @@ public class BandService extends Service {
     Dao<Assignment, Long> assignmentDao;
     @Pref
     Preferences_ prefs;
-    Assignment currentAssignment;
-    float runMeters = 0;
-    int currentPulse = 0;
-    boolean firstGpsFixAcquired = false;
-    boolean firstPulseFixAcquired = false;
-    boolean hasStartVibrated = false;
+    private Assignment currentAssignment;
+    private float runMeters = 0;
+    private int currentPulse = 0;
+    private boolean firstGpsFixAcquired = false;
+    private boolean firstPulseFixAcquired = false;
+    private boolean hasStartVibrated = false;
 
     private class LocationListener implements android.location.LocationListener {
         Location mLastLocation;
@@ -84,6 +88,8 @@ public class BandService extends Service {
             //toast(location.toString());
             if (mLastLocation.getAccuracy() != 0.0 && firstPulseFixAcquired)
                 runMeters += location.distanceTo(mLastLocation);
+            if(progressListener != null)
+                progressListener.onRunMeterIncreased(runMeters);
             mLastLocation.set(location);
             if(runMeters >= currentAssignment.goal.runDistance){
                 currentAssignment.status = Assignment.Status.COMPLETED;
@@ -223,6 +229,8 @@ public class BandService extends Service {
                         vitals.assignment = currentAssignment;
 
                         if (bandHeartRateEvent.getQuality().equals(HeartRateQuality.LOCKED)) {
+                            if(progressListener != null)
+                                progressListener.onNewHeartRateRead(bandHeartRateEvent.getHeartRate());
                             currentPulse = bandHeartRateEvent.getHeartRate();
                             firstPulseFixAcquired = true;
 
@@ -324,7 +332,7 @@ public class BandService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return mBinder;
     }
 
     void showSuccessNotification(){
@@ -375,5 +383,43 @@ public class BandService extends Service {
 
 
         notificationManager.notify(Constants.NOTIFICATION_ID, notificationBuilder.build());
+    }
+
+    public class BandServiceBinder extends Binder {
+        BandService getService() {
+            return BandService.this;
+        }
+    }
+
+    /**
+     * Registers a listener to receive current assignment information,
+     * @param pl listener, can be null
+     */
+    public void registerProgressListener(@Nullable ProgressListener pl){
+        this.progressListener = pl;
+    }
+
+    public Assignment getCurrentAssignment(){
+        return currentAssignment;
+    }
+
+    public float getRunMeters(){
+        return runMeters;
+    }
+    public int getCurrentPulse(){
+        return currentPulse;
+    }
+    public interface ProgressListener{
+        /**
+         * Called whenever a new pulse reading occured
+         * @param heartRate
+         */
+        void onNewHeartRateRead(int heartRate);
+
+        /**
+         * Called whenever the run meter increases
+         * @param runMeters
+         */
+        void onRunMeterIncreased(float runMeters);
     }
 }
