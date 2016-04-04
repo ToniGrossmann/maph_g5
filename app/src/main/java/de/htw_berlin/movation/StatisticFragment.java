@@ -89,7 +89,7 @@ public class StatisticFragment extends Fragment {
 
         chart.setData(data);
 
-
+        getActivity().setTitle(R.string.title_statistics);
     }
 
     @Override

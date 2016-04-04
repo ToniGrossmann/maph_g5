@@ -105,18 +105,6 @@
     <string name="warning_3">- Benutze das Band nur während des Joggens. Bei anderen sportlichen Aktivitäten kannst du hängen bleiben und dich selbst verletzen.</string>
     <string name="warning_4">- Überanspruche dich nicht und mach auch mal eine Pause. ;)</string>
 
-    <string name="fitness_level_x">Fitnesslevel %1$s</string>
-    <string name="fit">3: Marathonroutinier</string>
-    <string name="normal">2: Gelegenheitsläufer</string>
-    <string name="unfit">1: Trainingseinsteiger</string>
-    <string name="category">Kategorie</string>
-    <string name="current_goal_heading">Aktuelles Ziel</string>
-    <string name="no_current_goal">Du hast dir aktuell kein Ziel gesetzt.</string>
-    <string name="current_credits_heading">Verfügbare Credits</string>
-    <string name="fitnessstatus_heading">Fitnesstatus</string>
-    <string name="fitnessstatus_fit">Fitnesslevel 3: Du bist richtig fit!</string>
-    <string name="fitnessstatus_normal">Fitnesslevel 2: Streng dich noch etwas an!</string>
-    <string name="fitnessstatus_unfit">Fitnesslevel 1: Aller Anfang ist schwer!</string>
 
     <!-- Strings for page titles -->
     <string name="title_home">Home</string>
@@ -125,5 +113,27 @@
     <string name="title_movatar">Movatar</string>
     <string name="title_shop">Shop</string>
     <string name="title_microsoft_band">Microsoft Band</string>
+
+    <!-- Strings for home page -->
+    <string name="current_goal_heading">Aktuelles Ziel</string>
+    <string name="no_current_goal">Du hast dir aktuell kein Ziel gesetzt.</string>
+    <string name="current_credits_heading">Verfügbare Credits</string>
+    <string name="fitnessstatus_heading">Fitnesstatus</string>
+    <string name="fitnessstatus_fit">Fitnesslevel 3: Du bist richtig fit!</string>
+    <string name="fitnessstatus_normal">Fitnesslevel 2: Streng dich noch etwas an!</string>
+    <string name="fitnessstatus_unfit">Fitnesslevel 1: Aller Anfang ist schwer!</string>
+
+    <!-- Strings for statistics page -->
+    <string name="goals_counter_heading">Anzahl erreichter Ziele</string>
+    <string name="credits_all_time_heading">Gesamtanzahl erreichter Credits</string>
+    <string name="max_pulse_heading">Maximaler Puls</string>
+    <string name="min_pulse_heading">Minimaler Puls</string>
+
+    <!-- Strings for Movatar page -->
+    <string name="fitness_level_x">Fitnesslevel %1$s</string>
+    <string name="fit">3: Marathonroutinier</string>
+    <string name="normal">2: Gelegenheitsläufer</string>
+    <string name="unfit">1: Trainingseinsteiger</string>
+    <string name="category">Kategorie</string>
 
 </resources>
