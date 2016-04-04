@@ -121,13 +121,13 @@ public class MainActivity extends AppCompatActivity
                                            .addToBackStack(null)
                                            .commit();
                 break;
-            case R.id.nav_sensors:
+            /*case R.id.nav_sensors:
                 SensorFragment sf = SensorFragment_.builder().mUserId(1).build();
                 getSupportFragmentManager().beginTransaction()
                                            .replace(R.id.content_main_framelayout, sf)
                                            .addToBackStack(null)
                                            .commit();
-                break;
+                break;*/
             case R.id.nav_goals:
                 if (prefs.startedAssignmentId().exists())
                     Toast.makeText(this, R.string.assignment_already_active, Toast.LENGTH_LONG).show();
