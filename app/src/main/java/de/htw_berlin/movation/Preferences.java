@@ -13,7 +13,7 @@ public interface Preferences {
     boolean hasBeenStarted();
     boolean hasActiveAssignment();
 
-    @DefaultInt(10000)
+    @DefaultInt(0)
     int creditsEarnedLifeTime();
     int maxPulse();
     int minPulse();
