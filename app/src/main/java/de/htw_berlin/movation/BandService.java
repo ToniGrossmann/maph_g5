@@ -105,6 +105,7 @@ public class BandService extends Service {
                 run = false;
                 int credits = prefs.credits().get();
                 prefs.credits().put(credits+currentAssignment.goal.reward);
+                prefs.creditsEarnedLifeTime().put(prefs.creditsEarnedLifeTime().get()+currentAssignment.goal.reward);
                 showSuccessNotification();
                 stopSelf();
             }
