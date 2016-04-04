@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.j256.ormlite.dao.Dao;
 import com.microsoft.band.BandClient;
@@ -22,6 +23,7 @@ import com.mikepenz.iconics.context.IconicsContextWrapper;
 
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.androidannotations.ormlite.annotations.OrmLiteDao;
 
 import java.sql.SQLException;
@@ -37,6 +39,8 @@ public class MainActivity extends AppCompatActivity
     MyApplication app;
     @OrmLiteDao(helper = DatabaseHelper.class)
     Dao<User, Long> mUserDao;
+    @Pref
+    Preferences_ prefs;
 
     private DatabaseHelper dbHelper;
     BandClient client;
@@ -125,9 +129,12 @@ public class MainActivity extends AppCompatActivity
                                            .commit();
                 break;
             case R.id.nav_goals:
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_main_framelayout, GoalFragment_.builder().build())
-                                           .addToBackStack(null)
-                                           .commit();
+                if (prefs.startedAssignmentId().exists())
+                    Toast.makeText(this, R.string.assignment_already_active, Toast.LENGTH_LONG).show();
+                else
+                    getSupportFragmentManager().beginTransaction().replace(R.id.content_main_framelayout, GoalFragment_.builder().build())
+                                               .addToBackStack(null)
+                                               .commit();
                 break;
             case R.id.nav_stats:
                 StatisticFragment statf = StatisticFragment_.builder().mVitalsId(1).build();
@@ -161,7 +168,7 @@ public class MainActivity extends AppCompatActivity
 
     public void getConsent() {
         BandInfo[] devices = BandClientManager.getInstance().getPairedBands();
-        if(devices.length == 0)
+        if (devices.length == 0)
             return;
         client = BandClientManager.getInstance().create(app, devices[0]);
         if (client.getSensorManager().getCurrentHeartRateConsent() != UserConsent.GRANTED)
@@ -179,11 +186,11 @@ public class MainActivity extends AppCompatActivity
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.please_give_consent)
                .setCancelable(false)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        getConsent();
-                    }
-                }).show();
+               .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                   @Override
+                   public void onClick(DialogInterface dialog, int which) {
+                       getConsent();
+                   }
+               }).show();
     }
 }
