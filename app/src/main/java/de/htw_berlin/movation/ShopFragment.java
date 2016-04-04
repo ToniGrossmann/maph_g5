@@ -71,34 +71,30 @@ public class ShopFragment extends Fragment {
                                                 public void onClick(DialogInterface dialog, int which) {
                                                     dialog.dismiss();
                                                 }
-                                            });
+                                            }).show();
 
                                 } else {
                                     new AlertDialog.Builder(getContext())
-                                            .setTitle("Nicht genug Credits!!")
-                                            .setMessage("Du hast nicht genügend Credits für " + insideItem.name + "!").setNeutralButton(android.R.string.ok,
+                                            .setTitle("Nicht genug Credits!")
+                                            .setMessage("Du hast nicht genügend Credits für " + insideItem.name + "!")
+                                            .setNeutralButton(android.R.string.ok,
                                             new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog, int which) {
                                                     dialog.dismiss();
                                                 }
-                                            });
+                                            }).show();
                                 }
                                 // KAUFEN KAUFEN!
                             }
                     }
 
                 )
-                .
-
-                        setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                         // Nööööö
                                     }
                     }
-
                         )
-                            .
-
-                    show();
+                            .show();
                 }
     }

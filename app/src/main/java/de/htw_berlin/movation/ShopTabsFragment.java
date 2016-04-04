@@ -36,10 +36,7 @@ public class ShopTabsFragment extends Fragment {
     ViewPager viewPager;
     @ViewById
     TabLayout tabLayout;
-    //@ViewById
-    //TextView textViewCredits;
-    //@ViewById
-    //TextView textViewFitness;
+
     @Pref
     Preferences_ preferences;
 
