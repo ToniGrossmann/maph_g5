@@ -38,7 +38,6 @@ import org.androidannotations.ormlite.annotations.OrmLiteDao;
 
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.List;
 import java.util.Random;
 
 import de.htw_berlin.movation.persistence.DatabaseHelper;
@@ -196,8 +195,9 @@ public class BandService extends Service {
         if(devices.length == 0){
             run = false;
             prefs.startedAssignmentId().remove();
-            currentAssignment.status = Assignment.Status.FAILED;
             try {
+                currentAssignment = assignmentDao.queryForId(prefs.startedAssignmentId().get());
+                currentAssignment.status = Assignment.Status.FAILED;
                 currentAssignment.update();
             } catch (SQLException e) {
                 e.printStackTrace();
