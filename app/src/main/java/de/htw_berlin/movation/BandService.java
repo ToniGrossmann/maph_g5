@@ -334,6 +334,11 @@ public class BandService extends Service {
     public IBinder onBind(Intent intent) {
         return mBinder;
     }
+    @Override
+    public boolean onUnbind(Intent intent) {
+        progressListener = null;
+        return false;
+    }
 
     void showSuccessNotification(){
         Intent intent = new Intent(this, MainActivity_.class);
