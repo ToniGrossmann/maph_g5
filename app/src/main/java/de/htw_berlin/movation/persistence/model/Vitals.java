@@ -16,8 +16,10 @@ public class Vitals extends BaseDaoEnabled {
     public double lat;
     @DatabaseField
     public double lon;
-    @DatabaseField(foreign = true)
+    @DatabaseField(foreign = true, foreignAutoCreate = true)
     public Assignment assignment;
+    @DatabaseField
+    public double velocity;
 
 
 

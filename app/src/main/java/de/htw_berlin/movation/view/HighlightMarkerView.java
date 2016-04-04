@@ -1,4 +1,4 @@
-package de.htw_berlin.movation;
+package de.htw_berlin.movation.view;
 
 import android.content.Context;
 import android.widget.TextView;
@@ -6,6 +6,8 @@ import android.widget.TextView;
 import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.data.Entry;
+
+import de.htw_berlin.movation.R;
 
 /**
  * Created by Telan on 31.03.2016.

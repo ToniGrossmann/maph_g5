@@ -1,13 +1,8 @@
 package de.htw_berlin.movation;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -31,11 +26,11 @@ import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.androidannotations.ormlite.annotations.OrmLiteDao;
 
 import java.sql.SQLException;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import de.htw_berlin.movation.persistence.DatabaseHelper;
 import de.htw_berlin.movation.persistence.model.Vitals;
+import de.htw_berlin.movation.view.HighlightMarkerView;
 
 
 @EFragment(R.layout.fragment_statistic)

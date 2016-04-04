@@ -1,20 +1,13 @@
-package de.htw_berlin.movation;
+package de.htw_berlin.movation.adapter;
 
 /**
  * Created by Telan on 02.04.2016.
  */
-import android.app.Activity;
+
 import android.content.Context;
-import android.util.SparseArray;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.CheckedTextView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.j256.ormlite.dao.Dao;
 
@@ -27,9 +20,12 @@ import org.androidannotations.ormlite.annotations.OrmLiteDao;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.htw_berlin.movation.Constants;
+import de.htw_berlin.movation.Preferences_;
 import de.htw_berlin.movation.persistence.DatabaseHelper;
-import de.htw_berlin.movation.persistence.model.DiscountType;
 import de.htw_berlin.movation.persistence.model.MovatarClothes;
+import de.htw_berlin.movation.view.ItemView;
+import de.htw_berlin.movation.view.ItemView_;
 
 @EBean
 public class ListViewAdapter extends BaseAdapter {

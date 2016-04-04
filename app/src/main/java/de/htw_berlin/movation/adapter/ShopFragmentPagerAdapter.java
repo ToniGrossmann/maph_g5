@@ -1,4 +1,4 @@
-package de.htw_berlin.movation;
+package de.htw_berlin.movation.adapter;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -7,6 +7,9 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.htw_berlin.movation.DiscountFragment_;
+import de.htw_berlin.movation.ShopFragment_;
 
 public class ShopFragmentPagerAdapter extends FragmentStatePagerAdapter {
     final int PAGE_COUNT = 2;

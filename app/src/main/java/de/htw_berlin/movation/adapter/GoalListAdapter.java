@@ -1,4 +1,4 @@
-package de.htw_berlin.movation;
+package de.htw_berlin.movation.adapter;
 
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import de.htw_berlin.movation.R;
 import de.htw_berlin.movation.persistence.DatabaseHelper;
 import de.htw_berlin.movation.persistence.model.Goal;
 import de.htw_berlin.movation.persistence.model.GoalCategory;
