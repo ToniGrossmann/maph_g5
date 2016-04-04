@@ -1,6 +1,5 @@
 package de.htw_berlin.movation;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.widget.TextView;
@@ -9,16 +8,13 @@ import com.j256.ormlite.dao.Dao;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
-import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
-import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.androidannotations.ormlite.annotations.OrmLiteDao;
 
 import java.sql.SQLException;
-import java.util.Calendar;
 
 import de.htw_berlin.movation.persistence.DatabaseHelper;
 import de.htw_berlin.movation.persistence.model.Assignment;
@@ -71,7 +67,7 @@ public class HomeFragment extends Fragment {
         getActivity().setTitle(R.string.title_home);
         getActivity().getActionBar();
 
-        if (preferences.hasActiveGoal().get()) {
+        if (preferences.startedAssignmentId().exists()) {
             textViewCurrentGoal.setText("ZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIEL.");
         }
         else

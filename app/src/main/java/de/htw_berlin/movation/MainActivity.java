@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity
     Dao<User, Long> mUserDao;
 
     private DatabaseHelper dbHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity
 
         HomeFragment hf = HomeFragment_.builder().mUserId(1).build();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_main_framelayout, hf).commit();
+                                   .replace(R.id.content_main_framelayout, hf).commit();
     }
 
     @Override
@@ -68,61 +69,74 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-/*   # UNUSED
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+    /*   # UNUSED
+        @Override
+        public boolean onCreateOptionsMenu(Menu menu) {
+            // Inflate the menu; this adds items to the action bar if it is present.
+            getMenuInflater().inflate(R.menu.main, menu);
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
-    }
-*/
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            // Handle action bar item clicks here. The action bar will
+            // automatically handle clicks on the Home/Up button, so long
+            // as you specify a parent activity in AndroidManifest.xml.
+            int id = item.getItemId();
+
+            //noinspection SimplifiableIfStatement
+            if (id == R.id.action_settings) {
+                return true;
+            }
+
+            return super.onOptionsItemSelected(item);
+        }
+    */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             default:
                 break;
             case R.id.nav_homepage:
                 HomeFragment hf = HomeFragment_.builder().mUserId(1).build();
                 getSupportFragmentManager().beginTransaction()
-                                           .replace(R.id.content_main_framelayout, hf).commit();
+                                           .replace(R.id.content_main_framelayout, hf)
+                                           .addToBackStack(null)
+                                           .commit();
                 break;
             case R.id.nav_sensors:
                 SensorFragment sf = SensorFragment_.builder().mUserId(1).build();
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_main_framelayout, sf).commit();
+                                           .replace(R.id.content_main_framelayout, sf)
+                                           .addToBackStack(null)
+                                           .commit();
                 break;
             case R.id.nav_goals:
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_main_framelayout, TestFragment_.builder().build()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_main_framelayout, TestFragment_.builder().build())
+                                           .addToBackStack(null)
+                                           .commit();
                 break;
             case R.id.nav_stats:
                 StatisticFragment statf = StatisticFragment_.builder().mVitalsId(1).build();
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_main_framelayout, statf).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_main_framelayout, statf)
+                                           .addToBackStack(null)
+                                           .commit();
                 break;
 
             case R.id.nav_shop:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_main_framelayout, ShopFragment_.builder().build()).commit();
+                                           .replace(R.id.content_main_framelayout, ShopFragment_.builder().build())
+                                           .addToBackStack(null)
+                                           .commit();
                 break;
             case R.id.nav_movatar:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_main_framelayout, MovatarFragment_.builder().build()).commit();
+                                           .replace(R.id.content_main_framelayout, MovatarFragment_.builder().build())
+                                           .addToBackStack(null)
+                                           .commit();
                 break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
