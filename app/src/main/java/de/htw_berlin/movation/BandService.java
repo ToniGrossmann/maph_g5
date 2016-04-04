@@ -99,6 +99,7 @@ public class BandService extends Service {
                     e.printStackTrace();
                 }
                 prefs.startedAssignmentId().remove();
+                prefs.successfulGoals().put(prefs.successfulGoals().get()+1);
                 if (progressListener != null)
                     progressListener.onFinishAssignment();
                 run = false;
