@@ -17,6 +17,8 @@ import org.androidannotations.ormlite.annotations.OrmLiteDao;
 import java.sql.SQLException;
 
 import de.htw_berlin.movation.persistence.DatabaseHelper;
+import de.htw_berlin.movation.persistence.model.Assignment;
+import de.htw_berlin.movation.persistence.model.Goal;
 import de.htw_berlin.movation.persistence.model.User;
 
 @EFragment(R.layout.fragment_home)
@@ -28,6 +30,10 @@ public class HomeFragment extends Fragment {
     private DatabaseHelper dbHelper;
     @OrmLiteDao(helper = DatabaseHelper.class)
     Dao<User, Long> userDao;
+    @OrmLiteDao(helper = DatabaseHelper.class)
+    Dao<Assignment, Long> assignmentDao;
+    @OrmLiteDao(helper = DatabaseHelper.class)
+    Dao<Goal, Long> goalDao;
     @App
     MyApplication app;
     @ViewById
@@ -61,7 +67,7 @@ public class HomeFragment extends Fragment {
         getActivity().setTitle(R.string.title_home);
         getActivity().getActionBar();
 
-        if (preferences.hasActiveGoal().get()) {
+        if (preferences.startedAssignmentId().exists()) {
             textViewCurrentGoal.setText("ZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIEL.");
         }
         else
