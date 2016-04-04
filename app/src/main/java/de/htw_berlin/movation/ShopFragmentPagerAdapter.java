@@ -21,7 +21,7 @@ public class ShopFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return ShopFragment.newInstance(position + 1);
+        return ShopFragment_.builder().mPage(position + 1).build();
     }
 
     @Override
