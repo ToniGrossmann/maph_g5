@@ -247,6 +247,7 @@ public class BandService extends Service {
                         vitals.timeStamp = new Date(bandHeartRateEvent.getTimestamp());
                         vitals.lat = mLocationListeners[0].mLastLocation.getLatitude();
                         vitals.lon = mLocationListeners[0].mLastLocation.getLongitude();
+                        vitals.velocity = mLocationListeners[0].mLastLocation.getSpeed();
                         vitals.assignment = currentAssignment;
 
                         if (bandHeartRateEvent.getQuality().equals(HeartRateQuality.LOCKED)) {
