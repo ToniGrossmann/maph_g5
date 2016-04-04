@@ -1,7 +1,10 @@
 package de.htw_berlin.movation;
 
 import android.annotation.SuppressLint;
+import android.content.ComponentName;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.widget.TextView;
 
@@ -11,6 +14,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.androidannotations.ormlite.annotations.OrmLiteDao;
@@ -46,6 +50,11 @@ public class HomeFragment extends Fragment {
     @Pref
     Preferences_ preferences;
 
+    private BandService bandService;
+    private Assignment currentAssignment;
+    private float currentRunMeters;
+    private int currentHeartRate;
+
     public HomeFragment() {}
 
     @Override
@@ -62,6 +71,52 @@ public class HomeFragment extends Fragment {
     }
 
 
+    private class ProgressListener implements BandService.ProgressListener {
+        @Override
+        public void onNewHeartRateRead(final int heartRate) {
+            currentHeartRate = heartRate;
+            updateAssignmentProgressTextView(false);
+        }
+
+        @Override
+        public void onRunMeterIncreased(final float runMeters) {
+            currentRunMeters = runMeters;
+            updateAssignmentProgressTextView(false);
+        }
+
+        @Override
+        public void onFinishAssignment() {
+            updateAssignmentProgressTextView(true);
+            // TODO refresh credits
+        }
+    }
+
+    @UiThread
+    void updateAssignmentProgressTextView(boolean finished) {
+        if(finished){
+            textViewCurrentGoal.setText(R.string.no_current_goal);
+            textViewCredits.setText((preferences.credits().getOr(0).toString()));
+            currentRunMeters = 0;
+            currentHeartRate = 0;
+            currentAssignment = null;
+        }
+        else {
+            if(currentAssignment == null)
+                return;
+        String sb = getResources().getString(R.string.notification_started_assignment, currentAssignment.goal.description) + "\n" +
+                getResources().getString(R.string.notification_run_meters, (int) currentRunMeters) + "\n" +
+                getResources().getString(R.string.notification_current_pulse, currentHeartRate);
+        textViewCurrentGoal.setText(sb);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (bandService != null)
+            bandService.registerProgressListener(null);
+    }
+
     @SuppressLint("SetTextI18n")
     @AfterViews
     void afterViews() {
@@ -69,10 +124,22 @@ public class HomeFragment extends Fragment {
         getActivity().setTitle(R.string.title_home);
 
         if (preferences.startedAssignmentId().exists()) {
-            textViewCurrentGoal.setText("ZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIEL.");
-        }
-        else
-        {
+            getActivity().bindService(BandService_.intent(getActivity()).get(), new ServiceConnection() {
+                @Override
+                public void onServiceConnected(ComponentName name, IBinder service) {
+                    bandService = ((BandService.BandServiceBinder) service).getService();
+                    bandService.registerProgressListener(new ProgressListener());
+                    currentAssignment = bandService.getCurrentAssignment();
+                    currentHeartRate = bandService.getCurrentPulse();
+                    currentRunMeters = bandService.getRunMeters();
+                    updateAssignmentProgressTextView(false);
+                }
+
+                @Override
+                public void onServiceDisconnected(ComponentName name) { }
+            }, 0);
+
+        } else {
             textViewCurrentGoal.setText(R.string.no_current_goal);
         }
 

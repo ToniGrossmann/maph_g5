@@ -100,6 +100,8 @@ public class BandService extends Service {
                     e.printStackTrace();
                 }
                 prefs.startedAssignmentId().remove();
+                if (progressListener != null)
+                    progressListener.onFinishAssignment();
                 run = false;
                 int credits = prefs.credits().get();
                 prefs.credits().put(credits+currentAssignment.goal.reward);
@@ -193,6 +195,13 @@ public class BandService extends Service {
         BandInfo[] devices = BandClientManager.getInstance().getPairedBands();
         if(devices.length == 0){
             run = false;
+            prefs.startedAssignmentId().remove();
+            currentAssignment.status = Assignment.Status.FAILED;
+            try {
+                currentAssignment.update();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             stopSelf();
             return;
         }
@@ -418,7 +427,7 @@ public class BandService extends Service {
     /**
      * Registers a listener to receive current assignment information,
      *
-     * @param pl listener, can be null
+     * @param pl listener, can be null to unregister old listener
      */
     public void registerProgressListener(@Nullable ProgressListener pl) {
         this.progressListener = pl;
@@ -450,5 +459,10 @@ public class BandService extends Service {
          * @param runMeters
          */
         void onRunMeterIncreased(float runMeters);
+
+        /**
+         * Called when the assignment is finished
+         */
+        void onFinishAssignment();
     }
 }

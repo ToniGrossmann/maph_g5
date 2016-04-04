@@ -30,8 +30,8 @@
 
     <string name="notification_run_meters">Absolvierte Strecke: %1$d m</string>
     <string name="notification_current_pulse">Aktueller Puls: %1$d</string>
-    <string name="notification_ticker">Aufgabe gestartet</string>
     <string name="notification_success">Du bist erfolgreich %1$d Meter gelaufen!</string>
+    <string name="notification_ticker">Aufgabe gestartet</string>
     <string name="assignment_finished">Aufgabe erledigt</string>
     <string name="dummy_username">horsti@aol.com</string>
     <string name="dummy_password">horsti</string>

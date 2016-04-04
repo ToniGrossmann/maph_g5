@@ -65,6 +65,7 @@ public class GoalFragment extends Fragment {
 
     @AfterViews
     void bindAdapter() {
+        getActivity().setTitle(R.string.goals);
 
         expListView.setAdapter(listAdapter);
         expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
