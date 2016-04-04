@@ -6,4 +6,5 @@
     <color name="movation_bg">#80D0CF</color>
     <color name="movation_light_grey">#ededed</color>
     <color name="movation_dark_grey">#e0e0e0</color>
+    <color name="movation_text_dark_grey">#787878</color>
 </resources>
