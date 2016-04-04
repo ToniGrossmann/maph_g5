@@ -67,10 +67,18 @@ public class StatisticFragment extends Fragment {
     @ViewById(R.id.successfullGoalsValue)
     TextView totalGoalsSuccessfull;
 
+    @ViewById(R.id.distanceValue)
+    TextView txtDistance;
+
+    @ViewById(R.id.maxPaceValue)
+    TextView txtMaxPaceValue;
+
     @Pref
     Preferences_ preferences;
 
     private int lastIndex = 0;
+
+    List<Vitals> vitalList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -105,9 +113,6 @@ public class StatisticFragment extends Fragment {
 
         chart.setData(data);
 
-
-
-
         getActivity().setTitle(R.string.title_statistics);
     }
 
@@ -115,23 +120,40 @@ public class StatisticFragment extends Fragment {
     public void onStart()
     {
         super.onStart();
+        double distance = 0;
+
+        double maxPace = 0;
+        double currentPace = 0;
 
         try {
-            List<Vitals> vitalList = vitalsDao.queryForAll();
+            vitalList = vitalsDao.queryForAll();
 
             for(int i = lastIndex; i < vitalList.size(); i++)
             {
                 addEntry(vitalList.get(i).pulse,Integer.toString(i));
                 lastIndex = i+1;
+
+                if (vitalList.get(i).assignment != null && vitalList.get(i).assignment.goal != null) {
+                    distance += vitalList.get(i).assignment.goal.runDistance;
+                }
+
+                currentPace = vitalList.get(i).velocity;
+                if (currentPace > maxPace)
+                    maxPace = currentPace;
             }
         }
         catch(SQLException e)
         {}
 
+        currentPace = currentPace * 3.6;
+
         pulseMaxValue.setText(Integer.toString(preferences.maxPulse().get()));
         pulseMinValue.setText(Integer.toString(preferences.minPulse().get()));
         totalCreditsEarned.setText(Integer.toString(preferences.creditsEarnedLifeTime().get()));
         totalGoalsSuccessfull.setText(Integer.toString(preferences.successfulGoals().get()));
+
+        txtDistance.setText(Double.toString(distance) + "m");
+        txtMaxPaceValue.setText(Double.toString(maxPace) + "km/h");
 
         chart.invalidate();
 

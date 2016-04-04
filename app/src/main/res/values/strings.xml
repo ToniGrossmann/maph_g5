@@ -131,6 +131,8 @@
     <string name="credits_all_time_heading">Gesamtanzahl erreichter Credits</string>
     <string name="max_pulse_heading">Maximaler Puls</string>
     <string name="min_pulse_heading">Minimaler Puls</string>
+    <string name="distance_heading">Gesamte gelaufene Distanz</string>
+    <string name="max_pace_heading">Höchste gemessene Geschwindigkeit</string>
 
     <!-- Strings for Movatar page -->
     <string name="fitness_level_x">Fitnesslevel %1$s</string>
