@@ -18,10 +18,10 @@ import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.androidannotations.ormlite.annotations.OrmLiteDao;
 
 import de.htw_berlin.movation.persistence.DatabaseHelper;
-import de.htw_berlin.movation.persistence.model.MovatarClothes;
+import de.htw_berlin.movation.persistence.model.DiscountType;
 
-@EFragment(R.layout.fragment_shop_list)
-public class ShopFragment extends Fragment {
+@EFragment(R.layout.fragment_shop_discount)
+public class DiscountFragment extends Fragment {
 
     @App
     MyApplication app;
@@ -33,7 +33,7 @@ public class ShopFragment extends Fragment {
     int mPage;
 
     @OrmLiteDao(helper = DatabaseHelper.class)
-    Dao<MovatarClothes, Long> movatarClothesDao;
+    Dao<DiscountType, Long> discountTypeDao;
 
     @Bean
     ListViewAdapter adapter;
@@ -47,26 +47,28 @@ public class ShopFragment extends Fragment {
     }
 
     @ItemClick
-    void listViewItemClicked(final MovatarClothes item)
+    void listViewItemClicked(final DiscountType item)
     {
-        final MovatarClothes insideItem = item;
+        final DiscountType insideItem = item;
         new AlertDialog.Builder(getContext())
                 .setTitle("Kaufbestätigung")
-                .setMessage("Bist du sicher, dass du deinem Movatar \"" + insideItem.name + "\" für " + insideItem.price + " Credits kaufen möchtest?")
+                .setMessage("Bist du sicher, dass du \"" + insideItem.description + "\" für \"" +
+                        insideItem.name + "\" von \"" + insideItem.brand + "\" für den Preis von " +
+                        insideItem.price + " Credits kaufen möchtest?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 if ((preferences.credits().get() - insideItem.price) >= 0) {
                                     preferences.credits().put(preferences.credits().get() - (int) item.price);
                                     try {
-                                        insideItem.owned = true;
-                                        movatarClothesDao.update(insideItem);
+                                        //insideItem.owned = true;
+                                        discountTypeDao.update(insideItem);
 
+                                    } catch (Exception e) {
                                     }
-                                    catch(Exception e) {}
 
                                     new AlertDialog.Builder(getContext())
                                             .setTitle("Erfolg!")
-                                            .setMessage("Du hast " + insideItem.name + " gekauft!").setNeutralButton(android.R.string.ok,
+                                            .setMessage("Du hast den Rabatt für \"" + insideItem.name + "\" gekauft!").setNeutralButton(android.R.string.ok,
                                             new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog, int which) {
                                                     dialog.dismiss();
@@ -76,25 +78,24 @@ public class ShopFragment extends Fragment {
                                 } else {
                                     new AlertDialog.Builder(getContext())
                                             .setTitle("Nicht genug Credits!")
-                                            .setMessage("Du hast nicht genügend Credits für " + insideItem.name + "!")
+                                            .setMessage("Du hast nicht genügend Credits, um den Rabatt für \"" + insideItem.name + "\" zu kaufen!")
                                             .setNeutralButton(android.R.string.ok,
-                                            new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    dialog.dismiss();
-                                                }
-                                            }).show();
+                                                    new DialogInterface.OnClickListener() {
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            dialog.dismiss();
+                                                        }
+                                                    }).show();
                                 }
-                                // KAUFEN KAUFEN!
                             }
-                    }
+                        }
 
                 )
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        // Nööööö
-                                    }
-                    }
-                        )
-                            .show();
+                            public void onClick(DialogInterface dialog, int which) {
+                                // EMTPY
+                            }
+                        }
+                )
+                .show();
                 }
     }

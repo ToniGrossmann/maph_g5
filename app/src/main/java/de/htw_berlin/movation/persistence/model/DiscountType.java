@@ -22,7 +22,7 @@ public class DiscountType extends BaseDaoEnabled {
     public long price;
 
     @DatabaseField
-    public String imageFilePath;
+    public int imageFilePath;
 
     @DatabaseField(index = true)
     public String brand;
@@ -30,7 +30,7 @@ public class DiscountType extends BaseDaoEnabled {
 
     @Override
     public int delete() throws SQLException {
-        new File(imageFilePath).delete();
+        //new File(imageFilePath).delete();
         return super.delete();
     }
 
@@ -38,9 +38,12 @@ public class DiscountType extends BaseDaoEnabled {
     public DiscountType() {
     }
 
-    public DiscountType(String name, long price) {
+    public DiscountType(String name, String brand, String description, long price, int imageFilePath) {
         this.name = name;
+        this.brand =brand;
+        this.description = description;
         this.price = price;
+        this.imageFilePath = imageFilePath;
     }
 
 }

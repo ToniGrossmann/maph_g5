@@ -19,7 +19,7 @@ public class ShopFragmentPagerAdapter extends FragmentStatePagerAdapter {
         super(fm);
         this.context = context;
         fragments.add(ShopFragment_.builder().build());
-        fragments.add(ShopFragment_.builder().build());
+        fragments.add(DiscountFragment_.builder().build());
     }
 
     @Override
