@@ -3,13 +3,17 @@ package de.htw_berlin.movation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.widget.TextView;
 
 import com.j256.ormlite.dao.Dao;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
+import org.androidannotations.annotations.sharedpreferences.Pref;
+import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.androidannotations.ormlite.annotations.OrmLiteDao;
 
@@ -36,8 +40,14 @@ public class HomeFragment extends Fragment {
     Dao<Goal, Long> goalDao;
     @App
     MyApplication app;
+    @ViewById
+    TextView textViewCurrentGoal;
+    @ViewById
+    TextView textViewCredits;
+    @ViewById
+    TextView textViewFitness;
     @Pref
-    Preferences_ prefs;
+    Preferences_ preferences;
 
     public HomeFragment() {}
 
@@ -54,16 +64,28 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    @Click
-    void assignmentButton(){
-        try {
-            final Goal g = goalDao.queryBuilder().where().eq("runDistance", 10).query().get(0);
-            Assignment assignment = assignmentDao.createIfNotExists(new Assignment(){{goal =g; time = Calendar.getInstance().getTime();}});
-            Intent serviceIntent = BandService_.intent(app).get();
-            prefs.startedAssignmentId().put((long) assignment.id);
-            app.startService(serviceIntent);
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+    @AfterViews
+    void afterViews() {
+
+        getActivity().setTitle(R.string.title_home);
+        getActivity().getActionBar();
+
+        if (preferences.hasActiveGoal().get()) {
+            textViewCurrentGoal.setText("ZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIEL.");
         }
+        else
+        {
+            textViewCurrentGoal.setText(R.string.no_current_goal);
+        }
+
+        textViewCredits.setText((preferences.credits().get().toString()));
+
+        if (preferences.indexFitness().get() == Constants.Fitness.FIT.ordinal())
+            textViewFitness.setText(R.string.fitnessstatus_fit);
+        else if (preferences.indexFitness().get() == Constants.Fitness.AVERAGE.ordinal())
+            textViewFitness.setText(R.string.fitnessstatus_normal);
+        else if (preferences.indexFitness().get() == Constants.Fitness.FAT.ordinal())
+            textViewFitness.setText(R.string.fitnessstatus_unfit);
     }
 }

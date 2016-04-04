@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -40,6 +41,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import de.htw_berlin.movation.persistence.DatabaseHelper;
 import de.htw_berlin.movation.persistence.DatabaseTools;
@@ -54,6 +56,8 @@ public class MovatarFragment extends Fragment {
     private DatabaseHelper dbHelper;
     @OrmLiteDao(helper = DatabaseHelper.class)
     Dao<User, Long> userDao;
+    @OrmLiteDao(helper = DatabaseHelper.class)
+    Dao<MovatarClothes, Long> movatarClothesDao;
     @App
     MyApplication app;
     @SystemService
@@ -68,8 +72,6 @@ public class MovatarFragment extends Fragment {
     TextView txtCategory;
     @Pref
     Preferences_ preferences;
-    @Bean
-    DatabaseTools irgendeinNameHaha;
 
     private String[] categories = {"Frisur", "Haarfarbe", "Gesicht", "Augenfarbe", "Oberteil", "Unterteil", "Geschlecht"};
     private int currentCategoryIndex = 0;
@@ -79,10 +81,6 @@ public class MovatarFragment extends Fragment {
     private TypedArray layer3;
     private TypedArray layer4_female;
     private TypedArray layer4_male;
-    private TypedArray layer5_female;
-    private TypedArray layer5_male;
-    private TypedArray layer6_female;
-    private TypedArray layer6_male;
     private TypedArray layer7;
 
     private TypedArray tn_eyecolors;
@@ -96,6 +94,8 @@ public class MovatarFragment extends Fragment {
     Drawable[] layers = new Drawable[7];
     LayerDrawable layerDrawable;
 
+    List<MovatarClothes> clothesList;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,11 +107,20 @@ public class MovatarFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+
         currentCategoryIndex = 0;
+        setHasOptionsMenu(true);
     }
 
     @AfterViews
     void afterViews() {
+        try {
+            clothesList = movatarClothesDao.queryForAll();
+        }
+        catch(SQLException e)
+        {}
+
+        getActivity().setTitle(R.string.title_movatar);
 
         Resources r = getResources();
 
@@ -121,10 +130,6 @@ public class MovatarFragment extends Fragment {
         layer3 = r.obtainTypedArray(R.array.layer3);
         layer4_female = r.obtainTypedArray(R.array.layer4_female);
         layer4_male = r.obtainTypedArray(R.array.layer4_male);
-        layer5_female = r.obtainTypedArray(R.array.layer5_female);
-        layer5_male = r.obtainTypedArray(R.array.layer5_male);
-        layer6_female = r.obtainTypedArray(R.array.layer6_female);
-        layer6_male = r.obtainTypedArray(R.array.layer6_male);
         layer7 = r.obtainTypedArray(R.array.layer7);
 
         tn_eyecolors = r.obtainTypedArray(R.array.tn_eyecolors);
@@ -167,11 +172,11 @@ public class MovatarFragment extends Fragment {
         }
         else if (currentCategoryIndex == 4)
         {
-            imgThumbnail.setImageDrawable(tn_tops.getDrawable(preferences.indexTop().get()));
+            imgThumbnail.setImageDrawable(tn_tops.getDrawable((preferences.indexTop().get() - 4) % 8));
         }
         else if (currentCategoryIndex == 5)
         {
-            imgThumbnail.setImageDrawable(tn_bottoms.getDrawable(preferences.indexBottom().get()));
+            imgThumbnail.setImageDrawable(tn_bottoms.getDrawable((preferences.indexBottom().get() % 8)));
         }
         else
         {
@@ -185,8 +190,8 @@ public class MovatarFragment extends Fragment {
             layers[1] = layer2_female.getDrawable(preferences.indexFitness().get());
             layers[2] = layer3.getDrawable(preferences.indexHairstyle().get());
             layers[3] = layer4_female.getDrawable(preferences.indexHairColor().get() * 15 + preferences.indexExpression().get() * 3 + preferences.indexEyeColor().get());
-            layers[4] = layer5_female.getDrawable(preferences.indexBottom().get() + preferences.indexFitness().get() * 4);
-            layers[5] = layer6_female.getDrawable(preferences.indexTop().get() + preferences.indexFitness().get() * 4);
+            layers[4] = ResourcesCompat.getDrawable(getResources(), clothesList.get(preferences.indexBottom().get()).imageFilePath, null);
+            layers[5] = ResourcesCompat.getDrawable(getResources(), clothesList.get(preferences.indexTop().get()).imageFilePath, null);
             layers[6] = layer7.getDrawable(preferences.indexHairstyle().get() * 3 + preferences.indexHairColor().get());
         }
         else // male
@@ -195,8 +200,8 @@ public class MovatarFragment extends Fragment {
             layers[1] = layer2_male.getDrawable(preferences.indexFitness().get());
             layers[2] = layer3.getDrawable(preferences.indexHairstyle().get());
             layers[3] = layer4_male.getDrawable(preferences.indexHairColor().get() * 15 + preferences.indexExpression().get() * 3 + preferences.indexEyeColor().get());
-            layers[4] = layer5_male.getDrawable(preferences.indexBottom().get() + preferences.indexFitness().get() * 4);
-            layers[5] = layer6_male.getDrawable(preferences.indexTop().get() + preferences.indexFitness().get() * 4);
+            layers[4] = ResourcesCompat.getDrawable(getResources(), clothesList.get(preferences.indexBottom().get()).imageFilePath, null);
+            layers[5] = ResourcesCompat.getDrawable(getResources(), clothesList.get(preferences.indexTop().get()).imageFilePath, null);
             layers[6] = layer7.getDrawable(preferences.indexHairstyle().get() * 3 + preferences.indexHairColor().get());
         }
 
@@ -265,18 +270,45 @@ public class MovatarFragment extends Fragment {
         }
         else if (currentCategoryIndex == 4) // Top
         {
-            if (preferences.indexTop().get() - 1 >= 0)
-                preferences.indexTop().put(preferences.indexTop().get() - 1);
-            else
-                if(preferences.bottom2Blocked().get())
-                preferences.indexTop().put(3);
+            boolean nextFound = false;
+            int index = preferences.indexTop().get();
+
+            do {
+                if (index - 1 >= 0)
+                    index -= 1;
+                else
+                    index = clothesList.size() - 1;
+
+                if (clothesList.get(index).clothType.equals(Constants.ClothType.TOP) // wenn der Klamottentyp stimmt
+                        && clothesList.get(index).sex.ordinal() == preferences.indexGender().get() // und das Geschlecht stimmt
+                        && clothesList.get(index).fitness.ordinal() == preferences.indexFitness().get() // und der Figurtyp stimmt
+                        && clothesList.get(index).owned) // und die Kleidung besessen wird
+                {
+                    nextFound = true;
+                    preferences.indexTop().put(index);
+                }
+            } while (!nextFound);
         }
         else if (currentCategoryIndex == 5) // Bottom
         {
-            if (preferences.indexBottom().get() - 1 >= 0)
-                preferences.indexBottom().put(preferences.indexBottom().get() - 1);
-            else
-                preferences.indexBottom().put(3);
+            boolean nextFound = false;
+            int index = preferences.indexBottom().get();
+
+            do {
+                if (index - 1 >= 0)
+                    index -= 1;
+                else
+                    index = clothesList.size() - 1;
+
+                if (clothesList.get(index).clothType.equals(Constants.ClothType.BOTTOM) // wenn der Klamottentyp stimmt
+                        && clothesList.get(index).sex.ordinal() == preferences.indexGender().get() // und das Geschlecht stimmt
+                        && clothesList.get(index).fitness.ordinal() == preferences.indexFitness().get() // und der Figurtyp stimmt
+                        && clothesList.get(index).owned) // und die Kleidung besessen wird
+                {
+                    nextFound = true;
+                    preferences.indexBottom().put(index);
+                }
+            } while (!nextFound);
         }
         else // Gender
         {
@@ -284,6 +316,24 @@ public class MovatarFragment extends Fragment {
                 preferences.indexGender().put(preferences.indexGender().get() - 1);
             else
                 preferences.indexGender().put(1);
+
+            if (preferences.indexTop().get() + (clothesList.size() / 2) < clothesList.size())
+            {
+                preferences.indexTop().put(preferences.indexTop().get() + (clothesList.size() / 2));
+            }
+            else
+            {
+                preferences.indexTop().put(preferences.indexTop().get() - (clothesList.size() / 2));
+            }
+
+            if (preferences.indexBottom().get() + (clothesList.size() / 2) < clothesList.size())
+            {
+                preferences.indexBottom().put(preferences.indexBottom().get() + (clothesList.size() / 2));
+            }
+            else
+            {
+                preferences.indexBottom().put(preferences.indexBottom().get() - (clothesList.size() / 2));
+            }
         }
 
         redrawLayers();
@@ -321,17 +371,45 @@ public class MovatarFragment extends Fragment {
         }
         else if (currentCategoryIndex == 4) // Top
         {
-            if (preferences.indexTop().get() + 1 < 4)
-                preferences.indexTop().put(preferences.indexTop().get() + 1);
-            else
-                preferences.indexTop().put(0);
+            boolean nextFound = false;
+            int index = preferences.indexTop().get();
+
+            do {
+                if (index + 1 < clothesList.size())
+                    index += 1;
+                else
+                    index = 0;
+
+                if (clothesList.get(index).clothType.equals(Constants.ClothType.TOP) // wenn der Klamottentyp stimmt
+                        && clothesList.get(index).sex.ordinal() == preferences.indexGender().get() // und das Geschlecht stimmt
+                        && clothesList.get(index).fitness.ordinal() == preferences.indexFitness().get() // und der Figurtyp stimmt
+                        && clothesList.get(index).owned) // und die Kleidung besessen wird
+                {
+                    nextFound = true;
+                    preferences.indexTop().put(index);
+                }
+            } while (!nextFound);
         }
         else if (currentCategoryIndex == 5) // Bottom
         {
-            if (preferences.indexBottom().get() + 1 < 4)
-                preferences.indexBottom().put(preferences.indexBottom().get() + 1);
-            else
-                preferences.indexBottom().put(0);
+            boolean nextBottomFound = false;
+            int index = preferences.indexBottom().get();
+
+            do {
+                if (index + 1 < clothesList.size())
+                    index += 1;
+                else
+                    index = 0;
+
+                if (clothesList.get(index).clothType.equals(Constants.ClothType.BOTTOM) // wenn der Klamottentyp stimmt
+                        && clothesList.get(index).sex.ordinal() == preferences.indexGender().get() // und das Geschlecht stimmt
+                        && clothesList.get(index).fitness.ordinal() == preferences.indexFitness().get() // und der Figurtyp stimmt
+                        && clothesList.get(index).owned) // und die Kleidung besessen wird
+                {
+                    nextBottomFound = true;
+                    preferences.indexBottom().put(index);
+                }
+            } while (!nextBottomFound);
         }
         else // Gender
         {
@@ -339,55 +417,83 @@ public class MovatarFragment extends Fragment {
                 preferences.indexGender().put(preferences.indexGender().get() + 1);
             else
                 preferences.indexGender().put(0);
+
+            if (preferences.indexTop().get() + (clothesList.size() / 2) < clothesList.size())
+            {
+                preferences.indexTop().put(preferences.indexTop().get() + (clothesList.size() / 2));
+            }
+            else
+            {
+                preferences.indexTop().put(preferences.indexTop().get() - (clothesList.size() / 2));
+            }
+
+            if (preferences.indexBottom().get() + (clothesList.size() / 2) < clothesList.size())
+            {
+                preferences.indexBottom().put(preferences.indexBottom().get() + (clothesList.size() / 2));
+            }
+            else
+            {
+                preferences.indexBottom().put(preferences.indexBottom().get() - (clothesList.size() / 2));
+            }
         }
         redrawLayers();
     }
 
-    @Click
-    void btnShareMovatar() {
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main, menu);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
 
-        Drawable[] layers2 = new Drawable[10];
-        layers2[0] = ResourcesCompat.getDrawable(getResources(), R.drawable.layer0_hintergrund_3, null);
-        layers2[1] = layers[0];
-        layers2[2] = layers[1];
-        layers2[3] = layers[2];
-        layers2[4] = layers[3];
-        layers2[5] = layers[4];
-        layers2[6] = layers[5];
-        layers2[7] = layers[6];
-        layers2[8] = ResourcesCompat.getDrawable(getResources(), R.drawable.layer8_logo_2, null);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_share:
+                Drawable[] layers2 = new Drawable[10];
+                layers2[0] = ResourcesCompat.getDrawable(getResources(), R.drawable.layer0_hintergrund_3, null);
+                layers2[1] = layers[0];
+                layers2[2] = layers[1];
+                layers2[3] = layers[2];
+                layers2[4] = layers[3];
+                layers2[5] = layers[4];
+                layers2[6] = layers[5];
+                layers2[7] = layers[6];
+                layers2[8] = ResourcesCompat.getDrawable(getResources(), R.drawable.layer8_logo_2, null);
 
+                if (preferences.indexFitness().get() == Constants.Fitness.FIT.ordinal())
+                    layers2[9] = ResourcesCompat.getDrawable(getResources(), R.drawable.layer9_fitness_fit, null);
+                else if (preferences.indexFitness().get() == Constants.Fitness.AVERAGE.ordinal())
+                    layers2[9] = ResourcesCompat.getDrawable(getResources(), R.drawable.layer9_fitness_normal, null);
+                else
+                    layers2[9] = ResourcesCompat.getDrawable(getResources(), R.drawable.layer9_fitness_unfit, null);
 
-        if (preferences.indexFitness().get() == Constants.Fitness.FIT.ordinal())
-            layers2[9] = ResourcesCompat.getDrawable(getResources(), R.drawable.layer9_fitness_fit, null);
-        else if (preferences.indexFitness().get() == Constants.Fitness.AVERAGE.ordinal())
-            layers2[9] = ResourcesCompat.getDrawable(getResources(), R.drawable.layer9_fitness_normal, null);
-        else
-            layers2[9] = ResourcesCompat.getDrawable(getResources(), R.drawable.layer9_fitness_unfit, null);
+                LayerDrawable ld2 = new LayerDrawable(layers2);
 
-        LayerDrawable ld2 = new LayerDrawable(layers2);
+                int width = ld2.getIntrinsicWidth();
+                int height = ld2.getIntrinsicHeight();
+                Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+                Canvas canvas = new Canvas(bitmap);
+                ld2.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+                ld2.draw(canvas);
 
-        int width = ld2.getIntrinsicWidth();
-        int height = ld2.getIntrinsicHeight();
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        ld2.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        ld2.draw(canvas);
-
-        Intent share = new Intent(Intent.ACTION_SEND);
-        share.setType("image/jpeg");
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        File f = new File(Environment.getExternalStorageDirectory() + File.separator + "temporary_file.jpg");
-        try {
-            f.createNewFile();
-            FileOutputStream fo = new FileOutputStream(f);
-            fo.write(bytes.toByteArray());
-        } catch (IOException e) {
-            e.printStackTrace();
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType("image/jpeg");
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+                File f = new File(Environment.getExternalStorageDirectory() + File.separator + "temporary_file.jpg");
+                try {
+                    f.createNewFile();
+                    FileOutputStream fo = new FileOutputStream(f);
+                    fo.write(bytes.toByteArray());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                share.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///sdcard/temporary_file.jpg"));
+                startActivity(Intent.createChooser(share, "Share Image"));
+                return true;
         }
-        share.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///sdcard/temporary_file.jpg"));
-        startActivity(Intent.createChooser(share, "Share Image"));
+        return false;
     }
 
     /**

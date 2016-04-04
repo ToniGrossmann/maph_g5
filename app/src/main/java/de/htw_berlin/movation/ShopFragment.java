@@ -76,7 +76,7 @@ public class ShopFragment extends Fragment {
         final MovatarClothes insideItem = item;
         new AlertDialog.Builder(getContext())
                 .setTitle("Kaufbestätigung")
-                .setMessage("Bist du sicher das du " + insideItem.name + " für " + insideItem.price + " Credits kaufen möchtest?")
+                .setMessage("Bist du sicher, dass du \"" + insideItem.name + "\" für " + insideItem.price + " Credits kaufen möchtest?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 if ((preferences.credits().get() - insideItem.price) >= 0) {

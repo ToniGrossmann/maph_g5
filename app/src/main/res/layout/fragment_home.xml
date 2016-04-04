@@ -5,102 +5,132 @@
              android:layout_height="match_parent"
              tools:context="de.htw_berlin.movation.HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_columnSpan="2"
-        android:background="@color/movation_bg"
-        android:layout_row="1"
-        android:layout_margin="20dp">
+        android:orientation="vertical"
+        android:weightSum="10"
+        android:baselineAligned="false">
 
-        <GridLayout
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal|bottom"
-            android:columnCount="2"
-            android:rowCount="5">
+            android:layout_height="100dp"
+            android:src="@drawable/icon_movation"
+            android:background="@drawable/side_nav_bar_2"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="2"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp" />
 
-            <TextView
+<!--        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+        </LinearLayout>-->
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:background="@color/movation_light_grey">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/textView"
-                android:layout_row="0"
-                android:layout_column="0"
-                android:background="@android:drawable/editbox_background_normal"
-                android:layout_columnSpan="2"
-                android:autoText="true"/>
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/current_goal_heading"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10dp" />
+                <TextView
+                    android:id="@+id/textViewCurrentGoal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp" />
+            </LinearLayout>
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/icon_goals"
+                android:layout_marginRight="20dp"
+                android:layout_gravity="center" />
+        </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:background="@color/movation_dark_grey">
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Small Text"
-                android:id="@+id/textView2"
-                android:layout_row="1"
-                android:layout_column="0"
-                android:layout_gravity="center"/>
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/current_credits_heading"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10dp" />
+                <TextView
+                    android:id="@+id/textViewCredits"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp" />
+            </LinearLayout>
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/icon_credits"
+                android:layout_marginRight="20dp"
+                android:layout_gravity="center" />
+        </LinearLayout>
 
-            <com.caverock.androidsvg.SVGImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:id="@+id/imageView"
-                android:layout_row="1"
-                android:layout_column="1"
-                app:svg="dart.svg"
-                android:layout_gravity="right"
-                />
 
-            <com.caverock.androidsvg.SVGImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:id="@+id/imageView2"
-                android:layout_row="2"
-                app:svg="dart.svg"
-                android:layout_column="0"
-                android:layout_gravity="center"/>
 
-            <TextView
-                android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:background="@color/movation_light_grey">
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Small Text"
-                android:id="@+id/textView3"
-                android:layout_row="2"
-                android:layout_column="1"
-                android:layout_gravity="center"/>
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fitnessstatus_heading"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10dp" />
+                <TextView
+                    android:id="@+id/textViewFitness"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp" />
+            </LinearLayout>
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/icon_fitness"
+                android:layout_marginRight="20dp"
+                android:layout_gravity="center" />
+        </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Small Text"
-                android:id="@+id/textView4"
-                android:layout_row="3"
-                android:layout_column="0"
-                android:layout_gravity="center"/>
-
-            <com.caverock.androidsvg.SVGImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:id="@+id/imageView3"
-                android:layout_row="3"
-                android:layout_column="1"
-                app:svg="dart.svg"
-                android:layout_gravity="right"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="start assignment"
-                android:id="@+id/assignmentButton"
-                android:layout_row="4"
-                android:layout_column="1"/>
-
-        </GridLayout>
-    </FrameLayout>
+    </LinearLayout>
 
 </FrameLayout>

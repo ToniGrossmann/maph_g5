@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#055351</color>
     <color name="colorAccent">#FFEA3F</color>
     <color name="movation_bg">#80D0CF</color>
+    <color name="movation_light_grey">#ededed</color>
+    <color name="movation_dark_grey">#e0e0e0</color>
 </resources>

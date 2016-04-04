@@ -7,7 +7,6 @@ import org.androidannotations.annotations.sharedpreferences.DefaultInt;
 @SharedPref(SharedPref.Scope.APPLICATION_DEFAULT)
 public interface Preferences {
 
-
     String username();
     String password();
     boolean autologin();
@@ -28,7 +27,7 @@ public interface Preferences {
     @DefaultInt(0)
     int indexGender();
 
-    @DefaultInt(0)
+    @DefaultInt(2)
     int indexFitness();
 
     @DefaultInt(0)
@@ -43,21 +42,11 @@ public interface Preferences {
     @DefaultInt(0)
     int indexEyeColor();
 
-    @DefaultInt(0)
+    @DefaultInt(4)
     int indexTop();
 
     @DefaultInt(0)
     int indexBottom();
 
-    @DefaultBoolean(true)
-    boolean top2Blocked();
-
-    @DefaultBoolean(true)
-    boolean top4Blocked();
-
-    @DefaultBoolean(true)
-    boolean bottom2Blocked();
-
-    @DefaultBoolean(true)
-    boolean bottom4Blocked();}
+}
 
