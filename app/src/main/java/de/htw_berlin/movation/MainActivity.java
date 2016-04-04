@@ -161,6 +161,8 @@ public class MainActivity extends AppCompatActivity
 
     public void getConsent() {
         BandInfo[] devices = BandClientManager.getInstance().getPairedBands();
+        if(devices.length == 0)
+            return;
         client = BandClientManager.getInstance().create(app, devices[0]);
         if (client.getSensorManager().getCurrentHeartRateConsent() != UserConsent.GRANTED)
             client.getSensorManager().requestHeartRateConsent(this, new HeartRateConsentListener() {
