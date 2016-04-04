@@ -57,6 +57,9 @@ public class StatisticFragment extends Fragment {
     @ViewById
     LineChart chart;
 
+    @ViewById
+    TextView pulseAxisLabel;
+
     @Pref
     Preferences_ preferences;
 
@@ -72,7 +75,9 @@ public class StatisticFragment extends Fragment {
     {
         HighlightMarkerView mv = new HighlightMarkerView(this.getActivity(), R.layout.diagramm_markerview);
         chart.setMarkerView(mv);
+        chart.setDescription("");
 
+        pulseAxisLabel.setRotation(90);
         YAxis rightAxis = chart.getAxisRight();
         YAxis leftAxis = chart.getAxisLeft();
         XAxis xAxis = chart.getXAxis();
@@ -83,7 +88,7 @@ public class StatisticFragment extends Fragment {
 
         // Besondere Linie
         LimitLine ll = new LimitLine(80f, "Ruhepuls");
-        leftAxis.addLimitLine(ll);
+        //leftAxis.addLimitLine(ll);
 
         LineData data = new LineData();
 
@@ -175,7 +180,7 @@ public class StatisticFragment extends Fragment {
 
     private LineDataSet createSet() {
 
-        LineDataSet set = new LineDataSet(null, "Puls-Daten");
+        LineDataSet set = new LineDataSet(null, "Puls-Werte");
         set.setAxisDependency(YAxis.AxisDependency.LEFT);
         set.setColor(ColorTemplate.getHoloBlue());
         //set.setCircleColor(Color.WHITE);
@@ -185,7 +190,7 @@ public class StatisticFragment extends Fragment {
         set.setFillColor(ColorTemplate.getHoloBlue());
         set.setHighLightColor(Color.rgb(244, 117, 117));
         set.setValueTextColor(Color.BLACK);
-        set.setValueTextSize(9f);
+        set.setValueTextSize(12f);
         set.setDrawValues(false);
 
         return set;
