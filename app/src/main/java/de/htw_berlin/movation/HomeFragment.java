@@ -85,6 +85,7 @@ public class HomeFragment extends Fragment {
             textViewFitness.setText(R.string.fitnessstatus_fit);
 
         }
+        afterViews();
     }
 
     private class ProgressListener implements BandService.ProgressListener {

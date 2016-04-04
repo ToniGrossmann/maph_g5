@@ -19,6 +19,9 @@ public class Vitals extends BaseDaoEnabled {
     @DatabaseField(foreign = true, foreignAutoCreate = true)
     public Assignment assignment;
     @DatabaseField
+    /**
+     * meters per second
+     */
     public double velocity;
 
 

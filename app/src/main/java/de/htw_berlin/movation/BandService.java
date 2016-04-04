@@ -99,11 +99,13 @@ public class BandService extends Service {
                     e.printStackTrace();
                 }
                 prefs.startedAssignmentId().remove();
+                prefs.successfulGoals().put(prefs.successfulGoals().get()+1);
                 if (progressListener != null)
                     progressListener.onFinishAssignment();
                 run = false;
                 int credits = prefs.credits().get();
                 prefs.credits().put(credits+currentAssignment.goal.reward);
+                prefs.creditsEarnedLifeTime().put(prefs.creditsEarnedLifeTime().get()+currentAssignment.goal.reward);
                 showSuccessNotification();
                 stopSelf();
             }
@@ -247,6 +249,7 @@ public class BandService extends Service {
                         vitals.timeStamp = new Date(bandHeartRateEvent.getTimestamp());
                         vitals.lat = mLocationListeners[0].mLastLocation.getLatitude();
                         vitals.lon = mLocationListeners[0].mLastLocation.getLongitude();
+                        vitals.velocity = mLocationListeners[0].mLastLocation.getSpeed();
                         vitals.assignment = currentAssignment;
 
                         if (bandHeartRateEvent.getQuality().equals(HeartRateQuality.LOCKED)) {
