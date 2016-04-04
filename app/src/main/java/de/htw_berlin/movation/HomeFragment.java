@@ -75,13 +75,13 @@ public class HomeFragment extends Fragment {
         super.onResume();
         if(preferences.creditsEarnedLifeTime().get()  >= 1000 && preferences.indexFitness().get() == 2)
         {
-            preferences.indexFitness().put(1);
+            //preferences.indexFitness().put(1);
             textViewFitness.setText(R.string.fitnessstatus_normal);
 
         }
         if(preferences.creditsEarnedLifeTime().get()  >= 10000 && preferences.indexFitness().get() == 1)
         {
-            preferences.indexFitness().put(0);
+            //preferences.indexFitness().put(0);
             textViewFitness.setText(R.string.fitnessstatus_fit);
 
         }
