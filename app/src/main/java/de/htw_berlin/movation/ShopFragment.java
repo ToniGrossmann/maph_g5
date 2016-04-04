@@ -17,6 +17,7 @@ import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 import org.androidannotations.ormlite.annotations.OrmLiteDao;
 
+import de.htw_berlin.movation.adapter.ListViewAdapter;
 import de.htw_berlin.movation.persistence.DatabaseHelper;
 import de.htw_berlin.movation.persistence.model.MovatarClothes;
 

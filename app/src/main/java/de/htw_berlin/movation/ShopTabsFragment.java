@@ -17,6 +17,7 @@ import org.androidannotations.ormlite.annotations.OrmLiteDao;
 
 import java.sql.SQLException;
 
+import de.htw_berlin.movation.adapter.ShopFragmentPagerAdapter;
 import de.htw_berlin.movation.persistence.DatabaseHelper;
 import de.htw_berlin.movation.persistence.model.User;
 

@@ -1,4 +1,4 @@
-package de.htw_berlin.movation;
+package de.htw_berlin.movation.view;
 
 import android.content.Context;
 import android.widget.ImageView;
@@ -10,6 +10,7 @@ import com.squareup.picasso.Picasso;
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
 
+import de.htw_berlin.movation.R;
 import de.htw_berlin.movation.persistence.model.MovatarClothes;
 
 /**

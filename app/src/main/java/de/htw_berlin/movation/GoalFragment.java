@@ -23,6 +23,7 @@ import org.androidannotations.ormlite.annotations.OrmLiteDao;
 import java.sql.SQLException;
 import java.util.Calendar;
 
+import de.htw_berlin.movation.adapter.GoalListAdapter;
 import de.htw_berlin.movation.persistence.DatabaseHelper;
 import de.htw_berlin.movation.persistence.model.Assignment;
 import de.htw_berlin.movation.persistence.model.Goal;

@@ -6,9 +6,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
@@ -16,20 +14,17 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
 import com.j256.ormlite.dao.Dao;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
@@ -46,8 +41,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import de.htw_berlin.movation.persistence.DatabaseHelper;
-import de.htw_berlin.movation.persistence.DatabaseTools;
-import de.htw_berlin.movation.persistence.model.*;
+import de.htw_berlin.movation.persistence.model.MovatarClothes;
+import de.htw_berlin.movation.persistence.model.User;
 
 @EFragment(R.layout.fragment_movatarchange)
 public class MovatarFragment extends Fragment {

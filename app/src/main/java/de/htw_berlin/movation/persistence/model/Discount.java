@@ -9,10 +9,10 @@ public class Discount extends BaseDaoEnabled {
     @DatabaseField(generatedId = true)
     public int id;
 
-    @DatabaseField(foreign = true)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     public DiscountType type;
 
-    @DatabaseField(foreign = true)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     public User user;
 
     @DatabaseField
