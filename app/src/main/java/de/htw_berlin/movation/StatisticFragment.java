@@ -145,6 +145,15 @@ public class StatisticFragment extends Fragment {
 
     public void addEntry(float pulsValue, String timeStamp) {
 
+        if(pulsValue < preferences.minPulse().get())
+        {
+            preferences.edit().minPulse().put((int)pulsValue);
+        }
+        if(pulsValue > preferences.maxPulse().get())
+        {
+            preferences.edit().maxPulse().put((int)pulsValue);
+        }
+
         LineData data = chart.getData();
 
         if (data != null)
