@@ -3,6 +3,7 @@ package de.htw_berlin.movation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.View;
 import android.widget.ExpandableListView;
 
 import com.j256.ormlite.dao.Dao;
@@ -12,13 +13,10 @@ import com.microsoft.band.BandException;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Background;
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.ormlite.annotations.OrmLiteDao;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import de.htw_berlin.movation.persistence.DatabaseHelper;
 import de.htw_berlin.movation.persistence.model.Goal;
@@ -35,14 +33,13 @@ public class GoalFragment extends Fragment {
     Dao<Goal, Long> goalsDao;
     @OrmLiteDao(helper = DatabaseHelper.class)
     Dao<GoalCategory, Long> goalCategoriesDao;
-
+    @Bean
     GoalListAdapter listAdapter;
+
 
     @ViewById(R.id.expandableListView)
     ExpandableListView expListView;
 
-    List<String> listDataHeader;
-    HashMap<String, List<String>> listDataChild;
 
     @Background
     void connectToBand() {
@@ -57,7 +54,18 @@ public class GoalFragment extends Fragment {
 
     @AfterViews
     void bindAdapter() {
+
         expListView.setAdapter(listAdapter);
+        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition,
+                                        int childPosition, long id) {
+
+                Goal g = listAdapter.getChild(groupPosition, childPosition);
+                return true;
+            }
+        });
     }
 
     @Override
@@ -67,9 +75,9 @@ public class GoalFragment extends Fragment {
 
         // preparing list data
         //prepareListData();
-        prepareListData();
+        //prepareListData();
 
-        listAdapter = new GoalListAdapter(getActivity(), listDataHeader, listDataChild);
+        //listAdapter = new GoalListAdapter(getActivity(), listDataHeader, listDataChild);
 
         // setting list adapter
 
@@ -78,34 +86,5 @@ public class GoalFragment extends Fragment {
         //client = BandClientManager.getInstance().create(getActivity().getBaseContext(), devices[0]);
         //connectToBand();
         //Log.d(getClass().getSimpleName(), client.getConnectionState().name());
-    }
-
-    /*
-     * Preparing the list data
-     */
-    private void prepareListData() {
-        List<GoalCategory> listGoalGategories = new ArrayList<>();
-        List<Goal> listGoals = new ArrayList<>();
-
-        listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
-
-        try {
-            listGoalGategories = goalCategoriesDao.queryForAll();
-            listGoals = goalsDao.queryForAll();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        // Adding child data
-        for (GoalCategory gc : listGoalGategories) {
-            listDataHeader.add(gc.name);
-            List<String> listGoalNames = new ArrayList<>();
-            for (Goal g : listGoals) {
-                if (gc.equals(g.category)) {
-                    listGoalNames.add(g.description);
-                }
-            }
-            listDataChild.put(gc.name, listGoalNames);
-        }
     }
 }
