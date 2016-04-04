@@ -24,7 +24,7 @@ public class Goal extends BaseDaoEnabled {
     @DatabaseField
     public int reward;
 
-    @DatabaseField(foreign = true)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     public GoalCategory category;
 
     @SuppressWarnings("unused")

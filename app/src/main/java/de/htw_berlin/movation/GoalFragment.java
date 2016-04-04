@@ -113,45 +113,4 @@ public class GoalFragment extends Fragment {
             listDataChild.put(listGoalGategories.get(i).name, listGoalNames);
         }
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        //if (client.getSensorManager().getCurrentHeartRateConsent() == UserConsent.GRANTED) {
-            //BandService_.intent(getActivity().getApplication()).start();
-        serviceIntent = BandService_.intent(app).get();
-        app.startService(serviceIntent);
-    /*
-    } else
-
-        {
-            // user has not consented yet, request it
-            client.getSensorManager().requestHeartRateConsent(getActivity(), new HeartRateConsentListener() {
-                @Override
-                public void userAccepted(boolean consentGiven) {
-                    if (consentGiven) {
-                        BandService_.intent(getActivity()).start();
-
-                    }
-                }
-            });
-
-
-        }
-        */
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d(getClass().getSimpleName(), "onStop()");
-        //app.stopService(BandService_.intent(app).get());
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d(getClass().getSimpleName(), "onDestroy()");
-        app.stopService(BandService_.intent(app).get());
-    }
 }
