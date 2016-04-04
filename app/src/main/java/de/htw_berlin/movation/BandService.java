@@ -300,6 +300,7 @@ public class BandService extends Service {
         super.onDestroy();
         run = false;
         notificationManager.cancel(Constants.NOTIFICATION_ID);
+        if(client != null)
         try {
             client.disconnect().await();
         } catch (InterruptedException | BandException e) {
