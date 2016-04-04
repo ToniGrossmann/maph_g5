@@ -60,14 +60,30 @@ public class StatisticFragment extends Fragment {
     @ViewById
     TextView pulseAxisLabel;
 
+    @ViewById(R.id.pulseMaxValue)
+    TextView pulseMaxValue;
+
+    @ViewById(R.id.pulseMinValue)
+    TextView pulseMinValue;
+
+    @ViewById(R.id.earnedCreditsAllTImeValue)
+    TextView totalCreditsEarned;
+
+    @ViewById(R.id.successfullGoalsValue)
+    TextView totalGoalsSuccessfull;
+
     @Pref
     Preferences_ preferences;
+
+    private int lastIndex = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         dbHelper = app.getHelper();
+
+
     }
 
     @AfterViews
@@ -94,6 +110,9 @@ public class StatisticFragment extends Fragment {
 
         chart.setData(data);
 
+
+
+
         getActivity().setTitle(R.string.title_statistics);
     }
 
@@ -102,42 +121,22 @@ public class StatisticFragment extends Fragment {
     {
         super.onStart();
 
-        TextView pulseMaxValue = (TextView)getView().findViewById(R.id.pulseMaxValue);
-        TextView pulseMinValue = (TextView)getView().findViewById(R.id.pulseMinValue);
-        TextView totalCreditsEarned = (TextView)getView().findViewById(R.id.earnedCreditsAllTImeValue);
-        TextView totalGoalsSuccessfull = (TextView)getView().findViewById(R.id.successfullGoalsValue);
-
-        if(preferences.maxPulse().exists())
-            pulseMaxValue.setText(Integer.toString(preferences.maxPulse().get()));
-        else
-            pulseMaxValue.setText("0");
-
-        if(preferences.minPulse().exists())
-            pulseMinValue.setText(Integer.toString(preferences.minPulse().get()));
-        else
-            pulseMinValue.setText("0");
-
-        if(preferences.creditsEarnedLifeTime().exists())
-            totalCreditsEarned.setText(Integer.toString(preferences.creditsEarnedLifeTime().get()));
-        else
-            totalCreditsEarned.setText("0");
-
-        if(preferences.successfulGoals().exists())
-            totalGoalsSuccessfull.setText(Integer.toString(preferences.successfulGoals().get()));
-        else
-            totalGoalsSuccessfull.setText("0");
-
-        //chart.clear();
         try {
             List<Vitals> vitalList = vitalsDao.queryForAll();
 
-            for(int i = 0; i < vitalList.size(); i++)
+            for(int i = lastIndex; i < vitalList.size(); i++)
             {
                 addEntry(vitalList.get(i).pulse,Integer.toString(i));
+                lastIndex = i+1;
             }
         }
         catch(SQLException e)
         {}
+
+        pulseMaxValue.setText(Integer.toString(preferences.maxPulse().get()));
+        pulseMinValue.setText(Integer.toString(preferences.minPulse().get()));
+        totalCreditsEarned.setText(Integer.toString(preferences.creditsEarnedLifeTime().get()));
+        totalGoalsSuccessfull.setText(Integer.toString(preferences.successfulGoals().get()));
 
         chart.invalidate();
 
@@ -145,13 +144,13 @@ public class StatisticFragment extends Fragment {
 
     public void addEntry(float pulsValue, String timeStamp) {
 
-        if(pulsValue < preferences.minPulse().get())
+        if(pulsValue < preferences.minPulse().get() || preferences.minPulse().get() == 0)
         {
-            preferences.edit().minPulse().put((int)pulsValue);
+            preferences.minPulse().put((int)pulsValue);
         }
         if(pulsValue > preferences.maxPulse().get())
         {
-            preferences.edit().maxPulse().put((int)pulsValue);
+            preferences.maxPulse().put((int)pulsValue);
         }
 
         LineData data = chart.getData();
