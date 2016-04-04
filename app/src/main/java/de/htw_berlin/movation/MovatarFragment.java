@@ -1,5 +1,7 @@
 package de.htw_berlin.movation;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -214,43 +216,41 @@ public class MovatarFragment extends Fragment {
     @Override
     public void onResume() {
         super.onStart();
-        if(preferences.creditsEarnedLifeTime().get()  >= 1000 && preferences.indexFitness().get() == 2)
-        {
+        if (preferences.creditsEarnedLifeTime().get() >= 1000 && preferences.indexFitness().get() == 2) {
             preferences.indexFitness().put(1);
+
+
             txtFitness.setText(getString(R.string.fitness_level_x, getText(R.string.normal)));
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Level up!")
+                    .setMessage("Glückwunsch dein Movatar ist ein Level aufgestiegen! Verpasse ihm nun neue Kleidung.").setNeutralButton(android.R.string.ok,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).show();
+
 
         }
-        if(preferences.creditsEarnedLifeTime().get()  >= 10000 && preferences.indexFitness().get() == 1)
-        {
+        if (preferences.creditsEarnedLifeTime().get() >= 10000 && preferences.indexFitness().get() == 1) {
             preferences.indexFitness().put(0);
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Level up!")
+                    .setMessage("Glückwunsch dein Movatar ist ein Level aufgestiegen! Verpasse ihm nun neue Kleidung.").setNeutralButton(android.R.string.ok,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).show();
             txtFitness.setText(getString(R.string.fitness_level_x, getText(R.string.fit)));
-
         }
 
-        boolean nextFound = false;
-        int index = preferences.indexTop().get();
-
-
-        do {
-            if (index - 1 >= 0)
-                index -= 1;
-            else
-                index = clothesList.size() - 1;
-
-            if (clothesList.get(index).clothType.equals(Constants.ClothType.TOP) // wenn der Klamottentyp stimmt
-                    && clothesList.get(index).sex.ordinal() == preferences.indexGender().get() // und das Geschlecht stimmt
-                    && clothesList.get(index).fitness.ordinal() == preferences.indexFitness().get() // und der Figurtyp stimmt
-                    && clothesList.get(index).owned) // und die Kleidung besessen wird
-            {
-                nextFound = true;
-                preferences.indexTop().put(index);
-            }
-        } while (!nextFound);
+    }
+/*
 
 
         nextFound = false;
         index = preferences.indexBottom().get();
-
 
         do {
             if (index - 1 >= 0)
@@ -267,9 +267,8 @@ public class MovatarFragment extends Fragment {
                 preferences.indexBottom().put(index);
             }
         } while (!nextFound);
+        */
 
-        redrawLayers();
-    }
 
     @Click
     void btnMovatarCategoryChangeLeft() {
