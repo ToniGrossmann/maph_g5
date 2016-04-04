@@ -133,7 +133,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         final GoalCategory longTrip = goalCategoryDao.createIfNotExists(new GoalCategory() {{
             name = "Langstrecke";
         }});
-        GoalCategory marathon = goalCategoryDao.createIfNotExists(new GoalCategory() {{
+        final GoalCategory marathon = goalCategoryDao.createIfNotExists(new GoalCategory() {{
             name = "Marathon";
         }});
 /*
@@ -198,7 +198,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             requirements = "";
             reward = 100;
             runDistance = 42195;
-            category = longTrip;
+            category = marathon;
         }});
 
         vitalsDao.createIfNotExists(new Vitals(80, new GregorianCalendar(2016, 3, 31, 17, 44).getTime()));

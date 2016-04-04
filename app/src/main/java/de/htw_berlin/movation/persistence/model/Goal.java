@@ -24,8 +24,37 @@ public class Goal extends BaseDaoEnabled {
     @DatabaseField
     public int reward;
 
-    @DatabaseField(foreign = true)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     public GoalCategory category;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Goal goal = (Goal) o;
+
+        if (id != goal.id) return false;
+        if (runDistance != goal.runDistance) return false;
+        if (reward != goal.reward) return false;
+        if (description != null ? !description.equals(goal.description) : goal.description != null)
+            return false;
+        if (requirements != null ? !requirements.equals(goal.requirements) : goal.requirements != null)
+            return false;
+        return category != null ? category.equals(goal.category) : goal.category == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (requirements != null ? requirements.hashCode() : 0);
+        result = 31 * result + runDistance;
+        result = 31 * result + reward;
+        result = 31 * result + (category != null ? category.hashCode() : 0);
+        return result;
+    }
 
     @SuppressWarnings("unused")
     public Goal() {
