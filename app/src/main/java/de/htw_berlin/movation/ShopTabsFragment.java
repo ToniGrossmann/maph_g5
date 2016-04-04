@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.widget.TextView;
 
 import com.j256.ormlite.dao.Dao;
 
@@ -59,7 +58,6 @@ public class ShopTabsFragment extends Fragment {
         }
 
     }
-
 
     @AfterViews
     void afterViews() {

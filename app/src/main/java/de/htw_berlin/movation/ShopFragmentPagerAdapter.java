@@ -1,17 +1,25 @@
 package de.htw_berlin.movation;
+
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
-public class ShopFragmentPagerAdapter extends FragmentPagerAdapter {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ShopFragmentPagerAdapter extends FragmentStatePagerAdapter {
     final int PAGE_COUNT = 2;
     private String tabTitles[] = new String[] { "Movatar", "Rabatte" };
+
     private Context context;
+    List<Fragment> fragments = new ArrayList<>();
 
     public ShopFragmentPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.context = context;
+        fragments.add(ShopFragment_.builder().build());
+        fragments.add(ShopFragment_.builder().build());
     }
 
     @Override
@@ -21,7 +29,7 @@ public class ShopFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return ShopFragment_.builder().mPage(position + 1).build();
+        return fragments.get(position);
     }
 
     @Override
