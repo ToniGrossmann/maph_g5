@@ -88,13 +88,13 @@ public class BandService extends Service {
             //toast(location.toString());
             if (mLastLocation.getAccuracy() != 0.0 && firstPulseFixAcquired)
                 runMeters += location.distanceTo(mLastLocation);
-            if(progressListener != null)
+            if (progressListener != null)
                 progressListener.onRunMeterIncreased(runMeters);
             mLastLocation.set(location);
-            if(runMeters >= currentAssignment.goal.runDistance){
+            if (runMeters >= currentAssignment.goal.runDistance) {
                 currentAssignment.status = Assignment.Status.COMPLETED;
                 try {
-                currentAssignment.update();
+                    currentAssignment.update();
                     client.getNotificationManager().vibrate(VibrationType.THREE_TONE_HIGH);
                 } catch (BandIOException | SQLException e) {
                     e.printStackTrace();
@@ -184,6 +184,11 @@ public class BandService extends Service {
             if (locationManager.getLastKnownLocation(provider) != null)
                 toast("provider: " + provider + ", " + locationManager.getLastKnownLocation(provider).toString());
         BandInfo[] devices = BandClientManager.getInstance().getPairedBands();
+        if(devices.length == 0){
+            run = false;
+            stopSelf();
+            return;
+        }
         client = BandClientManager.getInstance().create(getApplication(), devices[0]);
         connectToBand();
     }
@@ -208,7 +213,7 @@ public class BandService extends Service {
         BandPendingResult<ConnectionState> a = client.connect();
         try {
             ConnectionState state = a.await();
-            if(!run){
+            if (!run) {
                 client.disconnect().await();
                 return;
             }
@@ -229,7 +234,7 @@ public class BandService extends Service {
                         vitals.assignment = currentAssignment;
 
                         if (bandHeartRateEvent.getQuality().equals(HeartRateQuality.LOCKED)) {
-                            if(progressListener != null)
+                            if (progressListener != null)
                                 progressListener.onNewHeartRateRead(bandHeartRateEvent.getHeartRate());
                             currentPulse = bandHeartRateEvent.getHeartRate();
                             firstPulseFixAcquired = true;
@@ -334,21 +339,22 @@ public class BandService extends Service {
     public IBinder onBind(Intent intent) {
         return mBinder;
     }
+
     @Override
     public boolean onUnbind(Intent intent) {
         progressListener = null;
         return false;
     }
 
-    void showSuccessNotification(){
+    void showSuccessNotification() {
         Intent intent = new Intent(this, MainActivity_.class);
         intent.setAction(Long.toString(System.currentTimeMillis()));
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getBaseContext())
                 .setSmallIcon(android.R.drawable.ic_dialog_map)
-                .setTicker(getResources().getString(R.string.notification_success, (int)runMeters))
+                .setTicker(getResources().getString(R.string.notification_success, (int) runMeters))
                 .setContentTitle(getResources().getString(R.string.assignment_finished))
-                .setContentText(getResources().getString(R.string.notification_success, (int)runMeters))
+                .setContentText(getResources().getString(R.string.notification_success, (int) runMeters))
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true)
                 .setContentIntent(PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT));
@@ -358,6 +364,9 @@ public class BandService extends Service {
     void showInfoNotification(boolean gpsFixAcquired, boolean pulseFixAcquired) {
         if (!run)
             return;
+        Intent intent = new Intent(this, MainActivity_.class);
+        intent.setAction(Long.toString(System.currentTimeMillis()));
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         NotificationCompat.InboxStyle inboxStyle =
                 new NotificationCompat.InboxStyle();
         String[] textLines = new String[3];
@@ -383,6 +392,7 @@ public class BandService extends Service {
                 .setSmallIcon(android.R.drawable.ic_dialog_map)
                 .setTicker(getResources().getString(R.string.notification_ticker))
                 .setWhen(System.currentTimeMillis())
+                .setContentIntent(PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT))
                 .setOngoing(true)
                 .setStyle(inboxStyle);
 
@@ -398,31 +408,36 @@ public class BandService extends Service {
 
     /**
      * Registers a listener to receive current assignment information,
+     *
      * @param pl listener, can be null
      */
-    public void registerProgressListener(@Nullable ProgressListener pl){
+    public void registerProgressListener(@Nullable ProgressListener pl) {
         this.progressListener = pl;
     }
 
-    public Assignment getCurrentAssignment(){
+    public Assignment getCurrentAssignment() {
         return currentAssignment;
     }
 
-    public float getRunMeters(){
+    public float getRunMeters() {
         return runMeters;
     }
-    public int getCurrentPulse(){
+
+    public int getCurrentPulse() {
         return currentPulse;
     }
-    public interface ProgressListener{
+
+    public interface ProgressListener {
         /**
          * Called whenever a new pulse reading occured
+         *
          * @param heartRate
          */
         void onNewHeartRateRead(int heartRate);
 
         /**
          * Called whenever the run meter increases
+         *
          * @param runMeters
          */
         void onRunMeterIncreased(float runMeters);

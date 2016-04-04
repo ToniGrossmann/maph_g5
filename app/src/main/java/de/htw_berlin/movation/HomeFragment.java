@@ -1,5 +1,6 @@
 package de.htw_berlin.movation;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.widget.TextView;
@@ -61,11 +62,11 @@ public class HomeFragment extends Fragment {
     }
 
 
+    @SuppressLint("SetTextI18n")
     @AfterViews
     void afterViews() {
 
         getActivity().setTitle(R.string.title_home);
-        getActivity().getActionBar();
 
         if (preferences.startedAssignmentId().exists()) {
             textViewCurrentGoal.setText("ZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIEL.");
@@ -75,7 +76,7 @@ public class HomeFragment extends Fragment {
             textViewCurrentGoal.setText(R.string.no_current_goal);
         }
 
-        textViewCredits.setText((preferences.credits().get().toString()));
+        textViewCredits.setText((preferences.credits().getOr(0).toString()));
 
         if (preferences.indexFitness().get() == Constants.Fitness.FIT.ordinal())
             textViewFitness.setText(R.string.fitnessstatus_fit);
