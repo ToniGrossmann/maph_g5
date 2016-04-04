@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity
                                            .commit();
                 break;
             case R.id.nav_goals:
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_main_framelayout, TestFragment_.builder().build())
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_main_framelayout, GoalFragment_.builder().build())
                                            .addToBackStack(null)
                                            .commit();
                 break;
