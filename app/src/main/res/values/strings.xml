@@ -97,9 +97,21 @@
     <string name="warning_2">- Benutze die App nur wenn du dich Gesund fühlst. Verzichte auf Sport wenn du krank bist.</string>
     <string name="warning_3">- Benutze das Band nur während des Joggens. Bei anderen sportlichen Aktivitäten kannst du hängen bleiben und dich selbst verletzen.</string>
     <string name="warning_4">- Überanspruche dich nicht und mach auch Mal eine Pause ;)</string>
+
     <string name="fitness_level_x">Fitnesslevel: %1$s</string>
     <string name="fit">Fit</string>
     <string name="unfit">Unfit</string>
     <string name="normal">Normal</string>
     <string name="category">Kategorie</string>
+    <string name="current_goal_heading">Aktuelles Ziel</string>
+    <string name="no_current_goal">Du hast dir aktuell kein Ziel gesetzt.</string>
+    <string name="current_credits_heading">Verfügbare Credits</string>
+    <string name="fitnessstatus_heading">Fitnesstatus</string>
+    <string name="fitnessstatus_fit">Fitnesslevel 3: Du bist richtig fit!</string>
+    <string name="fitnessstatus_normal">Fitnesslevel 2: Streng dich noch etwas an!</string>
+    <string name="fitnessstatus_unfit">Fitnesslevel 1: Aller Anfang ist schwer!</string>
+
+    <!-- Strings for page titles -->
+    <string name="title_home">Home</string>
+    <string name="title_movatar">Movatar</string>
 </resources>

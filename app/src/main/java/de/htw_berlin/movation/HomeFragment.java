@@ -58,24 +58,24 @@ public class HomeFragment extends Fragment {
     @AfterViews
     void afterViews() {
 
-        getActivity().setTitle("Home");
+        getActivity().setTitle(R.string.title_home);
         getActivity().getActionBar();
 
         if (preferences.hasActiveGoal().get()) {
-            textViewCurrentGoal.setText("ZIEL.");
+            textViewCurrentGoal.setText("ZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIELZIEL.");
         }
         else
         {
-            textViewCurrentGoal.setText("Du hast dir aktuell kein Ziel gesetzt.");
+            textViewCurrentGoal.setText(R.string.no_current_goal);
         }
 
         textViewCredits.setText((preferences.credits().get().toString()));
 
         if (preferences.indexFitness().get() == Constants.Fitness.FIT.ordinal())
-            textViewFitness.setText("Fitnesslevel 3: Du bist richtig fit!");
+            textViewFitness.setText(R.string.fitnessstatus_fit);
         else if (preferences.indexFitness().get() == Constants.Fitness.AVERAGE.ordinal())
-            textViewFitness.setText("Fitnesslevel 2: Streng dich noch etwas an!");
+            textViewFitness.setText(R.string.fitnessstatus_normal);
         else if (preferences.indexFitness().get() == Constants.Fitness.FAT.ordinal())
-            textViewFitness.setText("Fitnesslevel 1: Aller Anfang ist schwer!");
+            textViewFitness.setText(R.string.fitnessstatus_unfit);
     }
 }

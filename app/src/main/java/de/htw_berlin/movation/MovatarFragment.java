@@ -120,7 +120,7 @@ public class MovatarFragment extends Fragment {
         catch(SQLException e)
         {}
 
-        getActivity().setTitle("Movatar");
+        getActivity().setTitle(R.string.title_movatar);
 
         Resources r = getResources();
 
@@ -439,53 +439,6 @@ public class MovatarFragment extends Fragment {
         redrawLayers();
     }
 
-    //@Click
-    void shareMovatar() {
-
-        Drawable[] layers2 = new Drawable[10];
-        layers2[0] = ResourcesCompat.getDrawable(getResources(), R.drawable.layer0_hintergrund_3, null);
-        layers2[1] = layers[0];
-        layers2[2] = layers[1];
-        layers2[3] = layers[2];
-        layers2[4] = layers[3];
-        layers2[5] = layers[4];
-        layers2[6] = layers[5];
-        layers2[7] = layers[6];
-        layers2[8] = ResourcesCompat.getDrawable(getResources(), R.drawable.layer8_logo_2, null);
-
-        if (preferences.indexFitness().get() == Constants.Fitness.FIT.ordinal())
-            layers2[9] = ResourcesCompat.getDrawable(getResources(), R.drawable.layer9_fitness_fit, null);
-        else if (preferences.indexFitness().get() == Constants.Fitness.AVERAGE.ordinal())
-            layers2[9] = ResourcesCompat.getDrawable(getResources(), R.drawable.layer9_fitness_normal, null);
-        else
-            layers2[9] = ResourcesCompat.getDrawable(getResources(), R.drawable.layer9_fitness_unfit, null);
-
-        LayerDrawable ld2 = new LayerDrawable(layers2);
-
-        int width = ld2.getIntrinsicWidth();
-        int height = ld2.getIntrinsicHeight();
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        ld2.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        ld2.draw(canvas);
-
-        Intent share = new Intent(Intent.ACTION_SEND);
-        share.setType("image/jpeg");
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        File f = new File(Environment.getExternalStorageDirectory() + File.separator + "temporary_file.jpg");
-        try {
-            f.createNewFile();
-            FileOutputStream fo = new FileOutputStream(f);
-            fo.write(bytes.toByteArray());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        share.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///sdcard/temporary_file.jpg"));
-        startActivity(Intent.createChooser(share, "Share Image"));
-    }
-
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main, menu);
@@ -497,7 +450,47 @@ public class MovatarFragment extends Fragment {
         int id = item.getItemId();
         switch (id) {
             case R.id.action_share:
-                shareMovatar();
+                Drawable[] layers2 = new Drawable[10];
+                layers2[0] = ResourcesCompat.getDrawable(getResources(), R.drawable.layer0_hintergrund_3, null);
+                layers2[1] = layers[0];
+                layers2[2] = layers[1];
+                layers2[3] = layers[2];
+                layers2[4] = layers[3];
+                layers2[5] = layers[4];
+                layers2[6] = layers[5];
+                layers2[7] = layers[6];
+                layers2[8] = ResourcesCompat.getDrawable(getResources(), R.drawable.layer8_logo_2, null);
+
+                if (preferences.indexFitness().get() == Constants.Fitness.FIT.ordinal())
+                    layers2[9] = ResourcesCompat.getDrawable(getResources(), R.drawable.layer9_fitness_fit, null);
+                else if (preferences.indexFitness().get() == Constants.Fitness.AVERAGE.ordinal())
+                    layers2[9] = ResourcesCompat.getDrawable(getResources(), R.drawable.layer9_fitness_normal, null);
+                else
+                    layers2[9] = ResourcesCompat.getDrawable(getResources(), R.drawable.layer9_fitness_unfit, null);
+
+                LayerDrawable ld2 = new LayerDrawable(layers2);
+
+                int width = ld2.getIntrinsicWidth();
+                int height = ld2.getIntrinsicHeight();
+                Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+                Canvas canvas = new Canvas(bitmap);
+                ld2.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+                ld2.draw(canvas);
+
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType("image/jpeg");
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+                File f = new File(Environment.getExternalStorageDirectory() + File.separator + "temporary_file.jpg");
+                try {
+                    f.createNewFile();
+                    FileOutputStream fo = new FileOutputStream(f);
+                    fo.write(bytes.toByteArray());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                share.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///sdcard/temporary_file.jpg"));
+                startActivity(Intent.createChooser(share, "Share Image"));
                 return true;
         }
         return false;

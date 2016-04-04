@@ -9,21 +9,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="10">
+        android:weightSum="10"
+        android:baselineAligned="false">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:src="@drawable/icon_movation_home"
-            android:background="@color/movation_bg"
+            android:src="@drawable/icon_movation"
+            android:background="@drawable/side_nav_bar_2"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="2"/>
+            android:layout_weight="2"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp" />
 
-        <LinearLayout
+<!--        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1">
-        </LinearLayout>
+        </LinearLayout>-->
 
 
 
@@ -32,7 +35,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_weight="1"
-            android:background="#ededed">
+            android:background="@color/movation_light_grey">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -42,14 +45,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Aktuelles Ziel"
+                    android:text="@string/current_goal_heading"
                     android:textStyle="bold"
                     android:layout_marginLeft="10dp" />
                 <TextView
                     android:id="@+id/textViewCurrentGoal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Blalaaaa"
                     android:layout_marginLeft="10dp" />
             </LinearLayout>
             <ImageView
@@ -67,7 +69,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_weight="1"
-            android:background="#e0e0e0">
+            android:background="@color/movation_dark_grey">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -77,14 +79,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Verfügbare Credits"
+                    android:text="@string/current_credits_heading"
                     android:textStyle="bold"
                     android:layout_marginLeft="10dp" />
                 <TextView
                     android:id="@+id/textViewCredits"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Blalaaaa"
                     android:layout_marginLeft="10dp" />
             </LinearLayout>
             <ImageView
@@ -103,7 +104,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_weight="1"
-            android:background="#ededed">
+            android:background="@color/movation_light_grey">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -113,14 +114,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Fitnessstatus"
+                    android:text="@string/fitnessstatus_heading"
                     android:textStyle="bold"
                     android:layout_marginLeft="10dp" />
                 <TextView
                     android:id="@+id/textViewFitness"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Blalaaaa"
                     android:layout_marginLeft="10dp" />
             </LinearLayout>
             <ImageView
@@ -130,9 +130,6 @@
                 android:layout_marginRight="20dp"
                 android:layout_gravity="center" />
         </LinearLayout>
-
-
-
 
     </LinearLayout>
 
