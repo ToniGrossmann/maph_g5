@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity
 
             case R.id.nav_shop:
                 getSupportFragmentManager().beginTransaction()
-                                           .replace(R.id.content_main_framelayout, ShopFragment_.builder().build())
+                                           .replace(R.id.content_main_framelayout, ShopTabsFragment_.builder().build())
                                            .addToBackStack(null)
                                            .commit();
                 break;
