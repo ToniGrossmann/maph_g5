@@ -222,7 +222,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         discountTypeDao.create(new DiscountType("Originals ZX Flux Sneaker", "Adidas", "25% Rabatt", 1000, 1));
         discountTypeDao.create(new DiscountType("Rally Tight Jogginghose", "Nike", "15% Rabatt", 600, 1));
         discountTypeDao.create(new DiscountType("Spirit Poly Jacke", "Puma", "30% Rabatt", 1200, 1));
-        discountTypeDao.create(new DiscountType("Reebok", "Classic Wristband Schweißband", "40% Rabatt", 500, 1));
+        discountTypeDao.create(new DiscountType("Classic Wristband Schweißband", "Reebok", "40% Rabatt", 500, 1));
 
         movatarClothesDao.create(new MovatarClothes("Kurze Sporthose", 100, R.drawable.layer5_female_unfit_sporthose_kurz, Constants.Sex.FEMALE, Constants.Fitness.FAT, true, Constants.ClothType.BOTTOM));
         movatarClothesDao.create(new MovatarClothes("Kurze Sporthose", 100, R.drawable.layer5_female_unfit_sporthose_kurz_2, Constants.Sex.FEMALE, Constants.Fitness.FAT, false, Constants.ClothType.BOTTOM));
