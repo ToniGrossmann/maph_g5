@@ -101,6 +101,8 @@ public class BandService extends Service {
                 }
                 prefs.startedAssignmentId().remove();
                 run = false;
+                int credits = prefs.credits().get();
+                prefs.credits().put(credits+currentAssignment.goal.reward);
                 showSuccessNotification();
                 stopSelf();
             }
