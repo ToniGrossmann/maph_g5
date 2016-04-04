@@ -32,6 +32,7 @@
     <string name="stats">Statistik</string>
     <string name="movatar">Movatar</string>
     <string name="microsoft_band">Microsoft Band</string>
+    <string name="shop">Shop</string>
     <string name="credits">Creditpoints</string>
 
     <!-- Strings for SensorFragment -->
@@ -114,4 +115,5 @@
     <!-- Strings for page titles -->
     <string name="title_home">Home</string>
     <string name="title_movatar">Movatar</string>
+    <string name="title_shop">Shop</string>
 </resources>

@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity
 
             case R.id.nav_shop:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_main_framelayout, ShopFragment_.builder().build()).commit();
+                        .replace(R.id.content_main_framelayout, ShopTabsFragment_.builder().build()).commit();
                 break;
             case R.id.nav_movatar:
                 getSupportFragmentManager().beginTransaction()
