@@ -194,7 +194,6 @@ public class BandService extends Service {
         BandInfo[] devices = BandClientManager.getInstance().getPairedBands();
         if(devices.length == 0){
             run = false;
-            prefs.startedAssignmentId().remove();
             try {
                 currentAssignment = assignmentDao.queryForId(prefs.startedAssignmentId().get());
                 currentAssignment.status = Assignment.Status.FAILED;
@@ -202,6 +201,7 @@ public class BandService extends Service {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+            prefs.startedAssignmentId().remove();
             stopSelf();
             return;
         }
