@@ -143,8 +143,8 @@ public class BandService extends Service {
     }
 
     LocationListener[] mLocationListeners = new LocationListener[]{
-            new LocationListener(LocationManager.GPS_PROVIDER),
-            new LocationListener(LocationManager.NETWORK_PROVIDER)
+            new LocationListener(LocationManager.GPS_PROVIDER)
+            //new LocationListener(LocationManager.NETWORK_PROVIDER)
     };
 
     private void toast(final String message) {
@@ -163,6 +163,7 @@ public class BandService extends Service {
     public void onCreate() {
         super.onCreate();
         Log.d(getClass().getSimpleName(), "onCreate()");
+        /*
         try {
             locationManager.requestLocationUpdates(
                     LocationManager.NETWORK_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
@@ -172,6 +173,7 @@ public class BandService extends Service {
         } catch (IllegalArgumentException ex) {
             Log.d(TAG, "network provider does not exist, " + ex.getMessage());
         }
+        */
         try {
             locationManager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
@@ -181,10 +183,13 @@ public class BandService extends Service {
         } catch (IllegalArgumentException ex) {
             Log.d(TAG, "gps provider does not exist " + ex.getMessage());
         }
+        /*
         List<String> providers = locationManager.getAllProviders();
+
         for (String provider : providers)
             if (locationManager.getLastKnownLocation(provider) != null)
                 toast("provider: " + provider + ", " + locationManager.getLastKnownLocation(provider).toString());
+        */
         BandInfo[] devices = BandClientManager.getInstance().getPairedBands();
         if(devices.length == 0){
             run = false;
