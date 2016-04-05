@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.github.paolorotolo.appintro.AppIntro;
 
-import de.htw_berlin.movation.LoginActivity_;
+import de.htw_berlin.movation.MainActivity_;
 import de.htw_berlin.movation.MyApplication;
 import de.htw_berlin.movation.Preferences_;
 import de.htw_berlin.movation.R;
@@ -64,7 +64,7 @@ public class AppIntroActivity extends AppIntro {
     public void onDonePressed() {
         finish();
         preferences.hasBeenStarted().put(true);
-        Intent intent = new Intent(this, LoginActivity_.class);
+        Intent intent = new Intent(this, MainActivity_.class);
         startActivity(intent);
     }
 
