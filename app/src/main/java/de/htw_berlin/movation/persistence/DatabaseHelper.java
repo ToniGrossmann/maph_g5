@@ -148,7 +148,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         goalDao.createIfNotExists(new Goal() {{
             description = "Laufe 10 Meter";
             requirements = "";
-            reward = 1;
+            reward = 10001;
             runDistance = 10;
             category = shortTrip;
         }});

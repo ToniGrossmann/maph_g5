@@ -52,6 +52,11 @@ public class ListViewAdapter extends BaseAdapter {
         catch(Exception e){}
     }
 
+    public void remove(MovatarClothes item){
+        filteredItemList.remove(item);
+        notifyDataSetChanged();
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 

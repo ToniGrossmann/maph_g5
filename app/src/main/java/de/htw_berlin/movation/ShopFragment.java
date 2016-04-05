@@ -74,6 +74,7 @@ public class ShopFragment extends Fragment {
                                                     dialog.dismiss();
                                                 }
                                             }).show();
+                                    adapter.remove(insideItem);
 
 
                                 } else {

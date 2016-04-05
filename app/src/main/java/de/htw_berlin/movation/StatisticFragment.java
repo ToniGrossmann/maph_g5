@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
-
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -17,7 +16,6 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.j256.ormlite.dao.Dao;
 
-import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
@@ -29,6 +27,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import de.htw_berlin.movation.persistence.DatabaseHelper;
+import de.htw_berlin.movation.persistence.model.Assignment;
 import de.htw_berlin.movation.persistence.model.Vitals;
 import de.htw_berlin.movation.view.HighlightMarkerView;
 
@@ -43,6 +42,8 @@ public class StatisticFragment extends Fragment {
 
     @OrmLiteDao(helper = DatabaseHelper.class)
     Dao<Vitals, Long> vitalsDao;
+    @OrmLiteDao(helper = DatabaseHelper.class)
+    Dao<Assignment, Long> assignmentDao;
 
     @App
     MyApplication app;
@@ -89,7 +90,6 @@ public class StatisticFragment extends Fragment {
 
     }
 
-    @AfterViews
     public void initData()
     {
         HighlightMarkerView mv = new HighlightMarkerView(this.getActivity(), R.layout.diagramm_markerview);
@@ -117,42 +117,44 @@ public class StatisticFragment extends Fragment {
     }
 
     @Override
-    public void onStart()
+    public void onResume()
     {
-        super.onStart();
-        double distance = 0;
+        super.onResume();
+        initData();
+        int distance = 0;
 
         double maxPace = 0;
         double currentPace = 0;
 
         try {
-            vitalList = vitalsDao.queryForAll();
-
-            for(int i = lastIndex; i < vitalList.size(); i++)
+            int i = 0;
+            for(Vitals v : vitalsDao.queryForAll())
             {
-                addEntry(vitalList.get(i).pulse,Integer.toString(i));
-                lastIndex = i+1;
+                addEntry(v.pulse,Integer.toString(i));
+                i++;
 
-                if (vitalList.get(i).assignment != null && vitalList.get(i).assignment.goal != null) {
-                    distance += vitalList.get(i).assignment.goal.runDistance;
-                }
 
-                currentPace = vitalList.get(i).velocity;
+
+                currentPace = v.velocity;
                 if (currentPace > maxPace)
                     maxPace = currentPace;
             }
+            for(Assignment a : assignmentDao.queryBuilder().where().eq("status", Assignment.Status.COMPLETED).query())
+                distance += a.goal.runDistance;
+
         }
         catch(SQLException e)
-        {}
+        {e.printStackTrace();}
 
-        currentPace = currentPace * 3.6;
+
+        maxPace = (double)Math.round((maxPace * 3.6) * 100d) / 100d;
 
         pulseMaxValue.setText(Integer.toString(preferences.maxPulse().get()));
         pulseMinValue.setText(Integer.toString(preferences.minPulse().get()));
         totalCreditsEarned.setText(Integer.toString(preferences.creditsEarnedLifeTime().get()));
         totalGoalsSuccessfull.setText(Integer.toString(preferences.successfulGoals().get()));
 
-        txtDistance.setText(Double.toString(distance) + "m");
+        txtDistance.setText(Integer.toString(distance) + "m");
         txtMaxPaceValue.setText(Double.toString(maxPace) + "km/h");
 
         chart.invalidate();
