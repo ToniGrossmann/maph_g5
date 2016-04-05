@@ -73,7 +73,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="@string/give_heart_rate_consent"
         android:id="@+id/btnHeartRateConsent"
         android:layout_gravity="center_horizontal"/>
 
