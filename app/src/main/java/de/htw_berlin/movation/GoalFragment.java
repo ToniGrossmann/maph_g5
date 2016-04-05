@@ -81,7 +81,7 @@ public class GoalFragment extends Fragment {
                     Intent serviceIntent = BandService_.intent(app).get();
                     prefs.startedAssignmentId().put((long) assignment.id);
                     app.startService(serviceIntent);
-                    Toast.makeText(getActivity(), "TODO START INFO", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.started_assignment_x, assignment.goal.description), Toast.LENGTH_LONG).show();
                     getFragmentManager().popBackStack();
                 } catch (SQLException e) {
                     e.printStackTrace();

@@ -20,6 +20,7 @@
         completions."
     </string>
     <string name="notification_started_assignment">Gestartete Aufgabe: %1$s</string>
+    <string name="started_assignment_x">Aufgabe \"%1$s\" gestartet</string>
     <string name="notification_please_wait_for_pulse">Bitte warte, bis dein Puls erkannt wird</string>
     <string name="notification_please_wait_for_gps">Bitte warte, bis deine Position bestimmt ist</string>
 
