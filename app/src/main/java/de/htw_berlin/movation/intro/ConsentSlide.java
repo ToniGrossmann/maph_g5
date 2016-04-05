@@ -63,7 +63,8 @@ public class ConsentSlide extends Fragment {
 
     void getBand() {
         BandInfo[] devices = BandClientManager.getInstance().getPairedBands();
-        client = BandClientManager.getInstance().create(app, devices[0]);
+        if (devices.length != 0)
+            client = BandClientManager.getInstance().create(app, devices[0]);
     }
 
     @UiThread
@@ -124,7 +125,12 @@ public class ConsentSlide extends Fragment {
         super.setUserVisibleHint(visible);
         if (visible && isResumed()) {
             getBand();
-            if (client.getSensorManager().getCurrentHeartRateConsent() == UserConsent.GRANTED) {
+            if (client == null) {
+                activity.setProgressButtonEnabled(true);
+                activity.setNextPageSwipeLock(false);
+                btnHeartRateConsent.setEnabled(false);
+                btnHeartRateConsent.setText(R.string.heart_rate_consent_given);
+            } else if (client.getSensorManager().getCurrentHeartRateConsent() == UserConsent.GRANTED) {
                 activity.setNextPageSwipeLock(false);
                 activity.setProgressButtonEnabled(true);
                 btnHeartRateConsent.setEnabled(false);
