@@ -34,8 +34,8 @@ public class DiscountTypeView extends RelativeLayout {
 
     public void bind(DiscountType item)
     {
-        //Picasso.with(getContext()).load(item.imageFilePath).resize(50,50)
-        //        .into(icon);
+        Picasso.with(getContext()).load(item.imageFilePath).resize(50,50)
+                .into(icon);
         firstLine.setText(item.name);
         secondLine.setText("Credits: " + Long.toString(item.price));
     }
