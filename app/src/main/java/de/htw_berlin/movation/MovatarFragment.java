@@ -38,6 +38,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.htw_berlin.movation.persistence.DatabaseHelper;
@@ -95,6 +96,7 @@ public class MovatarFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        clothesList = new ArrayList<>();
         super.onCreate(savedInstanceState);
         dbHelper = app.getHelper();
         if (mUserId != -1) {
@@ -210,12 +212,16 @@ public class MovatarFragment extends Fragment {
 
     @Override
     public void onResume() {
-        super.onStart();
+        super.onResume();
         try {
             clothesList = movatarClothesDao.queryForAll();
         }
         catch(SQLException e)
-        {}
+        {
+
+        }
+
+
         if (preferences.creditsEarnedLifeTime().get() >= 1000 && preferences.indexFitness().get() == 2) {
             preferences.indexFitness().put(1);
 
@@ -245,29 +251,9 @@ public class MovatarFragment extends Fragment {
             txtFitness.setText(getString(R.string.fitness_level_x, getText(R.string.fit)));
         }
 
+        redrawLayers();
+
     }
-/*
-
-
-        nextFound = false;
-        index = preferences.indexBottom().get();
-
-        do {
-            if (index - 1 >= 0)
-                index -= 1;
-            else
-                index = clothesList.size() - 1;
-
-            if (clothesList.get(index).clothType.equals(Constants.ClothType.BOTTOM) // wenn der Klamottentyp stimmt
-                    && clothesList.get(index).sex.ordinal() == preferences.indexGender().get() // und das Geschlecht stimmt
-                    && clothesList.get(index).fitness.ordinal() == preferences.indexFitness().get() // und der Figurtyp stimmt
-                    && clothesList.get(index).owned) // und die Kleidung besessen wird
-            {
-                nextFound = true;
-                preferences.indexBottom().put(index);
-            }
-        } while (!nextFound);
-        */
 
 
     @Click

@@ -22,7 +22,7 @@ public interface Preferences {
 
     long startedAssignmentId();
 
-    @DefaultInt(30000)
+    @DefaultInt(0)
     int credits();
 
     @DefaultInt(0)

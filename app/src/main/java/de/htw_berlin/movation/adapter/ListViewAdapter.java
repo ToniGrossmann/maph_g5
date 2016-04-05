@@ -87,19 +87,19 @@ public class ListViewAdapter extends BaseAdapter {
         for(int i = 0; i < itemList.size();i++) {
             if(itemList.get(i).owned == false) {
                 if (itemList.get(i).sex == Constants.Sex.FEMALE && preferences.indexGender().get() == 0) {
-                    if (itemList.get(i).fitness == Constants.Fitness.FAT && preferences.indexFitness().get() == 0) {
+                    if (itemList.get(i).fitness == Constants.Fitness.FAT && preferences.indexFitness().get() == 2) {
                         filteredItemList.add(itemList.get(i));
                     } else if (itemList.get(i).fitness == Constants.Fitness.AVERAGE && preferences.indexFitness().get() == 1) {
                         filteredItemList.add(itemList.get(i));
-                    } else if (itemList.get(i).fitness == Constants.Fitness.FIT && preferences.indexFitness().get() == 2) {
+                    } else if (itemList.get(i).fitness == Constants.Fitness.FIT && preferences.indexFitness().get() == 0) {
                         filteredItemList.add(itemList.get(i));
                     }
                 } else if (itemList.get(i).sex == Constants.Sex.MALE && preferences.indexGender().get() == 1) {
-                    if (itemList.get(i).fitness == Constants.Fitness.FAT && preferences.indexFitness().get() == 0) {
+                    if (itemList.get(i).fitness == Constants.Fitness.FAT && preferences.indexFitness().get() == 2) {
                         filteredItemList.add(itemList.get(i));
                     } else if (itemList.get(i).fitness == Constants.Fitness.AVERAGE && preferences.indexFitness().get() == 1) {
                         filteredItemList.add(itemList.get(i));
-                    } else if (itemList.get(i).fitness == Constants.Fitness.FIT && preferences.indexFitness().get() == 2) {
+                    } else if (itemList.get(i).fitness == Constants.Fitness.FIT && preferences.indexFitness().get() == 0) {
                         filteredItemList.add(itemList.get(i));
                     }
                 }
