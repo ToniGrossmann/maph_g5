@@ -66,9 +66,9 @@
     <string name="unregister_sensors">Messung beenden</string>
     <string name="heart_rate_consent">Pulsmessung erlauben</string>
     <string name="band_required">Damit du die App benutzen kannst, benötigst du ein Micosoft Band 1 oder 2.</string>
-    <string name="thanks_for_app_download">Danke, dass Du dir unsere App runtergeladen hast!</string>
+    <string name="thanks_for_app_download">Danke, dass du dir unsere App runtergeladen hast!</string>
     <string name="short_introduction">Im Folgenden möchten wir dir eine kurze Einführung geben.</string>
-    <string name="make_sure_to_have_band">Bitte stell sicher, dass Du ein solches Fitnessarmband besitzt. Zusätlich benötigen wir Deine Erlaubnis, die Pulsrate auszulesen.</string>
+    <string name="make_sure_to_have_band">Bitte stell sicher, dass du ein solches Fitnessarmband besitzt. Zusätzlich benötigen wir deine Erlaubnis, die Pulsrate auszulesen.</string>
     <string name="give_heart_rate_consent">Einverständnis geben</string>
     <string name="please_give_consent">Bitte erlaube das Erfassen deines Herzschlags.</string>
     <string name="heart_rate_consent_given">Einverständnis erteilt</string>

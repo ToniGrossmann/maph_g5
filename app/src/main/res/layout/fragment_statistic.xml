@@ -215,7 +215,7 @@
                 android:id="@+id/imageView5"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/icon_pulse_min"
+                android:src="@drawable/icon_distance"
                 android:layout_marginRight="20dp"
                 android:layout_gravity="center" />
         </LinearLayout>
@@ -250,7 +250,7 @@
                 android:id="@+id/imageView6"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/icon_pulse_min"
+                android:src="@drawable/icon_speed"
                 android:layout_marginRight="20dp"
                 android:layout_gravity="center" />
         </LinearLayout>
